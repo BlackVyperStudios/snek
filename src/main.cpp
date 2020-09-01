@@ -18,14 +18,12 @@ int nTail;
 enum eDirecrion {STOP = 0, LEFT, RIGHT, UP, DOWN};
 eDirecrion dir;
 
+int colorBarrier = 8;
+int colorSnake = 10;
+int colorFruit = 4;
+
 void setup()
 {
-    HANDLE  hConsole;
-    int color = 10;
-
-    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, color);
-
     gameOver = false;
     dir = STOP;
 
@@ -42,23 +40,49 @@ void draw()
 {
     system("cls");
 
-    for (int i = 0; i < width +1; i++)
+    for (int i = 0; i < width + 1; i++)
+    {
+        HANDLE  hConsole;
+
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, colorBarrier);
+
         cout << "#";
+    }
     cout << endl;
 
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
+            HANDLE  hConsole;
+
+            hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+            SetConsoleTextAttribute(hConsole, colorBarrier);
+
             if (j == 0)
                 cout << "#";
             if (j == width - 1)
                 cout << "#";
 
             if (i == y && j == x)
+            {
+                HANDLE  hConsole;
+
+                hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+                SetConsoleTextAttribute(hConsole, colorSnake);
+
                 cout << "O";
+            }
             else if (i == fruitY && j == fruitX)
+            {
+                HANDLE  hConsole;
+
+                hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+                SetConsoleTextAttribute(hConsole, colorFruit);
+
                 cout << "F";
+            }
             else
             {
                 bool print = false;
@@ -66,8 +90,13 @@ void draw()
                 {
                     if (tailX[k] == j && tailY[k] == i)
                     {
-                        cout << "o";
+                        HANDLE  hConsole;
+
+                        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+                        SetConsoleTextAttribute(hConsole, colorSnake);
+
                         print = true;
+                        cout << "o";
                     }
                 }
                 if (!print)
@@ -77,13 +106,19 @@ void draw()
         cout << endl;
     }
 
-    for (int i = 0; i < width +1; i++)
+    for (int i = 0; i < width + 1; i++)
         cout << "#";
     cout << endl;
 
+    HANDLE  hConsole;
+    int colorText = 15;
+
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, colorText);
+
     cout << "SCORE: " << score << endl;
     if (dir == STOP)
-        cout << "PAUSE" << endl;
+        cout << "\nStart by moving with WASD. Press SPACE to pause the game. With X you'll quit." << endl;
 }
 
 void input()
@@ -105,7 +140,8 @@ void input()
             dir = RIGHT;
             break;
         case ' ':
-            dir = STOP;
+            cout << "\nPAUSE\nPress ENTER to resume." << endl;
+            cin.get();
             break;
         case 'x':
             gameOver = true;
@@ -139,9 +175,6 @@ void logic()
 
     switch (dir)
     {
-    case STOP:
-        x, y, prevX, prevY;
-        break;
     case LEFT:
         x--;
         break;
@@ -177,6 +210,8 @@ void logic()
 
 int main()
 {
+    SetConsoleTitle("snek");
+
     setup();
     while (!gameOver)
     {
@@ -185,7 +220,7 @@ int main()
         logic();
     }
 
-    cout << "\nGame Over\nPress 'ENTER' to quit ..." << endl;
+    cout << "\nGame Over\nPress ENTER to quit ..." << endl;
     
     cin.get();
     return 0;
