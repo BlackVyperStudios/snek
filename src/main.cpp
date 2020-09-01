@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <conio.h>
-
+#include <windows.h>
 using namespace std;
 
 bool gameOver;
@@ -20,6 +20,12 @@ eDirecrion dir;
 
 void setup()
 {
+    HANDLE  hConsole;
+    int color = 10;
+
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, color);
+
     gameOver = false;
     dir = STOP;
 
@@ -134,7 +140,7 @@ void logic()
     switch (dir)
     {
     case STOP:
-        x, y;
+        x, y, prevX, prevY;
         break;
     case LEFT:
         x--;
@@ -156,7 +162,7 @@ void logic()
         gameOver = true;
 
     for (int i = 0; i < nTail; i++)
-        if (tailX[i] == x && tailY[i] == y)
+        if (tailX[i] == x && tailY[i] == y  && dir != STOP)
             gameOver = true;
 
     if (x == fruitX && y == fruitY)
@@ -179,5 +185,8 @@ int main()
         logic();
     }
 
+    cout << "\nGame Over\nPress 'ENTER' to quit ..." << endl;
+    
+    cin.get();
     return 0;
 }
