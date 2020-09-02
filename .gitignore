@@ -30,3 +30,5 @@ cmake-build-relwithdebinfo/
 .idea/
 
 *.a
+
+cmake-build-debug-mingw/
