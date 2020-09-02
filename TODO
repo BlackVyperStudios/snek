@@ -1,0 +1,19 @@
+// snek TODO
+
+move functions into class
+make arguments pointers
+optimize data types
+move universal functions to namespace out of the class
+add auto snake movement
+add scoreboard
+add optional game modifications
+change qualified functions to inline functions
+add more ways to control the game
+add pause
+add easter egg
+add color
+add better snake (Oooooo) <- even at the fact, that that doesnt look like a snake at all LOL
+
+create game menu
+
+add second player
