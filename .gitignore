@@ -28,3 +28,5 @@ cmake-build-debug-cygwin/
 cmake-build-minsizerel/
 cmake-build-relwithdebinfo/
 .idea/
+
+*.a
