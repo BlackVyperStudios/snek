@@ -1,5 +1,5 @@
 // snake
-#include <ncurses.h>
+#include <ncurses/ncurses.h>
 #include <iostream>
 #include <random>
 #include <chrono>
