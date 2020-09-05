@@ -14,37 +14,24 @@ unsigned short int snakeLenght = 2;
 unsigned int apple[2]{0};
 
 // TODO unify both illegal position functions
-bool illegalPositionWithoutHead(const unsigned short int locationX, const unsigned short int locationY)
-{
-    if (locationX != 0 && locationY != 0 && locationX != screenX -1 && locationY != screenY -1)
-    {
-        for (unsigned short int i = 1; i < snakeLenght; i++)
-        {
-            if (snake[0][i] == locationX && snake[1][i] == locationY)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-    return true;
-}
-bool illegalPosition(const unsigned short int locationX, const unsigned short int locationY)
-{
-    if (locationX != 0 && locationY != 0 && locationX != screenX -1 && locationY != screenY -1)
-    {
-        for (int i = 0; i < snakeLenght; i++)
-        {
-            if (snake[0][i] == locationX && snake[1][i] == locationY)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-    return true;
-}
 
+bool illegalPosition(const unsigned short int locationX, const unsigned short int locationY, bool legalHead)
+{
+    if (locationX != 0 && locationY != 0 && locationX != screenX -1 && locationY != screenY -1)
+    {
+        unsigned short int i = 0;
+        if (legalHead) { i++;}
+        for (; i < snakeLenght; i++)
+        {
+            if (snake[0][i] == locationX && snake[1][i] == locationY)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    return true;
+}
 unsigned short int randomNum(const unsigned short int *maxNum)
 {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -64,7 +51,7 @@ void createApple()
         // create random location
         randomLocation[0] = randomNum(&screenX);
         randomLocation[1] = randomNum(&screenY);
-        if (!illegalPosition(randomLocation[0], randomLocation[1]))
+        if (!illegalPosition(randomLocation[0], randomLocation[1], false))
             notRnadom = false;
     }
     apple[0] = randomLocation[0];
@@ -116,7 +103,7 @@ int moveSnake()
         return 1;
 
     // TODO make preMoveChecks before updateSnake() to avoid 2 size glitch and save time
-    if (illegalPositionWithoutHead(snake[0][0], snake[1][0]))
+    if (illegalPosition(snake[0][0], snake[1][0], true))
         return 2;
     return 0;
 }
