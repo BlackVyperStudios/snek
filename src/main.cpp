@@ -34,7 +34,9 @@ unsigned short int randomNum(const unsigned short int *maxNum)
 }
 void drawApple()
 {
+    attron(COLOR_PAIR(3));
     mvaddch(apple[1],apple[0], 'A');
+    attroff(COLOR_PAIR(3));
 }
 void createApple()
 {
@@ -102,6 +104,7 @@ int moveSnake()
 }
 void drawSnake(bool firstDraw)
 {
+    attron(COLOR_PAIR(2));
     for (unsigned short int i = 0; i < snakeLength; i++)
     {
         mvaddch(snake[1][i],snake[0][i], 'S');
@@ -109,9 +112,11 @@ void drawSnake(bool firstDraw)
     // exclude remove of edge 0/0 on first draw
     if (!firstDraw)
         mvaddch(snake[1][snakeLength], snake[0][snakeLength], ' ');
+    attroff(COLOR_PAIR(2));
 }
 void drawField()
 {
+    attron(COLOR_PAIR(1));
     for (unsigned short int i = 0; i < screen[1]; i++)
     {
         for (unsigned short int j = 0; j < screen[0]; j++)
@@ -120,6 +125,7 @@ void drawField()
                 mvaddch(i,j,'#');
         }
     }
+    attroff(COLOR_PAIR(1));
 }
 void gameSetup()
 {
@@ -130,6 +136,16 @@ void gameSetup()
     raw();
     curs_set(0);
     keypad(stdscr,true);
+    // TODO just disable colors if they are not supported
+    if (has_colors() == FALSE) {
+        endwin();
+        printf("Your terminal does not support color\n");
+        exit(1);
+    }
+    start_color();
+    init_pair(1, COLOR_BLUE, COLOR_BLACK);
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(3, COLOR_RED, COLOR_BLACK);
 
     drawField();
 
