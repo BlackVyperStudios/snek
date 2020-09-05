@@ -120,16 +120,29 @@ int moveSnake()
         return 2;
     return 0;
 }
-void drawSnake()
+void drawSnake(bool firstDraw)
 {
-    for (int i = 0; i < snakeLenght; i++)
+    for (unsigned short int i = 0; i < snakeLenght; i++)
     {
         mvaddch(snake[1][i],snake[0][i], 'S');
     }
-    mvaddch(snake[1][snakeLenght], snake[0][snakeLenght], ' ');
+    // exclude remove of edge 0/0 on first draw
+    if (!firstDraw)
+        mvaddch(snake[1][snakeLenght], snake[0][snakeLenght], ' ');
+}
+void drawField()
+{
+    for (unsigned short int i = 0; i < screenY; i++)
+    {
+        for (unsigned short int j = 0; j < screenX; j++)
+        {
+            if (i == 0 || j == 0 || i == screenY -1 || j == screenX - 1)
+                mvaddch(i,j,'#');
+        }
+    }
 }
 
-int main()
+void gameSetup()
 {
     // initialise ncurses
     initscr();
@@ -139,15 +152,7 @@ int main()
     curs_set(0);
     keypad(stdscr,true);
 
-    // draw field
-    for (int i = 0; i < screenY; i++)
-    {
-        for (int j = 0; j < screenX; j++)
-        {
-            if (i == 0 || j == 0 || i == screenY -1 || j == screenX - 1)
-                mvaddch(i,j,'#');
-        }
-    }
+    drawField();
 
     // set snake coordinates
     snake[0][0] = screenX / 2;
@@ -156,12 +161,14 @@ int main()
     snake[1][1] = snake[1][0] + 1;
     snakeLenght = 2;
 
-    for (int i = 0; i < snakeLenght; i++)
-    {
-        mvaddch(snake[1][i],snake[0][i], 'S');
-    }
+    drawSnake(true);
 
     createApple();
+}
+
+int main()
+{
+    gameSetup();
 
     unsigned short int quit;
 
@@ -169,9 +176,9 @@ int main()
     while (true)
     {
         quit = moveSnake();
-        if (quit == 1 || quit == 2)
+        if (quit != 0)
             break;
-        drawSnake();
+        drawSnake(false);
     }
     // destroys ncurses
     endwin();
