@@ -90,15 +90,15 @@ void updateSnake(const unsigned short int newX, const unsigned short int newY)
 int moveSnake()
 {
     unsigned short int ch = getch();
-    if (ch == KEY_UP)
+    if (ch == KEY_UP || ch == 'w')
         updateSnake(snake[0][0], snake[1][0] -1);
-    else if (ch == KEY_DOWN)
+    else if (ch == KEY_DOWN || ch == 's')
         updateSnake(snake[0][0], snake[1][0] +1);
-    else if (ch == KEY_LEFT)
+    else if (ch == KEY_LEFT || ch == 'a')
         updateSnake(snake[0][0] -1, snake[1][0]);
-    else if (ch == KEY_RIGHT)
+    else if (ch == KEY_RIGHT || ch == 'd')
         updateSnake(snake[0][0] +1, snake[1][0]);
-    else if (ch == 'q')
+    else if (ch == 'q' || ch == 27) // 27 = ESC key
         return 1;
 
     // TODO make preMoveChecks before updateSnake() to avoid 2 size glitch and save time
