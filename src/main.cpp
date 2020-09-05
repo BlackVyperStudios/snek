@@ -35,7 +35,7 @@ unsigned short int randomNum(const unsigned short int *maxNum)
 void drawApple()
 {
     attron(COLOR_PAIR(3));
-    mvaddch(apple[1],apple[0], 'A');
+    mvaddch(apple[1],apple[0], 'O');
     attroff(COLOR_PAIR(3));
 }
 void createApple()
@@ -105,9 +105,12 @@ int moveSnake()
 void drawSnake(bool firstDraw)
 {
     attron(COLOR_PAIR(2));
-    for (unsigned short int i = 0; i < snakeLength; i++)
+
+    mvaddch(snake[1][0],snake[0][0], 'O');
+
+    for (unsigned short int i = 1; i < snakeLength; i++)
     {
-        mvaddch(snake[1][i],snake[0][i], 'S');
+        mvaddch(snake[1][i],snake[0][i], 'o');
     }
     // exclude remove of edge 0/0 on first draw
     if (!firstDraw)
@@ -143,7 +146,7 @@ void gameSetup()
         exit(1);
     }
     start_color();
-    init_pair(1, COLOR_BLUE, COLOR_BLACK);
+    init_pair(1, COLOR_BLUE, COLOR_BLUE);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
     init_pair(3, COLOR_RED, COLOR_BLACK);
 
