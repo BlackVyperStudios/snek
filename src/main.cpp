@@ -13,7 +13,6 @@ unsigned short int snakeLenght = 2;
 // add apple
 unsigned int apple[2]{0};
 
-// TODO unify both illegal position functions
 
 bool illegalPosition(const unsigned short int locationX, const unsigned short int locationY, bool legalHead)
 {
