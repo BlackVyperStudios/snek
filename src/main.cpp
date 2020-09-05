@@ -7,7 +7,8 @@
 unsigned short int screen[2]{30, 30};
 unsigned short int snake[2][100]{0};
 unsigned short int snakeLength = 1;
-unsigned int apple[2]{0};
+unsigned short int apple[2]{0};
+unsigned short int score = 0;
 
 bool illegalPosition(const unsigned short int locationX, const unsigned short int locationY, bool legalHead)
 {
@@ -38,6 +39,12 @@ void drawApple()
     mvaddch(apple[1],apple[0], 'O');
     attroff(COLOR_PAIR(3));
 }
+void drawScore()
+{
+    attron(COLOR_PAIR(4));
+    mvprintw(2,screen[0] + 2, "Score: %d", score);
+    attroff(COLOR_PAIR(4));
+}
 void createApple()
 {
     unsigned short int randomLocation[2];
@@ -53,6 +60,7 @@ void createApple()
     apple[0] = randomLocation[0];
     apple[1] = randomLocation[1];
     drawApple();
+    drawScore();
 }
 void updateSnake(const unsigned short int newX, const unsigned short int newY)
 {
@@ -60,6 +68,7 @@ void updateSnake(const unsigned short int newX, const unsigned short int newY)
     if (newX == apple[0] && newY == apple[1])
     {
         snakeLength++;
+        score = score + 10;
         createApple();
     }
     // first array is prev1 or prev2, seconds is x/y
@@ -149,6 +158,7 @@ void gameSetup()
     init_pair(1, COLOR_BLUE, COLOR_BLUE);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
     init_pair(3, COLOR_RED, COLOR_BLACK);
+    init_pair(4,COLOR_WHITE, COLOR_BLACK);
 
     drawField();
 
