@@ -4,22 +4,18 @@
 #include <random>
 #include <chrono>
 
-unsigned short int screenX = 30;
-unsigned int short screenY = 30;
-
-// add snake
+unsigned short int screen[2]{30, 30};
 unsigned short int snake[2][100]{0};
-unsigned short int snakeLenght = 1;
-// add apple
+unsigned short int snakeLength = 1;
 unsigned int apple[2]{0};
 
 bool illegalPosition(const unsigned short int locationX, const unsigned short int locationY, bool legalHead)
 {
-    if (locationX != 0 && locationY != 0 && locationX != screenX -1 && locationY != screenY -1)
+    if (locationX != 0 && locationY != 0 && locationX != screen[0] -1 && locationY != screen[1] -1)
     {
         unsigned short int i = 0;
         if (legalHead) { i++;}
-        for (; i < snakeLenght; i++)
+        for (; i < snakeLength; i++)
         {
             if (snake[0][i] == locationX && snake[1][i] == locationY)
             {
@@ -43,14 +39,14 @@ void drawApple()
 void createApple()
 {
     unsigned short int randomLocation[2];
-    bool notRnadom = true;
-    while (notRnadom)
+    bool notRandom = true;
+    while (notRandom)
     {
         // create random location
-        randomLocation[0] = randomNum(&screenX);
-        randomLocation[1] = randomNum(&screenY);
+        randomLocation[0] = randomNum(&screen[0]);
+        randomLocation[1] = randomNum(&screen[1]);
         if (!illegalPosition(randomLocation[0], randomLocation[1], false))
-            notRnadom = false;
+            notRandom = false;
     }
     apple[0] = randomLocation[0];
     apple[1] = randomLocation[1];
@@ -61,30 +57,29 @@ void updateSnake(const unsigned short int newX, const unsigned short int newY)
     // check if apple gets eaten
     if (newX == apple[0] && newY == apple[1])
     {
-        snakeLenght++;
+        snakeLength++;
         createApple();
     }
+    // first array is prev1 or prev2, seconds is x/y
+    unsigned short int preLoc[2][2];
 
-    unsigned short int prevX = snake[0][0];
-    unsigned short int prevY = snake[1][0];
-    unsigned short int prevX2, prevY2;
+    preLoc[0][0] = snake[0][0];
+    preLoc[0][1] = snake[1][0];
 
     snake[0][0] = newX;
     snake[1][0] = newY;
 
-    for (unsigned short int i = 1; i < snakeLenght +1; i++)
+    for (unsigned short int i = 1; i < snakeLength +1; i++)
     {
-        prevX2 = snake[0][i];
-        prevY2 = snake[1][i];
+        preLoc[1][0] = snake[0][i];
+        preLoc[1][1] = snake[1][i];
 
-        snake[0][i] = prevX;
-        snake[1][i] = prevY;
+        snake[0][i] = preLoc[0][0];
+        snake[1][i] = preLoc[0][1];
 
-        prevX = prevX2;
-        prevY = prevY2;
+        preLoc[0][0] = preLoc[1][0];
+        preLoc[0][1] = preLoc[1][1];
     }
-    snake[0][0] = newX;
-    snake[1][0] = newY;
 }
 int moveSnake()
 {
@@ -107,26 +102,25 @@ int moveSnake()
 }
 void drawSnake(bool firstDraw)
 {
-    for (unsigned short int i = 0; i < snakeLenght; i++)
+    for (unsigned short int i = 0; i < snakeLength; i++)
     {
         mvaddch(snake[1][i],snake[0][i], 'S');
     }
     // exclude remove of edge 0/0 on first draw
     if (!firstDraw)
-        mvaddch(snake[1][snakeLenght], snake[0][snakeLenght], ' ');
+        mvaddch(snake[1][snakeLength], snake[0][snakeLength], ' ');
 }
 void drawField()
 {
-    for (unsigned short int i = 0; i < screenY; i++)
+    for (unsigned short int i = 0; i < screen[1]; i++)
     {
-        for (unsigned short int j = 0; j < screenX; j++)
+        for (unsigned short int j = 0; j < screen[0]; j++)
         {
-            if (i == 0 || j == 0 || i == screenY -1 || j == screenX - 1)
+            if (i == 0 || j == 0 || i == screen[1] -1 || j == screen[0] - 1)
                 mvaddch(i,j,'#');
         }
     }
 }
-
 void gameSetup()
 {
     // initialise ncurses
@@ -140,17 +134,16 @@ void gameSetup()
     drawField();
 
     // set snake coordinates
-    snake[0][0] = screenX / 2;
-    snake[1][0] = screenY / 2;
+    snake[0][0] = screen[0] / 2;
+    snake[1][0] = screen[1] / 2;
     snake[0][1] = snake[0][0];
     snake[1][1] = snake[1][0] + 1;
-    snakeLenght = 1;
+    snakeLength = 1;
 
     drawSnake(true);
 
     createApple();
 }
-
 int main()
 {
     gameSetup();
