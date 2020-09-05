@@ -4,21 +4,21 @@
 #include <random>
 #include <chrono>
 
-int screenX = 30;
-int screenY = 30;
+unsigned short int screenX = 30;
+unsigned int short screenY = 30;
 
 // add snake
-int snake[2][10]{0};
-int snakeLenght = 2;
+unsigned short int snake[2][100]{0};
+unsigned short int snakeLenght = 2;
 // add apple
-int apple[2]{0};
+unsigned int apple[2]{0};
 
 // TODO unify both illegal position functions
-bool illegalPositionWithoutHead(int locationX, int locationY)
+bool illegalPositionWithoutHead(const unsigned short int locationX, const unsigned short int locationY)
 {
     if (locationX != 0 && locationY != 0 && locationX != screenX -1 && locationY != screenY -1)
     {
-        for (int i = 1; i < snakeLenght; i++)
+        for (unsigned short int i = 1; i < snakeLenght; i++)
         {
             if (snake[0][i] == locationX && snake[1][i] == locationY)
             {
@@ -29,7 +29,7 @@ bool illegalPositionWithoutHead(int locationX, int locationY)
     }
     return true;
 }
-bool illegalPosition(int locationX, int locationY)
+bool illegalPosition(const unsigned short int locationX, const unsigned short int locationY)
 {
     if (locationX != 0 && locationY != 0 && locationX != screenX -1 && locationY != screenY -1)
     {
@@ -45,11 +45,11 @@ bool illegalPosition(int locationX, int locationY)
     return true;
 }
 
-unsigned long long randomNum(int maxNum)
+unsigned short int randomNum(const unsigned short int *maxNum)
 {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::mt19937_64 generator(seed);
-    return generator() % maxNum; // lowers the number to the specified range
+    return generator() % *maxNum; // lowers the number to the specified range
 }
 void drawApple()
 {
@@ -57,13 +57,13 @@ void drawApple()
 }
 void createApple()
 {
-    int randomLocation[2];
+    unsigned short int randomLocation[2];
     bool notRnadom = true;
     while (notRnadom)
     {
         // create random location
-        randomLocation[0] = randomNum(screenX);
-        randomLocation[1] = randomNum(screenY);
+        randomLocation[0] = randomNum(&screenX);
+        randomLocation[1] = randomNum(&screenY);
         if (!illegalPosition(randomLocation[0], randomLocation[1]))
             notRnadom = false;
     }
@@ -71,7 +71,7 @@ void createApple()
     apple[1] = randomLocation[1];
     drawApple();
 }
-void updateSnake(int newX, int newY)
+void updateSnake(const unsigned short int newX, const unsigned short int newY)
 {
     // check if apple gets eaten
     if (newX == apple[0] && newY == apple[1])
@@ -80,14 +80,14 @@ void updateSnake(int newX, int newY)
         createApple();
     }
 
-    int prevX = snake[0][0];
-    int prevY = snake[1][0];
-    int prevX2, prevY2;
+    unsigned short int prevX = snake[0][0];
+    unsigned short int prevY = snake[1][0];
+    unsigned short int prevX2, prevY2;
 
     snake[0][0] = newX;
     snake[1][0] = newY;
 
-    for (int i = 1; i < snakeLenght +1; i++)
+    for (unsigned short int i = 1; i < snakeLenght +1; i++)
     {
         prevX2 = snake[0][i];
         prevY2 = snake[1][i];
@@ -103,7 +103,7 @@ void updateSnake(int newX, int newY)
 }
 int moveSnake()
 {
-    int ch = getch();
+    unsigned short int ch = getch();
     if (ch == KEY_UP)
         updateSnake(snake[0][0], snake[1][0] -1);
     else if (ch == KEY_DOWN)
@@ -163,7 +163,7 @@ int main()
 
     createApple();
 
-    int quit;
+    unsigned short int quit;
 
     // game loop
     while (true)
