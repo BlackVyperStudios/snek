@@ -9,10 +9,9 @@ unsigned int short screenY = 30;
 
 // add snake
 unsigned short int snake[2][100]{0};
-unsigned short int snakeLenght = 2;
+unsigned short int snakeLenght = 1;
 // add apple
 unsigned int apple[2]{0};
-
 
 bool illegalPosition(const unsigned short int locationX, const unsigned short int locationY, bool legalHead)
 {
@@ -145,7 +144,7 @@ void gameSetup()
     snake[1][0] = screenY / 2;
     snake[0][1] = snake[0][0];
     snake[1][1] = snake[1][0] + 1;
-    snakeLenght = 2;
+    snakeLenght = 1;
 
     drawSnake(true);
 
