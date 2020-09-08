@@ -4,11 +4,43 @@
 #include <random>
 #include <chrono>
 
+#if defined(_WIN32)
+#include <windows.h>
+#elif (__linux__)
+#include <unistd.h>
+#endif
+
 unsigned short int screen[2]{30, 30};
 unsigned short int snake[2][100]{0};
 unsigned short int snakeLength = 1;
 unsigned short int apple[2]{0};
 unsigned short int score = 0;
+unsigned short int lastDir;
+bool consoleSupportsColors;
+/*
+ * // TODO rework field like this
+ * field:
+ *
+ * ############# SNEK
+ * #           # by MCWertGaming
+ * #           #
+ * #           # Time: XX:XX // TODO implement time clock
+ * #           # Score: XX
+ * #           #
+ * #           #
+ * #############
+ *
+ */
+
+void sleepFor(long double milliSeconds)
+{
+    // two versions are needed due to different sleep() functions on windows and linux
+#if defined(_WIN32)
+    Sleep(milliSeconds);
+#elif (__linux__)
+    usleep(milliSeconds * 1000);
+#endif
+}
 
 bool illegalPosition(const unsigned short int locationX, const unsigned short int locationY, bool legalHead)
 {
@@ -94,17 +126,41 @@ void updateSnake(const unsigned short int newX, const unsigned short int newY)
 }
 int moveSnake()
 {
+    // TODO wait for Keyboard input until the time makes the snake move
     unsigned short int ch = getch();
     if (ch == KEY_UP || ch == 'w')
+    {
         updateSnake(snake[0][0], snake[1][0] -1);
+        lastDir = 1;
+    }
     else if (ch == KEY_DOWN || ch == 's')
+    {
         updateSnake(snake[0][0], snake[1][0] +1);
+        lastDir = 2;
+    }
     else if (ch == KEY_LEFT || ch == 'a')
+    {
         updateSnake(snake[0][0] -1, snake[1][0]);
+        lastDir = 3;
+    }
     else if (ch == KEY_RIGHT || ch == 'd')
+    {
         updateSnake(snake[0][0] +1, snake[1][0]);
+        lastDir = 4;
+    }
     else if (ch == 'q' || ch == 27) // 27 = ESC key
         return 1;
+    else
+    {
+        if (lastDir == 1)
+            updateSnake(snake[0][0], snake[1][0] -1);
+        else if (lastDir == 2)
+            updateSnake(snake[0][0], snake[1][0] +1);
+        else if (lastDir == 3)
+            updateSnake(snake[0][0] -1, snake[1][0]);
+        else if (lastDir == 4)
+            updateSnake(snake[0][0] +1, snake[1][0]);
+    }
 
     // TODO make preMoveChecks before updateSnake() to avoid 2 size glitch and save time
     if (illegalPosition(snake[0][0], snake[1][0], true))
@@ -186,6 +242,7 @@ int main()
         if (quit != 0)
             break;
         drawSnake(false);
+        sleepFor(1000);
     }
     // destroys ncurses
     endwin();
