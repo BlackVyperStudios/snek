@@ -31,6 +31,11 @@ bool consoleSupportsColors;
  * #############
  *
  */
+unsigned int getTimestamp()
+{
+    return std::chrono::time_point_cast<std::chrono::microseconds>(
+            std::chrono::high_resolution_clock::now()).time_since_epoch().count();
+}
 
 void sleepFor(long double milliSeconds)
 {
@@ -124,36 +129,88 @@ void updateSnake(const unsigned short int newX, const unsigned short int newY)
         preLoc[0][1] = preLoc[1][1];
     }
 }
+class timer
+{
+private:
+    unsigned int startTime;
+    unsigned int timeToWait;
+public:
+    // constructor starts timer
+    explicit timer(unsigned int);
+    virtual ~timer() = default;
+    // true means snake moves
+    [[nodiscard]] bool done();
+};
+timer::timer(unsigned int millisecondsToWait)
+{
+    startTime = getTimestamp();
+    timeToWait = millisecondsToWait;
+}
+bool timer::done()
+{
+    unsigned int timeTaken = getTimestamp() - startTime;
+    return timeTaken / 1000 > timeToWait;
+}
 int moveSnake()
 {
-    // TODO wait for Keyboard input until the time makes the snake move
+    // TODO improve this section
+    // TODO ignore key holding
+    // TODO ignore keypress during wait
+    timer timer(100);
     unsigned short int ch = getch();
-    if (ch == KEY_UP || ch == 'w')
-    {
-        updateSnake(snake[0][0], snake[1][0] -1);
-        lastDir = 1;
-    }
-    else if (ch == KEY_DOWN || ch == 's')
-    {
-        updateSnake(snake[0][0], snake[1][0] +1);
-        lastDir = 2;
-    }
-    else if (ch == KEY_LEFT || ch == 'a')
-    {
-        updateSnake(snake[0][0] -1, snake[1][0]);
-        lastDir = 3;
-    }
-    else if (ch == KEY_RIGHT || ch == 'd')
-    {
-        updateSnake(snake[0][0] +1, snake[1][0]);
-        lastDir = 4;
-    }
-    else if (ch == 'q' || ch == 27) // 27 = ESC key
-        return 1;
-    else
-    {
-        if (lastDir == 1)
+    bool snakeAlreadyMoved = false;
+        if (ch == KEY_UP || ch == 'w')
+        {
+            while (!timer.done())
+            {
+                sleepFor(1);
+            }
             updateSnake(snake[0][0], snake[1][0] -1);
+            lastDir = 1;
+            snakeAlreadyMoved = true;
+        }
+        else if (ch == KEY_DOWN || ch == 's')
+        {
+            while (!timer.done())
+            {
+                sleepFor(1);
+            }
+            updateSnake(snake[0][0], snake[1][0] +1);
+            lastDir = 2;
+            snakeAlreadyMoved = true;
+        }
+        else if (ch == KEY_LEFT || ch == 'a')
+        {
+            while (!timer.done())
+            {
+                sleepFor(1);
+            }
+            updateSnake(snake[0][0] -1, snake[1][0]);
+            lastDir = 3;
+            snakeAlreadyMoved = true;
+        }
+        else if (ch == KEY_RIGHT || ch == 'd')
+        {
+            while (!timer.done())
+            {
+                sleepFor(1);
+            }
+            updateSnake(snake[0][0] +1, snake[1][0]);
+            lastDir = 4;
+            snakeAlreadyMoved = true;
+        }
+        else if (ch == 'q' || ch == 27) // 27 = ESC key
+            return 1;
+    if (!snakeAlreadyMoved)
+    {
+        while (!timer.done())
+        {
+            sleepFor(1);
+        }
+        if (lastDir == 1)
+        {
+            updateSnake(snake[0][0], snake[1][0] -1);
+        }
         else if (lastDir == 2)
             updateSnake(snake[0][0], snake[1][0] +1);
         else if (lastDir == 3)
@@ -161,7 +218,6 @@ int moveSnake()
         else if (lastDir == 4)
             updateSnake(snake[0][0] +1, snake[1][0]);
     }
-
     // TODO make preMoveChecks before updateSnake() to avoid 2 size glitch and save time
     if (illegalPosition(snake[0][0], snake[1][0], true))
         return 2;
@@ -194,6 +250,11 @@ void drawField()
         }
     }
     attroff(COLOR_PAIR(1));
+
+    // TODO draw watermark
+    // attron(COLOR_PAIR(4));
+    // mvaddch(2, screen[0])
+    // attroff(COLOR_PAIR(4));
 }
 void gameSetup()
 {
@@ -242,7 +303,7 @@ int main()
         if (quit != 0)
             break;
         drawSnake(false);
-        sleepFor(1000);
+        // sleepFor(1000);
     }
     // destroys ncurses
     endwin();
