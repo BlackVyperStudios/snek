@@ -29,7 +29,7 @@ bool illegalPosition(const unsigned short int locationX, const unsigned short in
 }
 unsigned short int randomNum(const unsigned short int *maxNum)
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::mt19937_64 generator(seed);
     return generator() % *maxNum; // lowers the number to the specified range
 }
