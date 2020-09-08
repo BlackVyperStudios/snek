@@ -10,6 +10,8 @@
 #include <unistd.h>
 #endif
 
+// TODO make vars a struct
+// optimize data types
 unsigned short int screen[2]{30, 30};
 unsigned short int snake[2][100]{0};
 unsigned short int snakeLength = 1;
@@ -31,6 +33,11 @@ bool consoleSupportsColors;
  * #############
  *
  */
+
+// TODO move universal functions into a namespace
+// TODO move logic into class // namespace
+// change qualified functions to inline functions
+
 unsigned int getTimestamp()
 {
     return std::chrono::time_point_cast<std::chrono::microseconds>(
@@ -72,6 +79,7 @@ unsigned short int randomNum(const unsigned short int *maxNum)
 }
 void drawApple()
 {
+    // make blinking for the first 1/2/3 seconds after placing it
     attron(COLOR_PAIR(3));
     mvaddch(apple[1],apple[0], 'O');
     attroff(COLOR_PAIR(3));
@@ -154,6 +162,8 @@ bool timer::done()
 int moveSnake()
 {
     // TODO improve this section
+    // TODO skip everything, if the player has not moved yet
+    // TODO add more time on up and down movement
     // TODO ignore key holding
     // TODO ignore keypress during wait
     timer timer(100);
@@ -234,12 +244,14 @@ void drawSnake(bool firstDraw)
         mvaddch(snake[1][i],snake[0][i], 'o');
     }
     // exclude remove of edge 0/0 on first draw
+    // dont remove snakeHead on tail remove
     if (!firstDraw)
         mvaddch(snake[1][snakeLength], snake[0][snakeLength], ' ');
     attroff(COLOR_PAIR(2));
 }
 void drawField()
 {
+    // TODO animate first draw of the field
     attron(COLOR_PAIR(1));
     for (unsigned short int i = 0; i < screen[1]; i++)
     {
@@ -263,11 +275,12 @@ void gameSetup()
     cbreak();
     noecho();
     raw();
+    timeout(0);
     curs_set(0);
     keypad(stdscr,true);
     // TODO just disable colors if they are not supported
-    if (has_colors() == FALSE) {
-        endwin();
+    consoleSupportsColors = has_colors();
+    if (!consoleSupportsColors) {
         printf("Your terminal does not support color\n");
         exit(1);
     }

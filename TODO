@@ -1,25 +1,12 @@
 // snek TODO
 
-move functions into class
-make arguments pointers
-optimize data types
-move universal functions to namespace out of the class
-add auto snake movement
-+ make snake dont move until the user presses a key
-+ make movement more smooth by waiting more time on up and down movement
-snake spawns always on the middle
-add scoreboard
 add optional game modifications
-change qualified functions to inline functions
 add more ways to control the game
 add pause
 add easter egg
-add color
-+ visual effects
-  + slowly building of the field
-  + apple bliniking the first X seconds
-snakeHead gets erased by tail remove
 add sound effects
+make the field explode on loose
+add lose screen
 
 create game menu
 
