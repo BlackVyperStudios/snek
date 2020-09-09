@@ -12,4 +12,4 @@ if (WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static")
 endif (WIN32)
 
-add_executable(snek src/main.cpp)
+add_executable(snek src/main.cpp src/utils.cpp)
