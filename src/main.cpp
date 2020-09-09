@@ -1,11 +1,12 @@
 // snake
+// TODO move from ncurses to low-level system libraries (windows.h and unistd.h)
 #include <ncurses/ncurses.h>
 #include <iostream>
 #include <random>
 #include <chrono>
 
 // TODO make vars a struct
-// optimize data types
+// TODO optimize data types
 unsigned short int screen[2]{30, 30};
 unsigned short int snake[2][100]{0};
 unsigned short int snakeLength = 1;
