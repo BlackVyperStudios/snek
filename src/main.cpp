@@ -4,12 +4,6 @@
 #include <random>
 #include <chrono>
 
-#if defined(_WIN32)
-#include <windows.h>
-#elif (__linux__)
-#include <unistd.h>
-#endif
-
 // TODO make vars a struct
 // optimize data types
 unsigned short int screen[2]{30, 30};
@@ -36,24 +30,13 @@ bool consoleSupportsColors;
 
 // TODO move universal functions into a namespace
 // TODO move logic into class // namespace
-// change qualified functions to inline functions
+// TODO change qualified functions to inline functions
 
 unsigned int getTimestamp()
 {
     return std::chrono::time_point_cast<std::chrono::microseconds>(
             std::chrono::high_resolution_clock::now()).time_since_epoch().count();
 }
-
-void sleepFor(long double milliSeconds)
-{
-    // two versions are needed due to different sleep() functions on windows and linux
-#if defined(_WIN32)
-    Sleep(milliSeconds);
-#elif (__linux__)
-    usleep(milliSeconds * 1000);
-#endif
-}
-
 bool illegalPosition(const unsigned short int locationX, const unsigned short int locationY, bool legalHead)
 {
     if (locationX != 0 && locationY != 0 && locationX != screen[0] -1 && locationY != screen[1] -1)
@@ -147,14 +130,14 @@ public:
     explicit timer(unsigned int);
     virtual ~timer() = default;
     // true means snake moves
-    [[nodiscard]] bool done();
+    [[nodiscard]] bool done() const;
 };
 timer::timer(unsigned int millisecondsToWait)
 {
     startTime = getTimestamp();
     timeToWait = millisecondsToWait;
 }
-bool timer::done()
+bool timer::done() const
 {
     unsigned int timeTaken = getTimestamp() - startTime;
     return timeTaken / 1000 > timeToWait;
@@ -164,63 +147,47 @@ int moveSnake()
     // TODO improve this section
     // TODO skip everything, if the player has not moved yet
     // TODO add more time on up and down movement
-    // TODO ignore key holding
-    // TODO ignore keypress during wait
-    timer timer(100);
-    unsigned short int ch = getch();
+    short int ch;
+    unsigned short int movementKey;
+    timer timer(500);
+    while (!timer.done())
+    {
+        ch = getch();
+        if (ch != ERR)
+            movementKey = ch;
+    }
+
     bool snakeAlreadyMoved = false;
-        if (ch == KEY_UP || ch == 'w')
+        if (movementKey == KEY_UP || movementKey == 'w')
         {
-            while (!timer.done())
-            {
-                sleepFor(1);
-            }
             updateSnake(snake[0][0], snake[1][0] -1);
             lastDir = 1;
             snakeAlreadyMoved = true;
         }
-        else if (ch == KEY_DOWN || ch == 's')
+        else if (movementKey == KEY_DOWN || movementKey == 's')
         {
-            while (!timer.done())
-            {
-                sleepFor(1);
-            }
             updateSnake(snake[0][0], snake[1][0] +1);
             lastDir = 2;
             snakeAlreadyMoved = true;
         }
-        else if (ch == KEY_LEFT || ch == 'a')
+        else if (movementKey == KEY_LEFT || movementKey == 'a')
         {
-            while (!timer.done())
-            {
-                sleepFor(1);
-            }
             updateSnake(snake[0][0] -1, snake[1][0]);
             lastDir = 3;
             snakeAlreadyMoved = true;
         }
-        else if (ch == KEY_RIGHT || ch == 'd')
+        else if (movementKey == KEY_RIGHT || movementKey == 'd')
         {
-            while (!timer.done())
-            {
-                sleepFor(1);
-            }
             updateSnake(snake[0][0] +1, snake[1][0]);
             lastDir = 4;
             snakeAlreadyMoved = true;
         }
-        else if (ch == 'q' || ch == 27) // 27 = ESC key
+        else if (movementKey == 'q' || movementKey == 27) // 27 = ESC key
             return 1;
     if (!snakeAlreadyMoved)
     {
-        while (!timer.done())
-        {
-            sleepFor(1);
-        }
         if (lastDir == 1)
-        {
             updateSnake(snake[0][0], snake[1][0] -1);
-        }
         else if (lastDir == 2)
             updateSnake(snake[0][0], snake[1][0] +1);
         else if (lastDir == 3)
@@ -275,7 +242,8 @@ void gameSetup()
     cbreak();
     noecho();
     raw();
-    timeout(0);
+    nodelay(stdscr, true);
+    scrollok(stdscr, true);
     curs_set(0);
     keypad(stdscr,true);
     // TODO just disable colors if they are not supported
@@ -316,7 +284,6 @@ int main()
         if (quit != 0)
             break;
         drawSnake(false);
-        // sleepFor(1000);
     }
     // destroys ncurses
     endwin();
