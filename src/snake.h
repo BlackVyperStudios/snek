@@ -81,6 +81,7 @@ namespace snake
     }
     void createApple()
     {
+        // TODO apple disappears sometimes
         unsigned short int randomLocation[2];
         bool notRandom = true;
         while (notRandom)
