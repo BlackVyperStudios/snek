@@ -27,4 +27,9 @@ cmake-build-debug-visual-studio/
 cmake-build-debug-cygwin/
 cmake-build-minsizerel/
 cmake-build-relwithdebinfo/
+cmake-build-debug-mingw/
 .idea/
+# binaries
+*.a
+*.out
+*.exe
