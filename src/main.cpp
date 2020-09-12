@@ -4,6 +4,7 @@
 #include <ncurses/ncurses.h>
 #include <iostream>
 
+//#include "snake-old.h"
 #include "snake.h"
 
 /*
@@ -28,17 +29,20 @@
 
 int main()
 {
-    snake::gameSetup();
+    snake::snake obj(true);
 
     unsigned short int quit;
 
     // game loop
     while (true)
     {
-        quit = snake::moveSnake();
+        // quit = snake::moveSnake();
+        quit = obj.moveSnake();
+
         if (quit != 0)
             break;
-        snake::drawSnake(false);
+        // snake::drawSnake(false);
+        obj.drawSnake(false);
     }
     // destroys ncurses
     endwin();
