@@ -10,6 +10,7 @@ add lose screen
 windows terminal bugs on resizing
 
 proper readme with compilation, dependencies and requirements
++ mention, that only MinGW works
 
 create game menu
 
