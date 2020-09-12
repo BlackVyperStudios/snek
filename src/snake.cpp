@@ -169,6 +169,7 @@ void snake::snake::getInput()
     {
         ch = getch();
         if (ch != ERR)
+        {
             switch (ch)
             {
                 case KEY_UP:
@@ -194,6 +195,10 @@ void snake::snake::getInput()
                 default:
                     input = noInput;
             }
+            // skip timer, if it's the first move
+            if (lastDir == notMovedYet)
+                break;
+        }
     }
 
 }
