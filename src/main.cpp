@@ -32,20 +32,13 @@ int main()
     snake::snake obj(true);
 
     unsigned short int quit;
-
     // game loop
     while (true)
     {
-        // quit = snake::moveSnake();
-        quit = obj.moveSnake();
-
+        quit = obj.update();
         if (quit != 0)
             break;
-        // snake::drawSnake(false);
-        obj.drawSnake(false);
     }
-    // destroys ncurses
-    endwin();
     if (quit == 1)
         std::cout << "Game aborted...\n";
     else if (quit == 2)

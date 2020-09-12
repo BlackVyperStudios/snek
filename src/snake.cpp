@@ -12,12 +12,15 @@ snake::snake::snake(bool initNcurses)
     drawField();
     drawSnake(true);
     createApple();
+    drawApple();
+    drawScore();
 }
 void snake::snake::initColorMode()
 {
     // TODO just disable colors if they are not supported
     consoleSupportsColors = has_colors();
-    if (!consoleSupportsColors) {
+    if (!consoleSupportsColors)
+    {
         printf("Your terminal does not support color\n");
         exit(1);
     }
@@ -98,22 +101,19 @@ void snake::snake::createApple()
         // create random location
         randomLocation[0] = utils::randomNum(&screen[0]);
         randomLocation[1] = utils::randomNum(&screen[1]);
-        if (!illegalPosition(randomLocation[0], randomLocation[1], false))
+        if (!illegalPosition(randomLocation[0], randomLocation[1]))
             notRandom = false;
     }
     apple[0] = randomLocation[0];
     apple[1] = randomLocation[1];
-    drawApple();
-    drawScore();
 }
 
 /* ==== checks ==== */
-bool snake::snake::illegalPosition(const unsigned short int locationX, const unsigned short int locationY, bool legalHead)
+bool snake::snake::illegalPosition(const unsigned short int locationX, const unsigned short int locationY)
 {
     if (locationX != 0 && locationY != 0 && locationX != screen[0] -1 && locationY != screen[1] -1)
     {
         unsigned short int i = 0;
-        if (legalHead) { i++;}
         for (; i < snakeLength; i++)
         {
             if (snakePos[0][i] == locationX && snakePos[1][i] == locationY)
@@ -125,50 +125,138 @@ bool snake::snake::illegalPosition(const unsigned short int locationX, const uns
     }
     return true;
 }
+bool snake::snake::appleEaten()
+{
+    if (snakePos[0][0] == apple[0] && snakePos[1][0] == apple[1])
+        return true;
+    else
+        return false;
+}
 
 /* === game-update === */
 unsigned short int snake::snake::update()
 {
-    /*
-     * 1. get input while waiting
-     * 2. check, if position is illegal
-     * 3. update snakePos
-     * 4. redraw snake
-     * 5. update apple
-     * 6.
-     */
-
-
+    // TODO skip getInput timer, if snake hasn't moved yet
+    // TODO add more time on up and down movement
+    getInput();
+    // check, if the player newer moved to skip the other tasks
+    if (lastDir == notMovedYet && input == noInput)
+        return 0;
+    // check, if the user wants to exit the game
+    else if (input == userQuit)
+        return 1;
+    calcNewSnakePos();
+    // check, if the new snake destination is illegal (if that's true, the player looses)
+    if (illegalPosition(newSnakePos[0],newSnakePos[1]))
+        return 2;
+    updateSnakePos();
+    drawSnake(false);
+    if (appleEaten())
+    {
+        score += 10;
+        snakeLength++;
+        createApple();
+        drawApple();
+        drawScore();
+    }
     return 0;
 }
 
-
-
-
-
-
-/*
- * really shitty
- * please remove
- */
-
-void snake::snake::updateSnakePos(const unsigned short int newX, const unsigned short int newY)
+/* game mechanics */
+void snake::snake::getInput()
 {
-    // check if apple gets eaten
-    if (newX == apple[0] && newY == apple[1])
+    short int ch;
+    unsigned short int input2;
+    utils::timer timer(500);
+
+    while (!timer.done())
     {
-        snakeLength++;
-        score = score + 10;
-        createApple();
+        ch = getch();
+        if (ch != ERR)
+            input2 = ch;
     }
+    switch (input2) {
+        case KEY_UP:
+        case 'w':
+            input = moveUp;
+            break;
+        case KEY_DOWN:
+        case 's':
+            input = moveDown;
+            break;
+        case KEY_LEFT:
+        case 'a':
+            input = moveLeft;
+            break;
+        case KEY_RIGHT:
+        case 'd':
+            input = moveRight;
+            break;
+        case 27: // ESC key
+        case 'q':
+            input = userQuit;
+            break;
+        default:
+            input = noInput;
+    }
+}
+void snake::snake::calcNewSnakePos()
+{
+    switch (input)
+    {
+        case noInput:
+            break;
+        case moveUp:
+            newSnakePos[0] = snakePos[0][0];
+            newSnakePos[1] = snakePos[1][0] - 1;
+            lastDir = lastDirUp;
+            return;
+        case moveDown:
+            newSnakePos[0] = snakePos[0][0];
+            newSnakePos[1] = snakePos[1][0] + 1;
+            lastDir = lastDirDown;
+            return;
+        case moveLeft:
+            newSnakePos[0] = snakePos[0][0] - 1;
+            newSnakePos[1] = snakePos[1][0];
+            lastDir = lastDirLeft;
+            return;
+        case moveRight:
+            newSnakePos[0] = snakePos[0][0] + 1;
+            newSnakePos[1] = snakePos[1][0];
+            lastDir = lastDirRight;
+            return;
+    }
+    switch (lastDir)
+    {
+        case lastDirUp:
+            newSnakePos[0] = snakePos[0][0];
+            newSnakePos[1] = snakePos[1][0] - 1;
+            return;
+        case lastDirDown:
+            newSnakePos[0] = snakePos[0][0];
+            newSnakePos[1] = snakePos[1][0] + 1;
+            return;
+        case lastDirLeft:
+            newSnakePos[0] = snakePos[0][0] - 1;
+            newSnakePos[1] = snakePos[1][0];
+            return;
+        case lastDirRight:
+            newSnakePos[0] = snakePos[0][0] + 1;
+            newSnakePos[1] = snakePos[1][0];
+            return;
+    }
+}
+void snake::snake::updateSnakePos()
+{
     // first array is prev1 or prev2, seconds is x/y
     unsigned short int preLoc[2][2];
 
     preLoc[0][0] = snakePos[0][0];
     preLoc[0][1] = snakePos[1][0];
 
-    snakePos[0][0] = newX;
-    snakePos[1][0] = newY;
+    snakePos[0][0] = newSnakePos[0];
+    snakePos[1][0] = newSnakePos[1];
 
     for (unsigned short int i = 1; i < snakeLength +1; i++)
     {
@@ -181,63 +269,9 @@ void snake::snake::updateSnakePos(const unsigned short int newX, const unsigned 
         preLoc[0][0] = preLoc[1][0];
         preLoc[0][1] = preLoc[1][1];
     }
-
 }
-unsigned short int snake::snake::moveSnake()
+snake::snake::~snake()
 {
-    // TODO improve this section
-    // TODO skip everything, if the player has not moved yet
-    // TODO add more time on up and down movement
-    short int ch;
-    unsigned short int movementKey;
-    utils::timer timer(500);
-    while (!timer.done())
-    {
-        ch = getch();
-        if (ch != ERR)
-            movementKey = ch;
-    }
-
-    bool snakePosAlreadyMoved = false;
-    if (movementKey == KEY_UP || movementKey == 'w')
-    {
-        updateSnakePos(snakePos[0][0], snakePos[1][0] -1);
-        lastDir = 1;
-        snakePosAlreadyMoved = true;
-    }
-    else if (movementKey == KEY_DOWN || movementKey == 's')
-    {
-        updateSnakePos(snakePos[0][0], snakePos[1][0] +1);
-        lastDir = 2;
-        snakePosAlreadyMoved = true;
-    }
-    else if (movementKey == KEY_LEFT || movementKey == 'a')
-    {
-        updateSnakePos(snakePos[0][0] -1, snakePos[1][0]);
-        lastDir = 3;
-        snakePosAlreadyMoved = true;
-    }
-    else if (movementKey == KEY_RIGHT || movementKey == 'd')
-    {
-        updateSnakePos(snakePos[0][0] +1, snakePos[1][0]);
-        lastDir = 4;
-        snakePosAlreadyMoved = true;
-    }
-    else if (movementKey == 'q' || movementKey == 27) // 27 = ESC key
-        return 1;
-    if (!snakePosAlreadyMoved)
-    {
-        if (lastDir == 1)
-            updateSnakePos(snakePos[0][0], snakePos[1][0] -1);
-        else if (lastDir == 2)
-            updateSnakePos(snakePos[0][0], snakePos[1][0] +1);
-        else if (lastDir == 3)
-            updateSnakePos(snakePos[0][0] -1, snakePos[1][0]);
-        else if (lastDir == 4)
-            updateSnakePos(snakePos[0][0] +1, snakePos[1][0]);
-    }
-    // TODO make preMoveChecks before updateSnakePos() to avoid 2 size glitch and save time
-    if (illegalPosition(snakePos[0][0], snakePos[1][0], true))
-        return 2;
-    return 0;
+    // destroys ncurses
+    endwin();
 }
