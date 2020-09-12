@@ -150,6 +150,7 @@ unsigned short int snake::snake::update()
     drawSnake();
     if (appleEaten())
     {
+        // TODO animate score and tail changes
         score += 10;
         snakeLength++;
         createApple();
