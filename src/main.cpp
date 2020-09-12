@@ -22,8 +22,6 @@
  *
  */
 
-// TODO move universal functions into a namespace
-// TODO move logic into class // namespace
 // TODO change qualified functions to inline functions
 
 
