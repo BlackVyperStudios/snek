@@ -29,13 +29,13 @@
 
 int main()
 {
-    snake::snake obj(true);
+    snake::snake snek(true);
 
     unsigned short int quit;
     // game loop
     while (true)
     {
-        quit = obj.update();
+        quit = snek.update();
         if (quit != 0)
             break;
     }
