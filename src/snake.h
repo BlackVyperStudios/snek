@@ -23,7 +23,7 @@ namespace snake
     class snake
     {
     private:
-        unsigned short int screen[2]{30, 30};
+        const unsigned short int screen[2]{30, 30};
         unsigned short int snakePos[2][100]{0};
         unsigned short int newSnakePos[2]{0};
         unsigned short int snakeLength = 1;
@@ -40,7 +40,7 @@ namespace snake
         /* drawing */
         void drawScore();
         void drawField();
-        void drawSnake(bool);
+        void drawSnake();
         void drawApple();
         /* game-object creation */
         void createApple();

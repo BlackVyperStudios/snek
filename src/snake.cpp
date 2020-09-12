@@ -10,7 +10,7 @@ snake::snake::snake(bool initNcurses)
     initColorMode();
     setDefaultPos();
     drawField();
-    drawSnake(true);
+    drawSnake();
     createApple();
     drawApple();
     drawScore();
@@ -37,7 +37,6 @@ void snake::snake::setDefaultPos()
     snakePos[1][0] = screen[1] / 2;
     snakePos[0][1] = snakePos[0][0];
     snakePos[1][1] = snakePos[1][0] + 1;
-    snakeLength = 1;
 }
 
 /* ==== drawing ==== */
@@ -48,7 +47,7 @@ void snake::snake::drawApple()
     mvaddch(apple[1],apple[0], 'O');
     attroff(COLOR_PAIR(3));
 }
-void snake::snake::drawSnake(bool firstDraw)
+void snake::snake::drawSnake()
 {
     attron(COLOR_PAIR(2));
 
@@ -58,10 +57,8 @@ void snake::snake::drawSnake(bool firstDraw)
     {
         mvaddch(snakePos[1][i],snakePos[0][i], 'o');
     }
-    // exclude remove of edge 0/0 on first draw
-    // dont remove snakePosHead on tail remove
-    if (!firstDraw)
-        mvaddch(snakePos[1][snakeLength], snakePos[0][snakeLength], ' ');
+    // erase tail
+    mvaddch(snakePos[1][snakeLength], snakePos[0][snakeLength], ' ');
     attroff(COLOR_PAIR(2));
 }
 void snake::snake::drawField()
@@ -150,7 +147,7 @@ unsigned short int snake::snake::update()
     if (illegalPosition(newSnakePos[0],newSnakePos[1]))
         return 2;
     updateSnakePos();
-    drawSnake(false);
+    drawSnake();
     if (appleEaten())
     {
         score += 10;
