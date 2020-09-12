@@ -164,39 +164,38 @@ unsigned short int snake::snake::update()
 void snake::snake::getInput()
 {
     short int ch;
-    unsigned short int input2;
     utils::timer timer(500);
-
     while (!timer.done())
     {
         ch = getch();
         if (ch != ERR)
-            input2 = ch;
+            switch (ch)
+            {
+                case KEY_UP:
+                case 'w':
+                    input = moveUp;
+                    break;
+                case KEY_DOWN:
+                case 's':
+                    input = moveDown;
+                    break;
+                case KEY_LEFT:
+                case 'a':
+                    input = moveLeft;
+                    break;
+                case KEY_RIGHT:
+                case 'd':
+                    input = moveRight;
+                    break;
+                case 27: // ESC key
+                case 'q':
+                    input = userQuit;
+                    break;
+                default:
+                    input = noInput;
+            }
     }
-    switch (input2) {
-        case KEY_UP:
-        case 'w':
-            input = moveUp;
-            break;
-        case KEY_DOWN:
-        case 's':
-            input = moveDown;
-            break;
-        case KEY_LEFT:
-        case 'a':
-            input = moveLeft;
-            break;
-        case KEY_RIGHT:
-        case 'd':
-            input = moveRight;
-            break;
-        case 27: // ESC key
-        case 'q':
-            input = userQuit;
-            break;
-        default:
-            input = noInput;
-    }
+
 }
 void snake::snake::calcNewSnakePos()
 {
