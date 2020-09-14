@@ -1,6 +1,5 @@
 # vscode config files
 .vscode/
-.devcontainer/
 # vs community config and project files
 .vs/
 CMakeSettings.json
