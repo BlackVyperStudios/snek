@@ -1,7 +1,12 @@
 #include "utils.h"
 #include <random>
 #include <chrono>
-#include <ncurses/ncurses.h>
+
+#if defined(_WIN32)
+    #include <ncurses/ncurses>
+#elif (__linux__)
+    #include <ncurses.h>
+#endif
 
 unsigned int utils::getTimestamp()
 {

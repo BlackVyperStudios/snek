@@ -1,7 +1,6 @@
 // snake
 // TODO add proper header for source files and header with copyright notice
 // TODO move from ncurses to low-level system libraries (windows.h and unistd.h)
-#include <ncurses/ncurses.h>
 #include <iostream>
 
 //#include "snake-old.h"
