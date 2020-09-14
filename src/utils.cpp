@@ -1,6 +1,7 @@
 #include "utils.h"
 #include <random>
 #include <chrono>
+#include <ncurses/ncurses.h>
 
 unsigned int utils::getTimestamp()
 {
@@ -22,4 +23,15 @@ bool utils::timer::done() const
 {
     unsigned int timeTaken = getTimestamp() - startTime;
     return timeTaken / 1000 > timeToWait;
+}
+void utils::initNcurses()
+{
+    initscr();
+    cbreak();
+    noecho();
+    raw();
+    nodelay(stdscr, true);
+    scrollok(stdscr, true);
+    curs_set(0);
+    keypad(stdscr,true);
 }

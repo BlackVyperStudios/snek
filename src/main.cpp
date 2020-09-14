@@ -4,6 +4,7 @@
 #include <ncurses/ncurses.h>
 #include <iostream>
 
+//#include "snake-old.h"
 #include "snake.h"
 
 /*
@@ -21,27 +22,21 @@
  *
  */
 
-// TODO move universal functions into a namespace
-// TODO move logic into class // namespace
 // TODO change qualified functions to inline functions
 
 
 int main()
 {
-    snake::gameSetup();
+    snake::snake snek(true);
 
     unsigned short int quit;
-
     // game loop
     while (true)
     {
-        quit = snake::moveSnake();
+        quit = snek.update();
         if (quit != 0)
             break;
-        snake::drawSnake(false);
     }
-    // destroys ncurses
-    endwin();
     if (quit == 1)
         std::cout << "Game aborted...\n";
     else if (quit == 2)
