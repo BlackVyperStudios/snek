@@ -1,3 +1,10 @@
+#include <chrono>
+#include <random>
+#if defined(_WIN32)
+#include <ncurses/ncurses>
+#elif (__linux__)
+#include <ncurses.h>
+#endif
 #include "snake.h"
 
 /* ==== pre-game ==== */
@@ -14,7 +21,6 @@ snake::snake::snake()
 }
 void snake::snake::initColorMode()
 {
-    // TODO move into game loop class
     consoleSupportsColors = has_colors();
     if (consoleSupportsColors)
     {

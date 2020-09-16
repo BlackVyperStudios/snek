@@ -1,14 +1,5 @@
 #pragma once
 
-#if defined(_WIN32)
-    #include <ncurses/ncurses>
-#elif (__linux__)
-    #include <ncurses.h>
-#endif
-
-#include <iostream>
-
-// TODO change values to definitions
 // input parsing values
 #define moveUp 1
 #define moveDown 2
@@ -75,7 +66,7 @@ namespace snake
         // returns a std::chrono timestamp
         unsigned int getTimestamp();
 
-        // retuns a random number in between 0 and the given number
+        // returns a random number in between 0 and the given number
         unsigned short int randomNum(const unsigned short int*);
 
         void initNcurses();
