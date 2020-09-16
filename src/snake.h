@@ -40,16 +40,18 @@ namespace snake
         short int input{};
 
         /* pre-game */
-        // static void initNcurses();
         void initColorMode();
         void setDefaultPos();
+
         /* drawing */
         void drawScore();
         void drawField();
         void drawSnake();
         void drawApple();
+
         /* game-object creation */
         void createApple();
+
         /* checks */
         bool illegalPosition(unsigned short int, unsigned short int);
         bool appleEaten();

@@ -99,7 +99,7 @@ void snake::snake::drawScore()
 /* ==== game-object creation ==== */
 void snake::snake::createApple()
 {
-    // TODO apple disappears sometimes
+    // TODO apple disappears sometimes (probably a problem with one field not detected by illegalPosition())
     unsigned short int randomLocation[2];
     bool notRandom = true;
     while (notRandom)
@@ -119,8 +119,7 @@ bool snake::snake::illegalPosition(const unsigned short int locationX, const uns
 {
     if (locationX != 0 && locationY != 0 && locationX != screen[0] -1 && locationY != screen[1] -1)
     {
-        unsigned short int i = 0;
-        for (; i < snakeLength; i++)
+        for (unsigned short int i = 0; i < snakeLength; i++)
         {
             if (snakePos[0][i] == locationX && snakePos[1][i] == locationY)
             {
@@ -156,7 +155,6 @@ unsigned short int snake::snake::update()
         return 2;
     updateSnakePos();
     drawSnake();
-    // move to updateObjects
     if (appleEaten())
     {
         // TODO animate score and tail changes
@@ -172,7 +170,6 @@ unsigned short int snake::snake::update()
 /* game mechanics */
 void snake::snake::getInput()
 {
-    // TODO add more time on up and down movement
     short int ch;
     utils::timer timer(500);
     while (!timer.done())
