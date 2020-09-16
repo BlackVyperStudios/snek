@@ -7,7 +7,6 @@
 #endif
 
 #include <iostream>
-#include "utils.h"
 
 // TODO change values to definitions
 // input parsing values
@@ -71,4 +70,28 @@ namespace snake
         // destructor destroys game and ncurses
         virtual ~snake();
     };
+    namespace utils
+    {
+        // returns a std::chrono timestamp
+        unsigned int getTimestamp();
+
+        // retuns a random number in between 0 and the given number
+        unsigned short int randomNum(const unsigned short int*);
+
+        void initNcurses();
+
+        // a simple timer
+        class timer
+        {
+        private:
+            unsigned int startTime;
+            unsigned int timeToWait;
+        public:
+            // constructor starts timer
+            explicit timer(unsigned int);
+            virtual ~timer() = default;
+            // true means snake moves
+            [[nodiscard]] bool done() const;
+        };
+    }
 }

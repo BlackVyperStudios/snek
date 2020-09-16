@@ -1,12 +1,9 @@
 #include "snake.h"
-#include "utils.h"
 
 /* ==== pre-game ==== */
 snake::snake::snake()
 {
-    // TODO remove and add class for Gameloop (which can be used for menu and other stuff later)
-    if (initNcurses)
-        utils::initNcurses();
+    utils::initNcurses();
     initColorMode();
     setDefaultPos();
     drawField();
@@ -295,4 +292,37 @@ snake::snake::~snake()
 {
     // destroys ncurses
     endwin();
+}
+/* utils */
+unsigned int snake::utils::getTimestamp()
+{
+    return std::chrono::time_point_cast<std::chrono::microseconds>(
+            std::chrono::high_resolution_clock::now()).time_since_epoch().count();
+}
+unsigned short int snake::utils::randomNum(const unsigned short int *maxNum)
+{
+    unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::mt19937_64 generator(seed);
+    return generator() % *maxNum; // lowers the number to the specified range
+}
+snake::utils::timer::timer(unsigned int millisecondsToWait)
+{
+    startTime = getTimestamp();
+    timeToWait = millisecondsToWait;
+}
+bool snake::utils::timer::done() const
+{
+    unsigned int timeTaken = getTimestamp() - startTime;
+    return timeTaken / 1000 > timeToWait;
+}
+void snake::utils::initNcurses()
+{
+    initscr();
+    cbreak();
+    noecho();
+    raw();
+    nodelay(stdscr, true);
+    scrollok(stdscr, true);
+    curs_set(0);
+    keypad(stdscr,true);
 }
