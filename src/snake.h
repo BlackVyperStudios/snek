@@ -58,6 +58,9 @@ namespace snake
         void getInput();
         void updateSnakePos();
         void calcNewSnakePos();
+
+        /* fixes */
+        void normaliseMovementSpeed() const;
     public:
         // constructor initialises the complete game and ncurses
         explicit snake(bool);

@@ -17,6 +17,7 @@ snake::snake::snake(bool initNcurses)
 }
 void snake::snake::initColorMode()
 {
+    // TODO move into game loop class
     consoleSupportsColors = has_colors();
     if (consoleSupportsColors)
     {
@@ -141,8 +142,6 @@ bool snake::snake::appleEaten()
 /* === game-update === */
 unsigned short int snake::snake::update()
 {
-    // TODO skip getInput timer, if snake hasn't moved yet
-    // TODO add more time on up and down movement
     getInput();
     // check, if the player newer moved to skip the other tasks
     if (lastDir == notMovedYet && input == noInput)
@@ -150,6 +149,7 @@ unsigned short int snake::snake::update()
     // check, if the user wants to exit the game
     else if (input == userQuit)
         return 1;
+    normaliseMovementSpeed();
     calcNewSnakePos();
     // check, if the new snake destination is illegal (if that's true, the player looses)
     if (illegalPosition(newSnakePos[0],newSnakePos[1]))
@@ -172,6 +172,7 @@ unsigned short int snake::snake::update()
 /* game mechanics */
 void snake::snake::getInput()
 {
+    // TODO add more time on up and down movement
     short int ch;
     utils::timer timer(500);
     while (!timer.done())
@@ -279,6 +280,18 @@ void snake::snake::updateSnakePos()
 
         preLoc[0][0] = preLoc[1][0];
         preLoc[0][1] = preLoc[1][1];
+    }
+}
+/* fixes */
+void snake::snake::normaliseMovementSpeed() const
+{
+    if (input == moveUp || input == moveDown || input == noInput && lastDir == lastDirUp || input == noInput && lastDir == lastDirDown)
+    {
+        utils::timer timer(140);
+        while (!timer.done())
+        {
+            // wait
+        }
     }
 }
 snake::snake::~snake()
