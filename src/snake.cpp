@@ -2,7 +2,7 @@
 #include "utils.h"
 
 /* ==== pre-game ==== */
-snake::snake::snake(bool initNcurses)
+snake::snake::snake()
 {
     // TODO remove and add class for Gameloop (which can be used for menu and other stuff later)
     if (initNcurses)

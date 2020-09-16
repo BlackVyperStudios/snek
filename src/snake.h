@@ -65,7 +65,7 @@ namespace snake
         void normaliseMovementSpeed() const;
     public:
         // constructor initialises the complete game and ncurses
-        explicit snake(bool);
+        explicit snake();
         // updates the game state
         unsigned short int update();
         // destructor destroys game and ncurses
