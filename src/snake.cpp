@@ -4,7 +4,7 @@
 /* ==== pre-game ==== */
 snake::snake::snake(bool initNcurses)
 {
-    // TODO improve
+    // TODO remove and add class for Gameloop (which can be used for menu and other stuff later)
     if (initNcurses)
         utils::initNcurses();
     initColorMode();
@@ -17,18 +17,15 @@ snake::snake::snake(bool initNcurses)
 }
 void snake::snake::initColorMode()
 {
-    // TODO just disable colors if they are not supported
     consoleSupportsColors = has_colors();
-    if (!consoleSupportsColors)
+    if (consoleSupportsColors)
     {
-        printf("Your terminal does not support color\n");
-        exit(1);
+        start_color();
+        init_pair(1, COLOR_BLUE, COLOR_BLUE);
+        init_pair(2, COLOR_GREEN, COLOR_BLACK);
+        init_pair(3, COLOR_RED, COLOR_BLACK);
+        init_pair(4,COLOR_WHITE, COLOR_BLACK);
     }
-    start_color();
-    init_pair(1, COLOR_BLUE, COLOR_BLUE);
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);
-    init_pair(3, COLOR_RED, COLOR_BLACK);
-    init_pair(4,COLOR_WHITE, COLOR_BLACK);
 }
 void snake::snake::setDefaultPos()
 {
@@ -42,14 +39,20 @@ void snake::snake::setDefaultPos()
 /* ==== drawing ==== */
 void snake::snake::drawApple()
 {
-    // make blinking for the first 1/2/3 seconds after placing it
-    attron(COLOR_PAIR(3));
-    mvaddch(apple[1],apple[0], 'O');
-    attroff(COLOR_PAIR(3));
+    // TODO make blinking for the first 1/2/3 seconds after placing it
+    if (consoleSupportsColors)
+    {
+        attron(COLOR_PAIR(3));
+        mvaddch(apple[1],apple[0], 'O');
+        attroff(COLOR_PAIR(3));
+    }
+    else
+        mvaddch(apple[1],apple[0], 'A');
 }
 void snake::snake::drawSnake()
 {
-    attron(COLOR_PAIR(2));
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(2));
 
     mvaddch(snakePos[1][0],snakePos[0][0], 'O');
 
@@ -59,12 +62,14 @@ void snake::snake::drawSnake()
     }
     // erase tail
     mvaddch(snakePos[1][snakeLength], snakePos[0][snakeLength], ' ');
-    attroff(COLOR_PAIR(2));
+    if (consoleSupportsColors)
+        attroff(COLOR_PAIR(2));
 }
 void snake::snake::drawField()
 {
     // TODO animate first draw of the field
-    attron(COLOR_PAIR(1));
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(1));
     for (unsigned short int i = 0; i < screen[1]; i++)
     {
         for (unsigned short int j = 0; j < screen[0]; j++)
@@ -73,7 +78,8 @@ void snake::snake::drawField()
                 mvaddch(i,j,'#');
         }
     }
-    attroff(COLOR_PAIR(1));
+    if (consoleSupportsColors)
+        attroff(COLOR_PAIR(1));
 
     // TODO draw watermark
     // attron(COLOR_PAIR(4));
@@ -82,9 +88,11 @@ void snake::snake::drawField()
 }
 void snake::snake::drawScore()
 {
-    attron(COLOR_PAIR(4));
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(4));
     mvprintw(2,screen[0] + 2, "Score: %d", score);
-    attroff(COLOR_PAIR(4));
+    if (consoleSupportsColors)
+        attroff(COLOR_PAIR(4));
 }
 
 /* ==== game-object creation ==== */
@@ -148,6 +156,7 @@ unsigned short int snake::snake::update()
         return 2;
     updateSnakePos();
     drawSnake();
+    // move to updateObjects
     if (appleEaten())
     {
         // TODO animate score and tail changes
