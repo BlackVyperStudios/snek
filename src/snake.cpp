@@ -7,6 +7,29 @@
 #endif
 #include "snake.h"
 
+// input parsing values
+#define moveUp 1
+#define moveDown 2
+#define moveLeft 3
+#define moveRight 4
+#define noInput 0
+#define userQuit -1
+// last direction parsing values
+#define notMovedYet 0
+#define lastDirUp 1
+#define lastDirDown 2
+#define lastDirRight 3
+#define lastDirLeft 4
+// apple color
+#define redApple 0
+#define magentaApple 1
+// text color
+#define blueText 1
+#define greenText 2
+#define redText 3
+#define whiteText 4
+#define magentaText 5
+
 /* ==== pre-game ==== */
 snake::snake::snake()
 {
@@ -48,15 +71,15 @@ void snake::snake::drawApple(unsigned short int color)
 
     if (color == redApple && consoleSupportsColors)
     {
-        attron(COLOR_PAIR(3));
+        attron(COLOR_PAIR(redText));
         mvaddch(apple[redApple][1],apple[redApple][0], 'O');
-        attroff(COLOR_PAIR(3));
+        attroff(COLOR_PAIR(redText));
     }
     else if (color == magentaApple && consoleSupportsColors)
     {
-        attron(COLOR_PAIR(5));
+        attron(COLOR_PAIR(magentaText));
         mvaddch(apple[magentaApple][1],apple[magentaApple][0], 'O');
-        attroff(COLOR_PAIR(5));
+        attroff(COLOR_PAIR(magentaText));
     }
     else if (color == redApple && !consoleSupportsColors)
         mvaddch(apple[redApple][1],apple[redApple][0], 'A');
@@ -66,7 +89,7 @@ void snake::snake::drawApple(unsigned short int color)
 void snake::snake::drawSnake()
 {
     if (consoleSupportsColors)
-        attron(COLOR_PAIR(2));
+        attron(COLOR_PAIR(greenText));
 
     mvaddch(snakePos[1][0],snakePos[0][0], 'O');
 
@@ -77,13 +100,13 @@ void snake::snake::drawSnake()
     // erase tail
     mvaddch(snakePos[1][snakeLength], snakePos[0][snakeLength], ' ');
     if (consoleSupportsColors)
-        attroff(COLOR_PAIR(2));
+        attroff(COLOR_PAIR(greenText));
 }
 void snake::snake::drawField()
 {
     // TODO animate first draw of the field
     if (consoleSupportsColors)
-        attron(COLOR_PAIR(1));
+        attron(COLOR_PAIR(blueText));
     for (unsigned short int i = 0; i < screen[1]; i++)
     {
         for (unsigned short int j = 0; j < screen[0]; j++)
@@ -93,7 +116,7 @@ void snake::snake::drawField()
         }
     }
     if (consoleSupportsColors)
-        attroff(COLOR_PAIR(1));
+        attroff(COLOR_PAIR(blueText));
 
     // TODO draw watermark
     // attron(COLOR_PAIR(4));
@@ -103,10 +126,10 @@ void snake::snake::drawField()
 void snake::snake::drawScore()
 {
     if (consoleSupportsColors)
-        attron(COLOR_PAIR(4));
+        attron(COLOR_PAIR(whiteText));
     mvprintw(2,screen[0] + 2, "Score: %d", score);
     if (consoleSupportsColors)
-        attroff(COLOR_PAIR(4));
+        attroff(COLOR_PAIR(whiteText));
 }
 
 /* ==== game-object creation ==== */

@@ -1,30 +1,5 @@
 #pragma once
 
-// TODO move into source
-// TODO replace values
-// input parsing values
-#define moveUp 1
-#define moveDown 2
-#define moveLeft 3
-#define moveRight 4
-#define noInput 0
-#define userQuit -1
-// last direction parsing values
-#define notMovedYet 0
-#define lastDirUp 1
-#define lastDirDown 2
-#define lastDirRight 3
-#define lastDirLeft 4
-// apple color
-#define redApple 0
-#define magentaApple 1
-// text color
-#define blueText 1
-#define greenText 2
-#define redText 3
-#define whiteText 4
-#define magentaText 5
-
 namespace snake
 {
     class snake
