@@ -1,5 +1,7 @@
 #pragma once
 
+// TODO move into source
+// TODO replace values
 // input parsing values
 #define moveUp 1
 #define moveDown 2
@@ -13,6 +15,15 @@
 #define lastDirDown 2
 #define lastDirRight 3
 #define lastDirLeft 4
+// apple color
+#define redApple 0
+#define magentaApple 1
+// text color
+#define blueText 1
+#define greenText 2
+#define redText 3
+#define whiteText 4
+#define magentaText 5
 
 namespace snake
 {
@@ -23,7 +34,8 @@ namespace snake
         unsigned short int snakePos[2][100]{0};
         unsigned short int newSnakePos[2]{0};
         unsigned short int snakeLength = 1;
-        unsigned short int apple[2]{0};
+        unsigned short int apple[2][2]{0};
+        bool magentaAppleExist = false;
         unsigned short int score = 0;
         unsigned short int lastDir{};
         bool consoleSupportsColors{};
@@ -34,17 +46,22 @@ namespace snake
         inline void setDefaultPos();
 
         /* drawing */
-        inline void drawScore();
+        void drawScore();
         inline void drawField();
-        inline void drawSnake();
-        inline void drawApple();
+        void drawSnake();
+        void drawApple(unsigned short int);
 
         /* game-object creation */
-        inline void createApple();
+        void createApple(unsigned short int);
+
+        /* game-object updating */
+        void updateApple();
 
         /* checks */
-        bool illegalPosition(unsigned short int, unsigned short int);
-        bool appleEaten();
+        // TODO make pointers
+        bool illegalPosition(unsigned short int, unsigned short int, bool);
+        bool redAppleEaten();
+        bool magentaAppleEaten();
 
         /* game mechanics */
         void getInput();
@@ -52,9 +69,10 @@ namespace snake
         void calcNewSnakePos();
 
         /* fixes */
-        void normaliseMovementSpeed() const;
+        inline void normaliseMovementSpeed() const;
     public:
         // constructor initialises the complete game and ncurses
+        // TODO create overload for changing the screen size
         snake();
         // updates the game state
         unsigned short int update();

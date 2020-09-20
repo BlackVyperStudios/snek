@@ -15,8 +15,8 @@ snake::snake::snake()
     setDefaultPos();
     drawField();
     drawSnake();
-    createApple();
-    drawApple();
+    createApple(redApple);
+    drawApple(redApple);
     drawScore();
 }
 void snake::snake::initColorMode()
@@ -25,10 +25,11 @@ void snake::snake::initColorMode()
     if (consoleSupportsColors)
     {
         start_color();
-        init_pair(1, COLOR_BLUE, COLOR_BLUE);
-        init_pair(2, COLOR_GREEN, COLOR_BLACK);
-        init_pair(3, COLOR_RED, COLOR_BLACK);
-        init_pair(4,COLOR_WHITE, COLOR_BLACK);
+        init_pair(blueText, COLOR_BLUE, COLOR_BLUE);
+        init_pair(greenText, COLOR_GREEN, COLOR_BLACK);
+        init_pair(redText, COLOR_RED, COLOR_BLACK);
+        init_pair(whiteText, COLOR_WHITE, COLOR_BLACK);
+        init_pair(magentaText, COLOR_MAGENTA, COLOR_BLACK);
     }
 }
 void snake::snake::setDefaultPos()
@@ -41,17 +42,26 @@ void snake::snake::setDefaultPos()
 }
 
 /* ==== drawing ==== */
-void snake::snake::drawApple()
+void snake::snake::drawApple(unsigned short int color)
 {
     // TODO make blinking for the first 1/2/3 seconds after placing it
-    if (consoleSupportsColors)
+
+    if (color == redApple && consoleSupportsColors)
     {
         attron(COLOR_PAIR(3));
-        mvaddch(apple[1],apple[0], 'O');
+        mvaddch(apple[redApple][1],apple[redApple][0], 'O');
         attroff(COLOR_PAIR(3));
     }
-    else
-        mvaddch(apple[1],apple[0], 'A');
+    else if (color == magentaApple && consoleSupportsColors)
+    {
+        attron(COLOR_PAIR(5));
+        mvaddch(apple[magentaApple][1],apple[magentaApple][0], 'O');
+        attroff(COLOR_PAIR(5));
+    }
+    else if (color == redApple && !consoleSupportsColors)
+        mvaddch(apple[redApple][1],apple[redApple][0], 'A');
+    else if (color == magentaApple && !consoleSupportsColors)
+        mvaddch(apple[redApple][1],apple[redApple][0], 'S');
 }
 void snake::snake::drawSnake()
 {
@@ -100,9 +110,10 @@ void snake::snake::drawScore()
 }
 
 /* ==== game-object creation ==== */
-void snake::snake::createApple()
+void snake::snake::createApple(unsigned short int color)
 {
     // TODO apple disappears sometimes (probably a problem with one field not detected by illegalPosition())
+    //  probably one behind the tail and gets removed by tail erase because snake gets one larger so the free space behind the tail gets erased, increase illegalPos end point (snakeLength + 1)
     unsigned short int randomLocation[2];
     bool notRandom = true;
     while (notRandom)
@@ -110,17 +121,47 @@ void snake::snake::createApple()
         // create random location
         randomLocation[0] = utils::randomNum(&screen[0]);
         randomLocation[1] = utils::randomNum(&screen[1]);
-        if (!illegalPosition(randomLocation[0], randomLocation[1]))
+        if (!illegalPosition(randomLocation[0], randomLocation[1], true))
             notRandom = false;
     }
-    apple[0] = randomLocation[0];
-    apple[1] = randomLocation[1];
+    apple[color][0] = randomLocation[0];
+    apple[color][1] = randomLocation[1];
+}
+
+/* game-object updating */
+void snake::snake::updateApple()
+{
+    // red apple
+    if (redAppleEaten())
+    {
+        // TODO animate score and tail changes
+        score += 10;
+        snakeLength++;
+        createApple(redApple);
+        if (snakeLength % 5 == 0 && !magentaAppleExist)
+        {
+            createApple(magentaApple);
+            drawApple(magentaApple);
+            magentaAppleExist = true;
+        }
+        drawApple(redApple);
+        drawScore();
+    }
+    else if (magentaAppleEaten())
+    {
+        score += 20;
+        snakeLength++;
+        magentaAppleExist = false;
+        drawScore();
+    }
 }
 
 /* ==== checks ==== */
-bool snake::snake::illegalPosition(const unsigned short int locationX, const unsigned short int locationY)
+bool snake::snake::illegalPosition(const unsigned short int locationX, const unsigned short int locationY, bool illegalApple)
 {
-    if (locationX != 0 && locationY != 0 && locationX != screen[0] -1 && locationY != screen[1] -1)
+    if (locationX != 0 && locationY != 0 || locationX != screen[0] -1 && locationY != screen[1] -1 ||
+        locationX != apple[redApple][0] && locationY != apple[redApple][1] && illegalApple ||
+        locationX != apple[magentaApple][0] && locationY != apple[magentaApple][1] && illegalApple)
     {
         for (unsigned short int i = 0; i < snakeLength; i++)
         {
@@ -133,9 +174,16 @@ bool snake::snake::illegalPosition(const unsigned short int locationX, const uns
     }
     return true;
 }
-bool snake::snake::appleEaten()
+bool snake::snake::redAppleEaten()
 {
-    if (snakePos[0][0] == apple[0] && snakePos[1][0] == apple[1])
+    if (snakePos[0][0] == apple[redApple][0] && snakePos[1][0] == apple[redApple][1])
+        return true;
+    else
+        return false;
+}
+bool snake::snake::magentaAppleEaten()
+{
+    if (snakePos[0][0] == apple[magentaApple][0] && snakePos[1][0] == apple[magentaApple][1])
         return true;
     else
         return false;
@@ -144,6 +192,7 @@ bool snake::snake::appleEaten()
 /* === game-update === */
 unsigned short int snake::snake::update()
 {
+    /* pre-move tasks */
     getInput();
     // check, if the player newer moved to skip the other tasks
     if (lastDir == notMovedYet && input == noInput)
@@ -151,22 +200,19 @@ unsigned short int snake::snake::update()
     // check, if the user wants to exit the game
     else if (input == userQuit)
         return 1;
+    // make up and down movement slower to make it feel as fast as left and right movement
     normaliseMovementSpeed();
+    // calculates the new snake position for illegalPosition() and updateSnake()
+    // TODO split into X,Y to avoid declaration of newSnakePos[] -> or reimplement
     calcNewSnakePos();
     // check, if the new snake destination is illegal (if that's true, the player looses)
-    if (illegalPosition(newSnakePos[0],newSnakePos[1]))
+    if (illegalPosition(newSnakePos[0],newSnakePos[1], false))
         return 2;
     updateSnakePos();
+    /* draw */
     drawSnake();
-    if (appleEaten())
-    {
-        // TODO animate score and tail changes
-        score += 10;
-        snakeLength++;
-        createApple();
-        drawApple();
-        drawScore();
-    }
+    /* object updating */
+    updateApple();
     return 0;
 }
 
