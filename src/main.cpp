@@ -19,9 +19,6 @@
  *
  */
 
-// TODO change qualified functions to inline functions
-
-
 int main()
 {
     snake::snake snek;

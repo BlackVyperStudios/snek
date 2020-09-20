@@ -30,17 +30,17 @@ namespace snake
         short int input{};
 
         /* pre-game */
-        void initColorMode();
-        void setDefaultPos();
+        inline void initColorMode();
+        inline void setDefaultPos();
 
         /* drawing */
-        void drawScore();
-        void drawField();
-        void drawSnake();
-        void drawApple();
+        inline void drawScore();
+        inline void drawField();
+        inline void drawSnake();
+        inline void drawApple();
 
         /* game-object creation */
-        void createApple();
+        inline void createApple();
 
         /* checks */
         bool illegalPosition(unsigned short int, unsigned short int);
@@ -55,7 +55,7 @@ namespace snake
         void normaliseMovementSpeed() const;
     public:
         // constructor initialises the complete game and ncurses
-        explicit snake();
+        snake();
         // updates the game state
         unsigned short int update();
         // destructor destroys game and ncurses
@@ -64,12 +64,12 @@ namespace snake
     namespace utils
     {
         // returns a std::chrono timestamp
-        unsigned int getTimestamp();
+        inline unsigned int getTimestamp();
 
         // returns a random number in between 0 and the given number
         unsigned short int randomNum(const unsigned short int*);
 
-        void initNcurses();
+        inline void initNcurses();
 
         // a simple timer
         class timer
