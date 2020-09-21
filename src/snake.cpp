@@ -135,8 +135,6 @@ void snake::snake::drawScore()
 /* ==== game-object creation ==== */
 void snake::snake::createApple(unsigned short int color)
 {
-    // TODO apple disappears sometimes (probably a problem with one field not detected by illegalPosition())
-    //  probably one behind the tail and gets removed by tail erase because snake gets one larger so the free space behind the tail gets erased, increase illegalPos end point (snakeLength + 1)
     unsigned short int randomLocation[2];
     bool notRandom = true;
     while (notRandom)
@@ -186,7 +184,7 @@ bool snake::snake::illegalPosition(const unsigned short int locationX, const uns
         locationX != apple[redApple][0] && locationY != apple[redApple][1] && illegalApple ||
         locationX != apple[magentaApple][0] && locationY != apple[magentaApple][1] && illegalApple)
     {
-        for (unsigned short int i = 0; i < snakeLength; i++)
+        for (unsigned short int i = 0; i <= snakeLength +1; i++)
         {
             if (snakePos[0][i] == locationX && snakePos[1][i] == locationY)
             {
