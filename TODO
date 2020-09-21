@@ -8,6 +8,7 @@ add sound effects
 make the field explode on loose
 add lose screen
 windows terminal bugs on resizing
+add increasing snakeSpeed
 
 proper readme with compilation, dependencies and requirements
 + mention, that only MinGW works
