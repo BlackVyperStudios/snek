@@ -276,9 +276,6 @@ void snake::snake::getInput()
                 case 'q':
                     input = userQuit;
                     break;
-                case 'p':
-                    snakeLength++;
-                    break;
                 default:
                     input = noInput;
             }
