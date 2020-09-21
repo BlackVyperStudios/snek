@@ -194,6 +194,9 @@ bool snake::snake::illegalPosition(const unsigned short int locationX, const uns
                 return true;
             }
         }
+        if (illegalApple && apple[redApple][0] == locationX && apple[redApple][1] == locationY ||
+            illegalApple && apple[magentaApple][0] == locationX && apple[magentaApple][0] == locationY)
+            return true;
         return false;
     }
     return true;
