@@ -98,6 +98,7 @@ void snake::snake::drawSnake()
         mvaddch(snakePos[1][i],snakePos[0][i], 'o');
     }
     // erase tail
+    // TODO dont erase, if head is on the location
     mvaddch(snakePos[1][snakeLength], snakePos[0][snakeLength], ' ');
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(greenText));
@@ -180,9 +181,8 @@ void snake::snake::updateApple()
 /* ==== checks ==== */
 bool snake::snake::illegalPosition(const unsigned short int locationX, const unsigned short int locationY, bool illegalApple)
 {
-    if (locationX != 0 && locationY != 0 || locationX != screen[0] -1 && locationY != screen[1] -1 ||
-        locationX != apple[redApple][0] && locationY != apple[redApple][1] && illegalApple ||
-        locationX != apple[magentaApple][0] && locationY != apple[magentaApple][1] && illegalApple)
+    // TODO remove illegalapple
+    if (locationX != 0 && locationY != 0 && locationX != screen[0] -1 && locationY != screen[1] -1)
     {
         for (unsigned short int i = 0; i <= snakeLength +1; i++)
         {
