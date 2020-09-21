@@ -183,7 +183,11 @@ bool snake::snake::illegalPosition(const unsigned short int locationX, const uns
     // make apple pos illegal for the createApple()
     if (locationX != 0 && locationY != 0 && locationX != screen[0] -1 && locationY != screen[1] -1)
     {
-        for (unsigned short int i = 0; i < snakeLength; i++)
+        unsigned short int snakeLengthCopy = snakeLength;
+        // prevent spawning of the apple on the tail of the snake, which gets erased
+        if (illegalApple)
+            snakeLengthCopy++;
+        for (unsigned short int i = 0; i < snakeLengthCopy; i++)
         {
             if (snakePos[0][i] == locationX && snakePos[1][i] == locationY)
             {
@@ -267,6 +271,9 @@ void snake::snake::getInput()
                 case 27: // ESC key
                 case 'q':
                     input = userQuit;
+                    break;
+                case 'p':
+                    snakeLength++;
                     break;
                 default:
                     input = noInput;
