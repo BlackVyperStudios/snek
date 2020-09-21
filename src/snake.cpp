@@ -180,10 +180,10 @@ void snake::snake::updateApple()
 /* ==== checks ==== */
 bool snake::snake::illegalPosition(const unsigned short int locationX, const unsigned short int locationY, bool illegalApple)
 {
-    // TODO remove illegalapple
+    // make apple pos illegal for the createApple()
     if (locationX != 0 && locationY != 0 && locationX != screen[0] -1 && locationY != screen[1] -1)
     {
-        for (unsigned short int i = 0; i <= snakeLength +1; i++)
+        for (unsigned short int i = 0; i < snakeLength; i++)
         {
             if (snakePos[0][i] == locationX && snakePos[1][i] == locationY)
             {
