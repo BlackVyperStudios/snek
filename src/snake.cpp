@@ -60,8 +60,6 @@ void snake::snake::setDefaultPos()
     // set snakePos coordinates
     snakePos[0][0] = screen[0] / 2;
     snakePos[1][0] = screen[1] / 2;
-    snakePos[0][1] = snakePos[0][0];
-    snakePos[1][1] = snakePos[1][0] + 1;
 }
 
 /* ==== drawing ==== */
@@ -97,9 +95,10 @@ void snake::snake::drawSnake()
     {
         mvaddch(snakePos[1][i],snakePos[0][i], 'o');
     }
-    // erase tail
+    // erase tail, but dont erase on first move due to last location at 0,0
     // TODO dont erase, if head is on the location
-    mvaddch(snakePos[1][snakeLength], snakePos[0][snakeLength], ' ');
+    if (snakePos[0][snakeLength] != 0 && snakePos[1][snakeLength] != 0)
+        mvaddch(snakePos[1][snakeLength], snakePos[0][snakeLength], ' ');
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(greenText));
 }
