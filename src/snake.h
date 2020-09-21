@@ -33,7 +33,6 @@ namespace snake
         void updateApple();
 
         /* checks */
-        // TODO make pointers
         bool illegalPosition(const unsigned short int*, const unsigned short int*, bool);
         bool redAppleEaten();
         bool magentaAppleEaten();
