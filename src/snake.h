@@ -34,7 +34,7 @@ namespace snake
 
         /* checks */
         // TODO make pointers
-        bool illegalPosition(unsigned short int, unsigned short int, bool);
+        bool illegalPosition(const unsigned short int*, const unsigned short int*, bool);
         bool redAppleEaten();
         bool magentaAppleEaten();
 

@@ -143,7 +143,7 @@ void snake::snake::createApple(unsigned short int color)
         // create random location
         randomLocation[0] = utils::randomNum(&screen[0]);
         randomLocation[1] = utils::randomNum(&screen[1]);
-        if (!illegalPosition(randomLocation[0], randomLocation[1], true))
+        if (!illegalPosition(&randomLocation[0], &randomLocation[1], true))
             notRandom = false;
     }
     apple[color][0] = randomLocation[0];
@@ -179,10 +179,10 @@ void snake::snake::updateApple()
 }
 
 /* ==== checks ==== */
-bool snake::snake::illegalPosition(const unsigned short int locationX, const unsigned short int locationY, bool illegalApple)
+bool snake::snake::illegalPosition(const unsigned short int *locationX, const unsigned short int *locationY, bool illegalApple)
 {
     // make apple pos illegal for the createApple()
-    if (locationX != 0 && locationY != 0 && locationX != screen[0] -1 && locationY != screen[1] -1)
+    if (*locationX != 0 && *locationY != 0 && *locationX != screen[0] -1 && *locationY != screen[1] -1)
     {
         unsigned short int snakeLengthCopy = snakeLength;
         // prevent spawning of the apple on the tail of the snake, which gets erased
@@ -190,13 +190,13 @@ bool snake::snake::illegalPosition(const unsigned short int locationX, const uns
             snakeLengthCopy++;
         for (unsigned short int i = 0; i < snakeLengthCopy; i++)
         {
-            if (snakePos[0][i] == locationX && snakePos[1][i] == locationY)
+            if (snakePos[0][i] == *locationX && snakePos[1][i] == *locationY)
             {
                 return true;
             }
         }
-        if (illegalApple && apple[redApple][0] == locationX && apple[redApple][1] == locationY ||
-            illegalApple && apple[magentaApple][0] == locationX && apple[magentaApple][0] == locationY)
+        if (illegalApple && apple[redApple][0] == *locationX && apple[redApple][1] == *locationY ||
+            illegalApple && apple[magentaApple][0] == *locationX && apple[magentaApple][0] == *locationY)
             return true;
         return false;
     }
@@ -231,10 +231,9 @@ unsigned short int snake::snake::update()
     // make up and down movement slower to make it feel as fast as left and right movement
     normaliseMovementSpeed();
     // calculates the new snake position for illegalPosition() and updateSnake()
-    // TODO split into X,Y to avoid declaration of newSnakePos[] -> or reimplement
     calcNewSnakePos();
     // check, if the new snake destination is illegal (if that's true, the player looses)
-    if (illegalPosition(newSnakePos[0],newSnakePos[1], false))
+    if (illegalPosition(&newSnakePos[0],&newSnakePos[1], false))
         return 2;
     updateSnakePos();
     /* draw */
