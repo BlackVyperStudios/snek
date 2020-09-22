@@ -1,29 +1,5 @@
 #pragma once
 
-#if defined(_WIN32)
-    #include <ncurses/ncurses>
-#elif (__linux__)
-    #include <ncurses.h>
-#endif
-
-#include <iostream>
-#include "utils.h"
-
-// TODO change values to definitions
-// input parsing values
-#define moveUp 1
-#define moveDown 2
-#define moveLeft 3
-#define moveRight 4
-#define noInput 0
-#define userQuit -1
-// last direction parsing values
-#define notMovedYet 0
-#define lastDirUp 1
-#define lastDirDown 2
-#define lastDirRight 3
-#define lastDirLeft 4
-
 namespace snake
 {
     class snake
@@ -33,37 +9,72 @@ namespace snake
         unsigned short int snakePos[2][100]{0};
         unsigned short int newSnakePos[2]{0};
         unsigned short int snakeLength = 1;
-        unsigned short int apple[2]{0};
+        unsigned short int apple[2][2]{0};
+        bool magentaAppleExist = false;
         unsigned short int score = 0;
         unsigned short int lastDir{};
         bool consoleSupportsColors{};
         short int input{};
 
         /* pre-game */
-        // static void initNcurses();
-        void initColorMode();
-        void setDefaultPos();
+        inline void initColorMode();
+        inline void setDefaultPos();
+
         /* drawing */
         void drawScore();
-        void drawField();
+        inline void drawField();
         void drawSnake();
-        void drawApple();
+        void drawApple(unsigned short int);
+
         /* game-object creation */
-        void createApple();
+        void createApple(unsigned short int);
+
+        /* game-object updating */
+        void updateApple();
+
         /* checks */
-        bool illegalPosition(unsigned short int, unsigned short int);
-        bool appleEaten();
+        bool illegalPosition(const unsigned short int*, const unsigned short int*, bool);
+        bool redAppleEaten();
+        bool magentaAppleEaten();
 
         /* game mechanics */
         void getInput();
         void updateSnakePos();
         void calcNewSnakePos();
+
+        /* fixes */
+        inline void normaliseMovementSpeed() const;
     public:
         // constructor initialises the complete game and ncurses
-        explicit snake(bool);
+        // TODO create overload for changing the screen size
+        snake();
         // updates the game state
         unsigned short int update();
         // destructor destroys game and ncurses
         virtual ~snake();
     };
+    namespace utils
+    {
+        // returns a std::chrono timestamp
+        inline unsigned int getTimestamp();
+
+        // returns a random number in between 0 and the given number
+        unsigned short int randomNum(const unsigned short int*);
+
+        inline void initNcurses();
+
+        // a simple timer
+        class timer
+        {
+        private:
+            unsigned int startTime;
+            unsigned int timeToWait;
+        public:
+            // constructor starts timer
+            explicit timer(unsigned int);
+            virtual ~timer() = default;
+            // true means snake moves
+            [[nodiscard]] bool done() const;
+        };
+    }
 }

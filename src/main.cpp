@@ -2,8 +2,6 @@
 // TODO add proper header for source files and header with copyright notice
 // TODO move from ncurses to low-level system libraries (windows.h and unistd.h)
 #include <iostream>
-
-//#include "snake-old.h"
 #include "snake.h"
 
 /*
@@ -21,12 +19,9 @@
  *
  */
 
-// TODO change qualified functions to inline functions
-
-
 int main()
 {
-    snake::snake snek(true);
+    snake::snake snek;
 
     unsigned short int quit;
     // game loop
