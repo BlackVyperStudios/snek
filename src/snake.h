@@ -22,8 +22,8 @@ namespace snake
 
         /* drawing */
         void drawScore();
-        inline void drawField();
-        inline void drawWatermark();
+        void drawField();
+        void drawWatermark();
         void drawSnake();
         void drawApple(unsigned short int);
 
@@ -72,10 +72,11 @@ namespace snake
             unsigned int timeToWait;
         public:
             // constructor starts timer
-            explicit timer(unsigned int);
+            explicit timer(unsigned short int);
             virtual ~timer() = default;
             // true means snake moves
             [[nodiscard]] bool done() const;
+            void reset();
         };
     }
 }
