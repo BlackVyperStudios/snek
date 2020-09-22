@@ -1,5 +1,7 @@
 // snek TODO
 
+move from ncurses to termbox
++ move from termbox to own reimplementation
 add optional game modifications
 add more ways to control the game
 add pause

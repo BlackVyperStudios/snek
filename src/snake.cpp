@@ -24,11 +24,12 @@
 #define redApple 0
 #define magentaApple 1
 // text color
-#define blueText 1
+#define blueBackground 1
 #define greenText 2
 #define redText 3
 #define whiteText 4
 #define magentaText 5
+#define yellowText 6
 
 /* ==== pre-game ==== */
 snake::snake::snake()
@@ -37,6 +38,7 @@ snake::snake::snake()
     initColorMode();
     setDefaultPos();
     drawField();
+    drawWatermark();
     drawSnake();
     createApple(redApple);
     drawApple(redApple);
@@ -48,11 +50,12 @@ void snake::snake::initColorMode()
     if (consoleSupportsColors)
     {
         start_color();
-        init_pair(blueText, COLOR_BLUE, COLOR_BLUE);
+        init_pair(blueBackground, COLOR_BLUE, COLOR_BLUE);
         init_pair(greenText, COLOR_GREEN, COLOR_BLACK);
         init_pair(redText, COLOR_RED, COLOR_BLACK);
         init_pair(whiteText, COLOR_WHITE, COLOR_BLACK);
         init_pair(magentaText, COLOR_MAGENTA, COLOR_BLACK);
+        init_pair(yellowText,COLOR_YELLOW,COLOR_BLACK);
     }
 }
 void snake::snake::setDefaultPos()
@@ -107,7 +110,7 @@ void snake::snake::drawField()
 {
     // TODO animate first draw of the field
     if (consoleSupportsColors)
-        attron(COLOR_PAIR(blueText));
+        attron(COLOR_PAIR(blueBackground));
     for (unsigned short int i = 0; i < screen[1]; i++)
     {
         for (unsigned short int j = 0; j < screen[0]; j++)
@@ -117,18 +120,30 @@ void snake::snake::drawField()
         }
     }
     if (consoleSupportsColors)
-        attroff(COLOR_PAIR(blueText));
-
-    // TODO draw watermark
-    // attron(COLOR_PAIR(4));
-    // mvaddch(2, screen[0])
-    // attroff(COLOR_PAIR(4));
+        attroff(COLOR_PAIR(blueBackground));
+}
+void snake::snake::drawWatermark()
+{
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(greenText));
+    mvprintw(1, screen[0] + 2, "Ooooo");
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(redText));
+    printw(" SNEK ");
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(greenText));
+    printw("ooooO");
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(redText));
+    mvprintw(2, screen[0] + 2, "by MCWertGaming");
+    if (consoleSupportsColors)
+        attroff(COLOR_PAIR(blueBackground));
 }
 void snake::snake::drawScore()
 {
     if (consoleSupportsColors)
-        attron(COLOR_PAIR(whiteText));
-    mvprintw(2,screen[0] + 2, "Score: %d", score);
+        attron(COLOR_PAIR(greenText));
+    mvprintw(4,screen[0] + 2, "Score: %d", score);
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(whiteText));
 }

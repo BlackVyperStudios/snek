@@ -23,6 +23,7 @@ namespace snake
         /* drawing */
         void drawScore();
         inline void drawField();
+        inline void drawWatermark();
         void drawSnake();
         void drawApple(unsigned short int);
 

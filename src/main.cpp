@@ -8,11 +8,11 @@
  * // TODO rework field like this
  * field:
  *
- * ############# SNEK
- * #           # by MCWertGaming
- * #           #
- * #           # Time: XX:XX // TODO implement time clock
- * #           # Score: XX
+ * ############# 1 SNEK
+ * #           # 2 by MCWertGaming
+ * #           # 3
+ * #           # // 4 Time: XX:XX // TODO implement time clock
+ * #           # 4 Score: XX
  * #           #
  * #           #
  * #############
