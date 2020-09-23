@@ -7,6 +7,10 @@
 #endif
 #include "snake.h"
 
+#define snakeVersionMajor 1
+#define snakeVersionMinor 0
+#define snakeVersionPatch 0
+#define snakeVersionRelease 'B'
 // input parsing values
 #define moveUp 1
 #define moveDown 2
@@ -193,7 +197,39 @@ void snake::snake::drawWatermark()
     while (!timer.done());
     if (consoleSupportsColors)
         attron(COLOR_PAIR(redText));
-    mvaddch(2,screen[0] + 2, 'b');
+    mvprintw(2,screen[0] + 2, "Version: ");
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    printw("%d", snakeVersionMajor);
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    printw(".");
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    printw("%d", snakeVersionMinor);
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    printw(".", snakeVersionMajor);
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    printw("%d", snakeVersionPatch);
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    printw("%c", snakeVersionRelease);
+    refresh();
+    timer.reset();
+    while (!timer.done());
+
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(redText));
+
+    mvaddch(3,screen[0] + 2, 'b');
     refresh();
     timer.reset();
     while (!timer.done());
@@ -201,7 +237,7 @@ void snake::snake::drawWatermark()
     refresh();
     timer.reset();
     while (!timer.done());
-    mvaddch(2,screen[0] + 5, 'M');
+    mvaddch(3,screen[0] + 5, 'M');
     refresh();
     timer.reset();
     while (!timer.done());
