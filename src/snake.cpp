@@ -228,7 +228,6 @@ void snake::snake::drawWatermark()
 
     if (consoleSupportsColors)
         attron(COLOR_PAIR(redText));
-
     mvaddch(3,screen[0] + 2, 'b');
     refresh();
     timer.reset();
@@ -439,12 +438,11 @@ void snake::snake::getInput()
                 default:
                     input = noInput;
             }
-            // skip timer, if it's the first move
-            if (lastDir == notMovedYet)
-                break;
         }
+        // skip timer, if it's the first move
+        if (lastDir == notMovedYet)
+            break;
     }
-
 }
 void snake::snake::calcNewSnakePos()
 {
