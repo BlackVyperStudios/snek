@@ -417,19 +417,31 @@ void snake::snake::getInput()
             {
                 case KEY_UP:
                 case 'w':
-                    input = moveUp;
+                    if (!snake::snake::noOppDir)
+                        input = moveUp;
+                    if (input != moveDown)
+                        input = moveUp;
                     break;
                 case KEY_DOWN:
                 case 's':
-                    input = moveDown;
+                    if (!snake::snake::noOppDir)
+                        input = moveDown;
+                    if (input != moveUp)
+                        input = moveDown;
                     break;
                 case KEY_LEFT:
                 case 'a':
-                    input = moveLeft;
+                    if (!snake::snake::noOppDir)
+                        input = moveLeft;
+                    if (input != moveRight)
+                        input = moveLeft;
                     break;
                 case KEY_RIGHT:
                 case 'd':
-                    input = moveRight;
+                    if (!snake::snake::noOppDir)
+                        input = moveRight;
+                    if (input != moveLeft)
+                        input = moveRight;
                     break;
                 case 27: // ESC key
                 case 'q':
