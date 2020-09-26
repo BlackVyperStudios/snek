@@ -53,8 +53,8 @@ namespace snake
         unsigned short int update();
         // destructor destroys game and ncurses
         virtual ~snake();
-        // if true you can't die from running in the opposite direction. bcs you can't run in the opposite direction.
-        bool noOppDir = true;
+        // toggles possible movement in the opposite direction
+        bool oppositeDir = false;
     };
     namespace utils
     {
