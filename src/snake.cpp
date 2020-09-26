@@ -7,6 +7,10 @@
 #endif
 #include "snake.h"
 
+#define snakeVersionMajor 1
+#define snakeVersionMinor 0
+#define snakeVersionPatch 0
+#define snakeVersionRelease 'B'
 // input parsing values
 #define moveUp 1
 #define moveDown 2
@@ -24,11 +28,12 @@
 #define redApple 0
 #define magentaApple 1
 // text color
-#define blueText 1
+#define blueBackground 1
 #define greenText 2
 #define redText 3
 #define whiteText 4
 #define magentaText 5
+#define yellowText 6
 
 /* ==== pre-game ==== */
 snake::snake::snake()
@@ -37,6 +42,7 @@ snake::snake::snake()
     initColorMode();
     setDefaultPos();
     drawField();
+    drawWatermark();
     drawSnake();
     createApple(redApple);
     drawApple(redApple);
@@ -48,11 +54,12 @@ void snake::snake::initColorMode()
     if (consoleSupportsColors)
     {
         start_color();
-        init_pair(blueText, COLOR_BLUE, COLOR_BLUE);
+        init_pair(blueBackground, COLOR_BLUE, COLOR_BLUE);
         init_pair(greenText, COLOR_GREEN, COLOR_BLACK);
         init_pair(redText, COLOR_RED, COLOR_BLACK);
         init_pair(whiteText, COLOR_WHITE, COLOR_BLACK);
         init_pair(magentaText, COLOR_MAGENTA, COLOR_BLACK);
+        init_pair(yellowText,COLOR_YELLOW,COLOR_BLACK);
     }
 }
 void snake::snake::setDefaultPos()
@@ -105,30 +112,183 @@ void snake::snake::drawSnake()
 }
 void snake::snake::drawField()
 {
-    // TODO animate first draw of the field
     if (consoleSupportsColors)
-        attron(COLOR_PAIR(blueText));
+        attron(COLOR_PAIR(blueBackground));
+    utils::timer timer(10);
+    for (unsigned short int i = 0; i < screen[0]; i++)
+    {
+        timer.reset();
+        mvaddch(0,i,'#');
+        refresh();
+        while (!timer.done());
+    }
     for (unsigned short int i = 0; i < screen[1]; i++)
     {
-        for (unsigned short int j = 0; j < screen[0]; j++)
-        {
-            if (i == 0 || j == 0 || i == screen[1] -1 || j == screen[0] - 1)
-                mvaddch(i,j,'#');
-        }
+        timer.reset();
+        mvaddch(i,screen[0],'#');
+        refresh();
+        while (!timer.done());
+    }
+    for (unsigned short int i = screen[0]; i > 0; i--)
+    {
+        timer.reset();
+        mvaddch(screen[1],i,'#');
+        refresh();
+        while (!timer.done());
+    }
+    // mvaddch(screen[0],0,'#');
+    for (unsigned short int i = screen[1]; i > 0; i--)
+    {
+        timer.reset();
+        mvaddch(i,0,'#');
+        refresh();
+        while (!timer.done());
     }
     if (consoleSupportsColors)
-        attroff(COLOR_PAIR(blueText));
+        attroff(COLOR_PAIR(blueBackground));
+}
+void snake::snake::drawWatermark()
+{
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(redText));
+    utils::timer timer(100);
+    mvaddch(1,screen[0] + 8, 'S');
+    refresh();
+    timer.reset();
+    addch('N');
+    refresh();
+    while (!timer.done());
+    timer.reset();
+    addch('E');
+    refresh();
+    while (!timer.done());
+    timer.reset();
+    addch('K');
+    refresh();
+    while (!timer.done());
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(greenText));
+    timer.reset();
+    while (!timer.done());
+    mvaddch(1,screen[0] + 6,'o');
+    mvaddch(1,screen[0] + 13,'o');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    mvaddch(1,screen[0] + 5, 'o');
+    mvaddch(1,screen[0] + 14,'o');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    mvaddch(1,screen[0] + 4, 'o');
+    mvaddch(1,screen[0] + 15,'o');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    mvaddch(1,screen[0] + 3, 'o');
+    mvaddch(1,screen[0] + 16,'o');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    mvaddch(1,screen[0] + 2, 'O');
+    mvaddch(1,screen[0] + 17,'O');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(redText));
+    mvprintw(2,screen[0] + 2, "Version: ");
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    printw("%d", snakeVersionMajor);
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    printw(".");
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    printw("%d", snakeVersionMinor);
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    printw(".", snakeVersionMajor);
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    printw("%d", snakeVersionPatch);
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    printw("%c", snakeVersionRelease);
+    refresh();
+    timer.reset();
+    while (!timer.done());
 
-    // TODO draw watermark
-    // attron(COLOR_PAIR(4));
-    // mvaddch(2, screen[0])
-    // attroff(COLOR_PAIR(4));
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(redText));
+    mvaddch(3,screen[0] + 2, 'b');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    addch('y');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    mvaddch(3,screen[0] + 5, 'M');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    addch('C');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    addch('W');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    addch('e');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    addch('r');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    addch('t');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    addch('G');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    addch('a');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    addch('m');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    addch('i');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    addch('n');
+    refresh();
+    timer.reset();
+    while (!timer.done());
+    addch('g');
+    if (consoleSupportsColors)
+        attroff(COLOR_PAIR(blueBackground));
 }
 void snake::snake::drawScore()
 {
     if (consoleSupportsColors)
-        attron(COLOR_PAIR(whiteText));
-    mvprintw(2,screen[0] + 2, "Score: %d", score);
+        attron(COLOR_PAIR(greenText));
+    mvprintw(4,screen[0] + 2, "Score: %d", score);
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(whiteText));
 }
@@ -257,19 +417,23 @@ void snake::snake::getInput()
             {
                 case KEY_UP:
                 case 'w':
-                    input = moveUp;
+                    if (oppositeDir || !oppositeDir && lastDir != lastDirDown || snakeLength == 1)
+                        input = moveUp;
                     break;
                 case KEY_DOWN:
                 case 's':
-                    input = moveDown;
+                    if (oppositeDir || !oppositeDir && lastDir != lastDirUp || snakeLength == 1)
+                        input = moveDown;
                     break;
                 case KEY_LEFT:
                 case 'a':
-                    input = moveLeft;
+                    if (oppositeDir || !oppositeDir && lastDir != lastDirRight || snakeLength == 1)
+                        input = moveLeft;
                     break;
                 case KEY_RIGHT:
                 case 'd':
-                    input = moveRight;
+                    if (oppositeDir || !oppositeDir && lastDir != lastDirLeft || snakeLength == 1)
+                        input = moveRight;
                     break;
                 case 27: // ESC key
                 case 'q':
@@ -278,12 +442,11 @@ void snake::snake::getInput()
                 default:
                     input = noInput;
             }
-            // skip timer, if it's the first move
-            if (lastDir == notMovedYet)
-                break;
         }
+        // skip timer, if it's the first move
+        if (lastDir == notMovedYet)
+            break;
     }
-
 }
 void snake::snake::calcNewSnakePos()
 {
@@ -384,7 +547,7 @@ unsigned short int snake::utils::randomNum(const unsigned short int *maxNum)
     std::mt19937_64 generator(seed);
     return generator() % *maxNum; // lowers the number to the specified range
 }
-snake::utils::timer::timer(unsigned int millisecondsToWait)
+snake::utils::timer::timer(unsigned short int millisecondsToWait)
 {
     startTime = getTimestamp();
     timeToWait = millisecondsToWait;
@@ -393,6 +556,10 @@ bool snake::utils::timer::done() const
 {
     unsigned int timeTaken = getTimestamp() - startTime;
     return timeTaken / 1000 > timeToWait;
+}
+void snake::utils::timer::reset()
+{
+    startTime = getTimestamp();
 }
 void snake::utils::initNcurses()
 {
