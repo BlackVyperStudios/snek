@@ -5,6 +5,7 @@ namespace snake
     class snake
     {
     private:
+        /* game variables */
         const unsigned short int screen[2]{30, 30};
         unsigned short int snakePos[2][100]{0};
         unsigned short int newSnakePos[2]{0};
@@ -13,8 +14,11 @@ namespace snake
         bool magentaAppleExist = false;
         unsigned short int score = 0;
         unsigned short int lastDir{};
-        bool consoleSupportsColors{};
         short int input{};
+        /* game options */
+        bool oppositeDir = false;
+        /* automatic options */
+        bool consoleSupportsColors{};
 
         /* pre-game */
         inline void initColorMode();
@@ -54,7 +58,6 @@ namespace snake
         // destructor destroys game and ncurses
         virtual ~snake();
         // toggles possible movement in the opposite direction
-        bool oppositeDir = false;
     };
     namespace utils
     {
