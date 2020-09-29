@@ -136,7 +136,6 @@ void snake::snake::drawField()
         refresh();
         while (!timer.done());
     }
-    // mvaddch(screen[0],0,'#');
     for (unsigned short int i = screen[1]; i > 0; i--)
     {
         timer.reset();
@@ -524,10 +523,7 @@ void snake::snake::normaliseMovementSpeed() const
     if (input == moveUp || input == moveDown || input == noInput && lastDir == lastDirUp || input == noInput && lastDir == lastDirDown)
     {
         utils::timer timer(140);
-        while (!timer.done())
-        {
-            // wait
-        }
+        while (!timer.done());
     }
 }
 snake::snake::~snake()
