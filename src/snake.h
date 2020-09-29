@@ -15,6 +15,8 @@ namespace snake
         unsigned short int score = 0;
         unsigned short int lastDir{};
         short int input{};
+        double snakeSpeedFactor{};
+        unsigned short int snakeSpeed{};
         /* game options */
         bool oppositeDir = false;
         /* automatic options */
@@ -23,6 +25,7 @@ namespace snake
         /* pre-game */
         inline void initColorMode();
         inline void setDefaultPos();
+        void calcSpeedFactor();
 
         /* drawing */
         void drawScore();
@@ -46,6 +49,7 @@ namespace snake
         void getInput();
         void updateSnakePos();
         void calcNewSnakePos();
+        void increaseSnakeSpeed();
 
         /* fixes */
         inline void normaliseMovementSpeed() const;

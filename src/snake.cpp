@@ -1,5 +1,6 @@
 #include <chrono>
 #include <random>
+#include <cmath>
 #if defined(_WIN32)
 #include <ncurses/ncurses>
 #elif (__linux__)
@@ -47,6 +48,8 @@ snake::snake::snake()
     createApple(redApple);
     drawApple(redApple);
     drawScore();
+    calcSpeedFactor();
+    increaseSnakeSpeed();
 }
 void snake::snake::initColorMode()
 {
@@ -67,6 +70,10 @@ void snake::snake::setDefaultPos()
     // set snakePos coordinates
     snakePos[0][0] = screen[0] / 2;
     snakePos[1][0] = screen[1] / 2;
+}
+void snake::snake::calcSpeedFactor()
+{
+    snakeSpeedFactor = (double)100 / ((screen[0] - 1) * (screen[1] - 1));
 }
 
 /* ==== drawing ==== */
@@ -335,6 +342,8 @@ void snake::snake::updateApple()
         magentaAppleExist = false;
         drawScore();
     }
+    if (snakeLength % 5 == 0)
+        increaseSnakeSpeed();
 }
 
 /* ==== checks ==== */
@@ -406,7 +415,7 @@ unsigned short int snake::snake::update()
 void snake::snake::getInput()
 {
     short int ch;
-    utils::timer timer(500);
+    utils::timer timer(snakeSpeed);
     while (!timer.done())
     {
         ch = getch();
@@ -517,6 +526,11 @@ void snake::snake::updateSnakePos()
         preLoc[0][1] = preLoc[1][1];
     }
 }
+void snake::snake::increaseSnakeSpeed()
+{
+    snakeSpeed = (unsigned int) (500 - snakeSpeedFactor * snakeLength / 0.25);
+}
+
 /* fixes */
 void snake::snake::normaliseMovementSpeed() const
 {
