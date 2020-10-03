@@ -54,6 +54,7 @@ namespace snake
         void calcNewSnakePos();
         void increaseSnakeSpeed();
 
+
         /* fixes */
         inline void normaliseMovementSpeed() const;
     public:

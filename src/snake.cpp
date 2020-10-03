@@ -334,7 +334,6 @@ void snake::snake::updateApple()
         }
         drawApple(redApple);
         drawScore();
-        // TODO move into function
         if (snakeLength % 5 == 0)
             increaseSnakeSpeed();
     }
@@ -344,7 +343,6 @@ void snake::snake::updateApple()
         snakeLength++;
         magentaAppleExist = false;
         drawScore();
-        // TODO move into function
         if (snakeLength % 5 == 0)
             increaseSnakeSpeed();
     }
