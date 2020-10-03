@@ -413,9 +413,6 @@ unsigned short int snake::snake::update()
     drawSnake();
     /* object updating */
     updateApple();
-
-    mvprintw(5, screen[0] + 2, "speed: %d", snakeSpeed);
-
     return 0;
 }
 
