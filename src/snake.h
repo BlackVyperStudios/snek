@@ -6,7 +6,7 @@ namespace snake
     {
     private:
         /* game variables */
-        const unsigned short int screen[2]{30, 30};
+        const unsigned short int screen[2]{20, 20};
         unsigned short int snakePos[2][100]{0};
         unsigned short int newSnakePos[2]{0};
         unsigned short int snakeLength = 1;
@@ -21,6 +21,7 @@ namespace snake
         const bool oppositeDir = false;
         const unsigned short int minSpeed = 10;
         const unsigned short int maxSpeed = 500;
+        const bool movementFix = false;
         /* automatic options */
         bool consoleSupportsColors{};
 

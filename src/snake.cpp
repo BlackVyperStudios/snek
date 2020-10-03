@@ -334,6 +334,9 @@ void snake::snake::updateApple()
         }
         drawApple(redApple);
         drawScore();
+        // TODO move into function
+        if (snakeLength % 5 == 0)
+            increaseSnakeSpeed();
     }
     else if (magentaAppleEaten())
     {
@@ -341,9 +344,10 @@ void snake::snake::updateApple()
         snakeLength++;
         magentaAppleExist = false;
         drawScore();
+        // TODO move into function
+        if (snakeLength % 5 == 0)
+            increaseSnakeSpeed();
     }
-    if (snakeLength % 5 == 0)
-        increaseSnakeSpeed();
 }
 
 /* ==== checks ==== */
@@ -397,7 +401,8 @@ unsigned short int snake::snake::update()
     else if (input == userQuit)
         return 1;
     // make up and down movement slower to make it feel as fast as left and right movement
-    normaliseMovementSpeed();
+    if (movementFix)
+        normaliseMovementSpeed();
     // calculates the new snake position for illegalPosition() and updateSnake()
     calcNewSnakePos();
     // check, if the new snake destination is illegal (if that's true, the player looses)
