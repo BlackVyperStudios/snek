@@ -18,7 +18,9 @@ namespace snake
         double snakeSpeedFactor{};
         unsigned short int snakeSpeed{};
         /* game options */
-        bool oppositeDir = false;
+        const bool oppositeDir = false;
+        const unsigned short int minSpeed = 10;
+        const unsigned short int maxSpeed = 500;
         /* automatic options */
         bool consoleSupportsColors{};
 
