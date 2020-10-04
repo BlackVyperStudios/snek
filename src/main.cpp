@@ -6,7 +6,7 @@
 
 int main()
 {
-    snake::snake snek;
+    snake::snake snek(true, 20, 20);
 
     unsigned short int quit;
     // game loop

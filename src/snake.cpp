@@ -37,10 +37,33 @@
 #define yellowText 6
 
 /* ==== pre-game ==== */
-snake::snake::snake()
+snake::snake::snake(bool initNcurses, unsigned short _screenX, unsigned short int _screenY) : screen{_screenX, _screenY}
 {
-    utils::initNcurses();
-    initColorMode();
+    if (initNcurses)
+    {
+        utils::initNcurses();
+        initColorMode();
+    }
+    setDefaultPos();
+    drawField();
+    drawWatermark();
+    drawSnake();
+    createApple(redApple);
+    drawApple(redApple);
+    drawScore();
+    calcSpeedFactor();
+    increaseSnakeSpeed();
+}
+snake::snake::snake(bool initNcurses, bool _oppositeDir, unsigned short int _minSpeed, unsigned short int _maxSpeed,
+                    bool _movementFix, unsigned short int _screenX, unsigned short int _screenY, bool _enableColorMode)
+                    : oppositeDir{_oppositeDir}, minSpeed{_minSpeed}, maxSpeed{_maxSpeed}, movementFix{_movementFix},
+                      screen{_screenX, _screenY}, consoleSupportsColors{_enableColorMode}
+{
+    if (initNcurses)
+    {
+        utils::initNcurses();
+        initColorMode();
+    }
     setDefaultPos();
     drawField();
     drawWatermark();
@@ -349,7 +372,8 @@ void snake::snake::updateApple()
 }
 
 /* ==== checks ==== */
-bool snake::snake::illegalPosition(const unsigned short int *locationX, const unsigned short int *locationY, bool illegalApple)
+bool snake::snake::illegalPosition(const unsigned short int *locationX, const unsigned short int *locationY,
+                                   bool illegalApple)
 {
     // make apple pos illegal for the createApple()
     if (*locationX != 0 && *locationY != 0 && *locationX != screen[0] && *locationY != screen[1])
@@ -539,7 +563,8 @@ void snake::snake::increaseSnakeSpeed()
 /* fixes */
 void snake::snake::normaliseMovementSpeed() const
 {
-    if (input == moveUp || input == moveDown || input == noInput && lastDir == lastDirUp || input == noInput && lastDir == lastDirDown)
+    if (input == moveUp || input == moveDown || input == noInput && lastDir == lastDirUp || input == noInput &&
+        lastDir == lastDirDown)
     {
         utils::timer timer(140);
         while (!timer.done());

@@ -12,6 +12,8 @@ add clock
 add leaderboard
 create game menu
 add second player
+magenta apple vanishes after time
+yellowApple spawns at 2% vanishes quickly too
 
 // coding optimisations
 move from ncurses to termbox

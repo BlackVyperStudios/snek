@@ -6,7 +6,6 @@ namespace snake
     {
     private:
         /* game variables */
-        const unsigned short int screen[2]{20, 20};
         unsigned short int snakePos[2][100]{0};
         unsigned short int newSnakePos[2]{0};
         unsigned short int snakeLength = 1;
@@ -22,8 +21,9 @@ namespace snake
         const unsigned short int minSpeed = 10;
         const unsigned short int maxSpeed = 500;
         const bool movementFix = false;
+        const unsigned short int screen[2];
         /* automatic options */
-        bool consoleSupportsColors{};
+        bool consoleSupportsColors = true;
 
         /* pre-game */
         inline void initColorMode();
@@ -57,9 +57,10 @@ namespace snake
         /* fixes */
         inline void normaliseMovementSpeed() const;
     public:
-        // constructor initialises the complete game and ncurses
-        // TODO create overload for manipulating game parameters
-        snake();
+        // constructor for default game options
+        explicit snake(bool, unsigned short int, unsigned short int);
+        // constructor for manual game options
+        snake(bool, bool, unsigned short int, unsigned short int, bool, unsigned short int, unsigned short int, bool);
         // updates the game state
         unsigned short int update();
         // destructor destroys game and ncurses
