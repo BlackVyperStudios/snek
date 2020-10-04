@@ -6,7 +6,7 @@ namespace snake
     {
     private:
         /* game variables */
-        const unsigned short int screen[2]{30, 30};
+        const unsigned short int screen[2]{20, 20};
         unsigned short int snakePos[2][100]{0};
         unsigned short int newSnakePos[2]{0};
         unsigned short int snakeLength = 1;
@@ -15,14 +15,20 @@ namespace snake
         unsigned short int score = 0;
         unsigned short int lastDir{};
         short int input{};
+        double snakeSpeedFactor{};
+        unsigned short int snakeSpeed{};
         /* game options */
-        bool oppositeDir = false;
+        const bool oppositeDir = false;
+        const unsigned short int minSpeed = 10;
+        const unsigned short int maxSpeed = 500;
+        const bool movementFix = false;
         /* automatic options */
         bool consoleSupportsColors{};
 
         /* pre-game */
         inline void initColorMode();
         inline void setDefaultPos();
+        void calcSpeedFactor();
 
         /* drawing */
         void drawScore();
@@ -46,6 +52,8 @@ namespace snake
         void getInput();
         void updateSnakePos();
         void calcNewSnakePos();
+        void increaseSnakeSpeed();
+
 
         /* fixes */
         inline void normaliseMovementSpeed() const;

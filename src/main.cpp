@@ -4,21 +4,6 @@
 #include <iostream>
 #include "snake.h"
 
-/*
- * // TODO rework field like this
- * field:
- *
- * ############# 1 SNEK
- * #           # 2 by MCWertGaming
- * #           # 3
- * #           # // 4 Time: XX:XX // TODO implement time clock
- * #           # 4 Score: XX
- * #           #
- * #           #
- * #############
- *
- */
-
 int main()
 {
     snake::snake snek;

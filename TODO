@@ -11,6 +11,15 @@ make the field explode on loose
 add lose screen
 windows terminal bugs on resizing
 add increasing snakeSpeed
+add clock
+add leaderboard
+change include to import as c++20 introduced
+fix gameover if the snake is too long
+fix right field side gameover
+add on / off switch for movement fix
+tune snakespeed to be variable
+tail cant move one behind the tail
+optimise movement fix to use movementFactor
 
 proper readme with compilation, dependencies and requirements
 + mention, that only MinGW works

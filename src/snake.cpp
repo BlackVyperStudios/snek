@@ -1,5 +1,6 @@
 #include <chrono>
 #include <random>
+#include <cmath>
 #if defined(_WIN32)
 #include <ncurses/ncurses>
 #elif (__linux__)
@@ -10,7 +11,7 @@
 #define snakeVersionMajor 1
 #define snakeVersionMinor 0
 #define snakeVersionPatch 0
-#define snakeVersionRelease 'B'
+#define snakeVersionRelease ' '
 // input parsing values
 #define moveUp 1
 #define moveDown 2
@@ -47,6 +48,8 @@ snake::snake::snake()
     createApple(redApple);
     drawApple(redApple);
     drawScore();
+    calcSpeedFactor();
+    increaseSnakeSpeed();
 }
 void snake::snake::initColorMode()
 {
@@ -67,6 +70,10 @@ void snake::snake::setDefaultPos()
     // set snakePos coordinates
     snakePos[0][0] = screen[0] / 2;
     snakePos[1][0] = screen[1] / 2;
+}
+void snake::snake::calcSpeedFactor()
+{
+    snakeSpeedFactor = (double)100 / ((screen[0] - 1) * (screen[1] - 1));
 }
 
 /* ==== drawing ==== */
@@ -136,7 +143,6 @@ void snake::snake::drawField()
         refresh();
         while (!timer.done());
     }
-    // mvaddch(screen[0],0,'#');
     for (unsigned short int i = screen[1]; i > 0; i--)
     {
         timer.reset();
@@ -328,6 +334,8 @@ void snake::snake::updateApple()
         }
         drawApple(redApple);
         drawScore();
+        if (snakeLength % 5 == 0)
+            increaseSnakeSpeed();
     }
     else if (magentaAppleEaten())
     {
@@ -335,6 +343,8 @@ void snake::snake::updateApple()
         snakeLength++;
         magentaAppleExist = false;
         drawScore();
+        if (snakeLength % 5 == 0)
+            increaseSnakeSpeed();
     }
 }
 
@@ -389,7 +399,8 @@ unsigned short int snake::snake::update()
     else if (input == userQuit)
         return 1;
     // make up and down movement slower to make it feel as fast as left and right movement
-    normaliseMovementSpeed();
+    if (movementFix)
+        normaliseMovementSpeed();
     // calculates the new snake position for illegalPosition() and updateSnake()
     calcNewSnakePos();
     // check, if the new snake destination is illegal (if that's true, the player looses)
@@ -407,7 +418,7 @@ unsigned short int snake::snake::update()
 void snake::snake::getInput()
 {
     short int ch;
-    utils::timer timer(500);
+    utils::timer timer(snakeSpeed);
     while (!timer.done())
     {
         ch = getch();
@@ -518,16 +529,18 @@ void snake::snake::updateSnakePos()
         preLoc[0][1] = preLoc[1][1];
     }
 }
+void snake::snake::increaseSnakeSpeed()
+{
+    snakeSpeed = (unsigned int) (500 - snakeSpeedFactor * snakeLength / ((double)minSpeed / maxSpeed));
+}
+
 /* fixes */
 void snake::snake::normaliseMovementSpeed() const
 {
     if (input == moveUp || input == moveDown || input == noInput && lastDir == lastDirUp || input == noInput && lastDir == lastDirDown)
     {
         utils::timer timer(140);
-        while (!timer.done())
-        {
-            // wait
-        }
+        while (!timer.done());
     }
 }
 snake::snake::~snake()
