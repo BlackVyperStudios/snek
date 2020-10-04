@@ -354,6 +354,8 @@ bool snake::snake::illegalPosition(const unsigned short int *locationX, const un
     // make apple pos illegal for the createApple()
     if (*locationX != 0 && *locationY != 0 && *locationX != screen[0] && *locationY != screen[1])
     {
+        if (!illegalApple && *locationX == snakePos[0][snakeLength-1] && *locationY == snakePos[1][snakeLength-1])
+            return false;
         unsigned short int snakeLengthCopy = snakeLength;
         // prevent spawning of the apple on the tail of the snake, which gets erased
         if (illegalApple)

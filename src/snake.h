@@ -54,12 +54,11 @@ namespace snake
         void calcNewSnakePos();
         void increaseSnakeSpeed();
 
-
         /* fixes */
         inline void normaliseMovementSpeed() const;
     public:
         // constructor initialises the complete game and ncurses
-        // TODO create overload for changing the screen size
+        // TODO create overload for manipulating game parameters
         snake();
         // updates the game state
         unsigned short int update();
