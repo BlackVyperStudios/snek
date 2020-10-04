@@ -37,7 +37,8 @@
 #define yellowText 6
 
 /* ==== pre-game ==== */
-snake::snake::snake(bool initNcurses, unsigned short _screenX, unsigned short int _screenY) : screen{_screenX, _screenY}
+snake::snake::snake(bool initNcurses, bool startupAnimations, unsigned short _screenX, unsigned short int _screenY)
+                    : screen{_screenX, _screenY}
 {
     if (initNcurses)
     {
@@ -45,8 +46,16 @@ snake::snake::snake(bool initNcurses, unsigned short _screenX, unsigned short in
         initColorMode();
     }
     setDefaultPos();
-    drawField();
-    drawWatermark();
+    if (startupAnimations)
+    {
+        animateField();
+        animateWatermark();
+    }
+    else
+    {
+        drawField();
+        drawWatermark();
+    }
     drawSnake();
     createApple(redApple);
     drawApple(redApple);
@@ -54,10 +63,11 @@ snake::snake::snake(bool initNcurses, unsigned short _screenX, unsigned short in
     calcSpeedFactor();
     increaseSnakeSpeed();
 }
-snake::snake::snake(bool initNcurses, bool _oppositeDir, unsigned short int _minSpeed, unsigned short int _maxSpeed,
-                    bool _movementFix, unsigned short int _screenX, unsigned short int _screenY, bool _enableColorMode)
-                    : oppositeDir{_oppositeDir}, minSpeed{_minSpeed}, maxSpeed{_maxSpeed}, movementFix{_movementFix},
-                      screen{_screenX, _screenY}, consoleSupportsColors{_enableColorMode}
+snake::snake::snake(bool initNcurses, bool startupAnimations, bool _oppositeDir, unsigned short int _minSpeed,
+                    unsigned short int _maxSpeed, bool _movementFix, unsigned short int _screenX,
+                    unsigned short int _screenY, bool _enableColorMode)
+                    : oppositeDir{_oppositeDir}, minSpeed{_minSpeed}, maxSpeed{_maxSpeed},
+                      movementFix{_movementFix}, screen{_screenX, _screenY}, consoleSupportsColors{_enableColorMode}
 {
     if (initNcurses)
     {
@@ -65,8 +75,16 @@ snake::snake::snake(bool initNcurses, bool _oppositeDir, unsigned short int _min
         initColorMode();
     }
     setDefaultPos();
-    drawField();
-    drawWatermark();
+    if (startupAnimations)
+    {
+        animateField();
+        animateWatermark();
+    }
+    else
+    {
+        drawField();
+        drawWatermark();
+    }
     drawSnake();
     createApple(redApple);
     drawApple(redApple);
@@ -140,7 +158,7 @@ void snake::snake::drawSnake()
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(greenText));
 }
-void snake::snake::drawField()
+void snake::snake::animateField()
 {
     if (consoleSupportsColors)
         attron(COLOR_PAIR(blueBackground));
@@ -176,7 +194,34 @@ void snake::snake::drawField()
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(blueBackground));
 }
-void snake::snake::drawWatermark()
+void snake::snake::drawField()
+{
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(blueBackground));
+    for (unsigned short int i = 0; i < screen[0]; i++)
+    {
+        mvaddch(0,i,'#');
+        refresh();
+    }
+    for (unsigned short int i = 0; i < screen[1]; i++)
+    {
+        mvaddch(i,screen[0],'#');
+        refresh();
+    }
+    for (unsigned short int i = screen[0]; i > 0; i--)
+    {
+        mvaddch(screen[1],i,'#');
+        refresh();
+    }
+    for (unsigned short int i = screen[1]; i > 0; i--)
+    {
+        mvaddch(i,0,'#');
+        refresh();
+    }
+    if (consoleSupportsColors)
+        attroff(COLOR_PAIR(blueBackground));
+}
+void snake::snake::animateWatermark()
 {
     if (consoleSupportsColors)
         attron(COLOR_PAIR(redText));
@@ -310,6 +355,24 @@ void snake::snake::drawWatermark()
     timer.reset();
     while (!timer.done());
     addch('g');
+    if (consoleSupportsColors)
+        attroff(COLOR_PAIR(blueBackground));
+}
+void snake::snake::drawWatermark()
+{
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(redText));
+    mvprintw(1,screen[0] + 8, "SNEK");
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(greenText));
+    mvprintw(1,screen[0] + 2,"Ooooo ");
+    mvprintw(1,screen[0] + 13,"ooooO");
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(redText));
+    mvprintw(2,screen[0] + 2, "Version: %d.%d.%d%c", snakeVersionMajor, snakeVersionMinor, snakeVersionPatch, snakeVersionRelease);
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(redText));
+    mvprintw(3,screen[0] + 2, "by MCWertGaming");
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(blueBackground));
 }

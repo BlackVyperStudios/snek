@@ -8,7 +8,7 @@
 
 int main()
 {
-    snake::snake snek(true, 20, 20);
+    snake::snake snek(true, true, 20, 20);
 
     unsigned short int quit = 0;
     while (quit == 0)

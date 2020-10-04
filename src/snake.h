@@ -33,7 +33,9 @@ namespace snake
         /* drawing */
         void drawScore();
         void drawField();
+        void animateField();
         void drawWatermark();
+        void animateWatermark();
         void drawSnake();
         void drawApple(unsigned short int);
 
@@ -58,9 +60,9 @@ namespace snake
         inline void normaliseMovementSpeed() const;
     public:
         // constructor for default game options
-        explicit snake(bool, unsigned short int, unsigned short int);
+        explicit snake(bool, bool, unsigned short int, unsigned short int);
         // constructor for manual game options
-        snake(bool, bool, unsigned short int, unsigned short int, bool, unsigned short int, unsigned short int, bool);
+        snake(bool, bool, bool, unsigned short int, unsigned short int, bool, unsigned short int, unsigned short int, bool);
         // updates the game state
         unsigned short int update();
         // destructor destroys game and ncurses
