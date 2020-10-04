@@ -20,11 +20,19 @@ move from ncurses to termbox
 + move from termbox to own reimplementation
 change include to import as c++20 introduced
 
-// bugs
+// bugs / fixes
 optimise movement fix to use movementFactor
 fix gameover if the snake is too long
 windows terminal bugs on resizing
+change score to 1 instead 10
+speed up version and name info drawing
 
 // documentation
 proper readme with compilation, dependencies and requirements
 + mention, that only MinGW works
+
+//
+only set colormode if its not disabled
+only set colors if ncurses gets initialised but set colors to on / off
+add watermark in custom mode
+add watermark in dev mode

@@ -13,3 +13,5 @@ if (WIN32)
 endif (WIN32)
 
 add_executable(snek src/main.cpp src/snake.cpp)
+add_executable(snek-debugFront src/frontend-debug.cpp src/snake.cpp)
+add_executable(snek-releaseFront src/frontend-release.cpp src/snake.cpp)
