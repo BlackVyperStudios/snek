@@ -36,3 +36,5 @@ cmake-build-debug-mingw/
 snek
 
 Makefile
+
+snek.cbp
