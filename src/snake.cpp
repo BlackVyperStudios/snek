@@ -326,7 +326,7 @@ void snake::snake::updateApple()
         score += 10;
         snakeLength++;
         createApple(redApple);
-        if (snakeLength % 5 == 0 && !magentaAppleExist)
+        if ((snakeLength -1) % 5 == 0 && !magentaAppleExist)
         {
             createApple(magentaApple);
             drawApple(magentaApple);
@@ -334,7 +334,7 @@ void snake::snake::updateApple()
         }
         drawApple(redApple);
         drawScore();
-        if (snakeLength % 5 == 0)
+        if ((snakeLength -1) % 5 == 0)
             increaseSnakeSpeed();
     }
     else if (magentaAppleEaten())
@@ -343,7 +343,7 @@ void snake::snake::updateApple()
         snakeLength++;
         magentaAppleExist = false;
         drawScore();
-        if (snakeLength % 5 == 0)
+        if ((snakeLength -1) % 5 == 0)
             increaseSnakeSpeed();
     }
 }
