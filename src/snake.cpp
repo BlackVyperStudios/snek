@@ -10,7 +10,7 @@
 
 #define snakeVersionMajor 1
 #define snakeVersionMinor 0
-#define snakeVersionPatch 0
+#define snakeVersionPatch 1
 #define snakeVersionRelease ' '
 // input parsing values
 #define moveUp 1
@@ -326,7 +326,7 @@ void snake::snake::updateApple()
         score += 10;
         snakeLength++;
         createApple(redApple);
-        if (snakeLength % 5 == 0 && !magentaAppleExist)
+        if ((snakeLength -1) % 5 == 0 && !magentaAppleExist)
         {
             createApple(magentaApple);
             drawApple(magentaApple);
@@ -334,7 +334,7 @@ void snake::snake::updateApple()
         }
         drawApple(redApple);
         drawScore();
-        if (snakeLength % 5 == 0)
+        if ((snakeLength -1) % 5 == 0)
             increaseSnakeSpeed();
     }
     else if (magentaAppleEaten())
@@ -343,7 +343,7 @@ void snake::snake::updateApple()
         snakeLength++;
         magentaAppleExist = false;
         drawScore();
-        if (snakeLength % 5 == 0)
+        if ((snakeLength -1) % 5 == 0)
             increaseSnakeSpeed();
     }
 }
@@ -352,8 +352,10 @@ void snake::snake::updateApple()
 bool snake::snake::illegalPosition(const unsigned short int *locationX, const unsigned short int *locationY, bool illegalApple)
 {
     // make apple pos illegal for the createApple()
-    if (*locationX != 0 && *locationY != 0 && *locationX != screen[0] -1 && *locationY != screen[1] -1)
+    if (*locationX != 0 && *locationY != 0 && *locationX != screen[0] && *locationY != screen[1])
     {
+        if (!illegalApple && *locationX == snakePos[0][snakeLength-1] && *locationY == snakePos[1][snakeLength-1])
+            return false;
         unsigned short int snakeLengthCopy = snakeLength;
         // prevent spawning of the apple on the tail of the snake, which gets erased
         if (illegalApple)

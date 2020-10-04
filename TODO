@@ -13,7 +13,7 @@ add leaderboard
 create game menu
 add second player
 
-// conding optimisations
+// coding optimisations
 move from ncurses to termbox
 + move from termbox to own reimplementation
 change include to import as c++20 introduced
@@ -21,11 +21,8 @@ change include to import as c++20 introduced
 // bugs
 optimise movement fix to use movementFactor
 fix gameover if the snake is too long
-fix right field side gameover
-tail cant move one behind the tail
 windows terminal bugs on resizing
 
 // documentation
 proper readme with compilation, dependencies and requirements
 + mention, that only MinGW works
-+ copy ncurses.h on windows for compilation with vsc etc
