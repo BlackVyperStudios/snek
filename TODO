@@ -26,6 +26,8 @@ fix gameover if the snake is too long
 windows terminal bugs on resizing
 change score to 1 instead 10
 speed up version and name info drawing
+snake freezes if too big on debug window
+seconds apple doesn't spawn on colorless mode
 
 // documentation
 proper readme with compilation, dependencies and requirements
