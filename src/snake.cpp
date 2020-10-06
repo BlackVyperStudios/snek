@@ -1,13 +1,12 @@
-#include <chrono>
-#include <random>
-#include <cmath>
 #if defined(_WIN32)
 #include <ncurses/ncurses>
 #elif (__linux__)
 #include <ncurses.h>
 #endif
 #include "snake.h"
+#include "utils.h"
 
+// version
 #define snakeVersionMajor 1
 #define snakeVersionMinor 0
 #define snakeVersionPatch 0
@@ -28,13 +27,6 @@
 // apple color
 #define redApple 0
 #define magentaApple 1
-// text color
-#define blueBackground 1
-#define greenText 2
-#define redText 3
-#define whiteText 4
-#define magentaText 5
-#define yellowText 6
 
 /* ==== pre-game ==== */
 snake::snake::snake(bool initNcurses, bool startupAnimations, unsigned short _screenX, unsigned short int _screenY)
@@ -43,7 +35,8 @@ snake::snake::snake(bool initNcurses, bool startupAnimations, unsigned short _sc
     if (initNcurses)
     {
         utils::initNcurses();
-        initColorMode();
+        utils::initColorMode();
+        consoleSupportsColors = has_colors();
     }
     setDefaultPos();
     if (startupAnimations)
@@ -72,7 +65,8 @@ snake::snake::snake(bool initNcurses, bool startupAnimations, bool _oppositeDir,
     if (initNcurses)
     {
         utils::initNcurses();
-        initColorMode();
+        utils::initColorMode();
+        consoleSupportsColors = has_colors();
     }
     setDefaultPos();
     if (startupAnimations)
@@ -91,20 +85,6 @@ snake::snake::snake(bool initNcurses, bool startupAnimations, bool _oppositeDir,
     drawScore();
     calcSpeedFactor();
     increaseSnakeSpeed();
-}
-void snake::snake::initColorMode()
-{
-    consoleSupportsColors = has_colors();
-    if (consoleSupportsColors)
-    {
-        start_color();
-        init_pair(blueBackground, COLOR_BLUE, COLOR_BLUE);
-        init_pair(greenText, COLOR_GREEN, COLOR_BLACK);
-        init_pair(redText, COLOR_RED, COLOR_BLACK);
-        init_pair(whiteText, COLOR_WHITE, COLOR_BLACK);
-        init_pair(magentaText, COLOR_MAGENTA, COLOR_BLACK);
-        init_pair(yellowText,COLOR_YELLOW,COLOR_BLACK);
-    }
 }
 void snake::snake::setDefaultPos()
 {
@@ -637,41 +617,4 @@ snake::snake::~snake()
 {
     // destroys ncurses
     endwin();
-}
-/* utils */
-unsigned int snake::utils::getTimestamp()
-{
-    return std::chrono::time_point_cast<std::chrono::microseconds>(
-            std::chrono::high_resolution_clock::now()).time_since_epoch().count();
-}
-unsigned short int snake::utils::randomNum(const unsigned short int *maxNum)
-{
-    unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::mt19937_64 generator(seed);
-    return generator() % *maxNum; // lowers the number to the specified range
-}
-snake::utils::timer::timer(unsigned short int millisecondsToWait)
-{
-    startTime = getTimestamp();
-    timeToWait = millisecondsToWait;
-}
-bool snake::utils::timer::done() const
-{
-    unsigned int timeTaken = getTimestamp() - startTime;
-    return timeTaken / 1000 > timeToWait;
-}
-void snake::utils::timer::reset()
-{
-    startTime = getTimestamp();
-}
-void snake::utils::initNcurses()
-{
-    initscr();
-    cbreak();
-    noecho();
-    raw();
-    nodelay(stdscr, true);
-    scrollok(stdscr, true);
-    curs_set(0);
-    keypad(stdscr,true);
 }
