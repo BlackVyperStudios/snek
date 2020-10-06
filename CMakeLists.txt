@@ -12,5 +12,7 @@ if (WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static")
 endif (WIN32)
 
-add_executable(snek-debugFront src/frontend-debug.cpp src/snake.cpp)
-add_executable(snek-releaseFront src/frontend-release.cpp src/snake.cpp)
+set(snake-source src/snake.cpp src/utils.cpp)
+
+add_executable(snek-debugFront src/frontend-debug.cpp ${snake-source})
+add_executable(snek-releaseFront src/frontend-release.cpp ${snake-source})
