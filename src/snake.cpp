@@ -8,9 +8,9 @@
 
 // version
 #define snakeVersionMajor 1
-#define snakeVersionMinor 0
+#define snakeVersionMinor 1
 #define snakeVersionPatch 0
-#define snakeVersionRelease ' '
+#define snakeVersionRelease 'B'
 // input parsing values
 #define moveUp 1
 #define moveDown 2
