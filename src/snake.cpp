@@ -5,12 +5,8 @@
 #endif
 #include "snake.h"
 #include "utils.h"
+#include "information.hpp"
 
-// version
-#define snakeVersionMajor 1
-#define snakeVersionMinor 1
-#define snakeVersionPatch 0
-#define snakeVersionRelease 'B'
 // input parsing values
 #define moveUp 1
 #define moveDown 2
@@ -133,7 +129,7 @@ void snake::snake::drawSnake()
 
     if (snakeLength > 1)
         mvaddch(snakePos[1][1],snakePos[0][1], 'o');
-    
+
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(greenText));
 }
@@ -254,7 +250,7 @@ void snake::snake::animateWatermark()
     refresh();
     timer.reset();
     while (!timer.done());
-    printw("%d", snakeVersionMajor);
+    printw("%d", SNAKE_VERSION_MAJOR);
     refresh();
     timer.reset();
     while (!timer.done());
@@ -262,19 +258,15 @@ void snake::snake::animateWatermark()
     refresh();
     timer.reset();
     while (!timer.done());
-    printw("%d", snakeVersionMinor);
+    printw("%d", SNAKE_VERSION_MINOR);
     refresh();
     timer.reset();
     while (!timer.done());
-    printw(".", snakeVersionMajor);
+    printw(".");
     refresh();
     timer.reset();
     while (!timer.done());
-    printw("%d", snakeVersionPatch);
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    printw("%c", snakeVersionRelease);
+    printw("%d", SNAKE_VERSION_PATCH);
     refresh();
     timer.reset();
     while (!timer.done());
@@ -348,7 +340,7 @@ void snake::snake::drawWatermark()
     mvprintw(1,screen[0] + 13,"ooooO");
     if (consoleSupportsColors)
         attron(COLOR_PAIR(redText));
-    mvprintw(2,screen[0] + 2, "Version: %d.%d.%d%c", snakeVersionMajor, snakeVersionMinor, snakeVersionPatch, snakeVersionRelease);
+    mvprintw(2,screen[0] + 2, "Version: %d.%d.%d", SNAKE_VERSION_MAJOR, SNAKE_VERSION_MINOR, SNAKE_VERSION_PATCH);
     if (consoleSupportsColors)
         attron(COLOR_PAIR(redText));
     mvprintw(3,screen[0] + 2, "by MCWertGaming");

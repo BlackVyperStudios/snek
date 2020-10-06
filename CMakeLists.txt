@@ -1,8 +1,13 @@
 cmake_minimum_required(VERSION 3.16)
-project(snek)
+project(snek
+        VERSION 1.0.2
+        DESCRIPTION "SNEK - A simple snake clone, playable in the commandline with some unique game modes."
+        HOMEPAGE_URL "https://github.com/MCWertGaming/snek"
+        LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
+configure_file(src/information.hpp.in src/information.hpp)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lncurses")
 
@@ -15,4 +20,5 @@ endif (WIN32)
 set(snake-source src/snake.cpp src/utils.cpp)
 
 add_executable(snek-debugFront src/frontend-debug.cpp ${snake-source})
+target_include_directories(snek-debugFront PUBLIC ${PROJECT_BINARY_DIR}/src)
 add_executable(snek-releaseFront src/frontend-release.cpp ${snake-source})
