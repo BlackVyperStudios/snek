@@ -124,17 +124,16 @@ void snake::snake::drawSnake()
     if (consoleSupportsColors)
         attron(COLOR_PAIR(greenText));
 
-    // tail gets erased before drawing the snake to avoid removing of the snake
+    // tail gets erased before drawing the snake to avoid removing of the snakeHead
     // erase tail, but dont erase on first move due to last location at 0,0
     if (snakePos[0][snakeLength] != 0 && snakePos[1][snakeLength] != 0)
         mvaddch(snakePos[1][snakeLength], snakePos[0][snakeLength], ' ');
 
     mvaddch(snakePos[1][0],snakePos[0][0], 'O');
 
-    for (unsigned short int i = 1; i < snakeLength; i++)
-    {
-        mvaddch(snakePos[1][i],snakePos[0][i], 'o');
-    }
+    if (snakeLength >= 1)
+        mvaddch(snakePos[1][1],snakePos[0][1], 'o');
+    
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(greenText));
 }
