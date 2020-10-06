@@ -131,7 +131,7 @@ void snake::snake::drawSnake()
 
     mvaddch(snakePos[1][0],snakePos[0][0], 'O');
 
-    if (snakeLength >= 1)
+    if (snakeLength > 1)
         mvaddch(snakePos[1][1],snakePos[0][1], 'o');
     
     if (consoleSupportsColors)

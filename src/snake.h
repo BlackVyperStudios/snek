@@ -26,7 +26,7 @@ namespace snake
         bool consoleSupportsColors = true;
 
         /* pre-game */
-        inline void setDefaultPos();
+        void setDefaultPos();
         void calcSpeedFactor();
 
         /* drawing */
