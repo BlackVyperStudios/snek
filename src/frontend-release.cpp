@@ -4,7 +4,7 @@
  *  Licensed under MIT on GitHub
  *  https://github.com/MCWertGaming/snek
  * ===================================== */
-#include "snake.h"
+#include "snake.hpp"
 
 int main()
 {

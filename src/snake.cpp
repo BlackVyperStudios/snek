@@ -3,8 +3,8 @@
 #elif (__linux__)
 #include <ncurses.h>
 #endif
-#include "snake.h"
-#include "utils.h"
+#include "snake.hpp"
+#include "utils.hpp"
 #include "information.hpp"
 
 // input parsing values
