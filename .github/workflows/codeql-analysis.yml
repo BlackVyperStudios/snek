@@ -30,7 +30,7 @@ jobs:
 
     steps:
     - name: install ncurses
-      run: sudo apt-get install libncurses5-dev libncursesw5-dev
+      run: sudo apt-get install libncurses-dev
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
