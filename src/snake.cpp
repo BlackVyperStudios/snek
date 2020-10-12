@@ -4,7 +4,7 @@
 #if defined(_WIN32)
 #include <ncurses/ncurses>
 #elif (__linux__)
-#include <ncurses.h>
+#include <ncurses/ncurses.h>
 #endif
 #include "snake.h"
 
