@@ -4,8 +4,9 @@
 #if defined(_WIN32)
 #include <ncurses/ncurses>
 #elif (__linux__)
-#include <ncurses.h>
+//
 #endif
+#include <ncurses.h>
 #include "snake.h"
 
 #define snakeVersionMajor 1
