@@ -36,4 +36,4 @@ cmake-build-debug-mingw/
 # custom project files
 snek
 snek.cbp
-src/information.hpp
+src-old/information.hpp
