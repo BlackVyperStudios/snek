@@ -1,4 +1,5 @@
 #if defined(_WIN32)
+// fix for MSYS2, because they are using the old directory structure
 #include <ncurses/ncurses>
 #elif (__linux__)
 #include <ncurses.h>
@@ -8,12 +9,12 @@
 #include "information.hpp"
 
 // input parsing values
-#define moveUp 1
-#define moveDown 2
-#define moveLeft 3
-#define moveRight 4
+#define inputUp 1
+#define inputDown 2
+#define inputLeft 3
+#define inputRight 4
 #define noInput 0
-#define userQuit -1
+#define inputQuit -1
 // last direction parsing values
 #define notMovedYet 0
 #define lastDirUp 1
@@ -456,7 +457,7 @@ unsigned short int snake::snake::update()
     if (lastDir == notMovedYet && input == noInput)
         return 0;
     // check, if the user wants to exit the game
-    else if (input == userQuit)
+    else if (input == inputQuit)
         return 1;
     // make up and down movement slower to make it feel as fast as left and right movement
     if (movementFix)
@@ -489,26 +490,26 @@ void snake::snake::getInput()
                 case KEY_UP:
                 case 'w':
                     if (oppositeDir || !oppositeDir && lastDir != lastDirDown || snakeLength == 1)
-                        input = moveUp;
+                        input = inputUp;
                     break;
                 case KEY_DOWN:
                 case 's':
                     if (oppositeDir || !oppositeDir && lastDir != lastDirUp || snakeLength == 1)
-                        input = moveDown;
+                        input = inputDown;
                     break;
                 case KEY_LEFT:
                 case 'a':
                     if (oppositeDir || !oppositeDir && lastDir != lastDirRight || snakeLength == 1)
-                        input = moveLeft;
+                        input = inputLeft;
                     break;
                 case KEY_RIGHT:
                 case 'd':
                     if (oppositeDir || !oppositeDir && lastDir != lastDirLeft || snakeLength == 1)
-                        input = moveRight;
+                        input = inputRight;
                     break;
                 case 27: // ESC key
                 case 'q':
-                    input = userQuit;
+                    input = inputQuit;
                     break;
                 default:
                     input = noInput;
@@ -525,22 +526,22 @@ void snake::snake::calcNewSnakePos()
     {
         case noInput:
             break;
-        case moveUp:
+        case inputUp:
             newSnakePos[0] = snakePos[0][0];
             newSnakePos[1] = snakePos[1][0] - 1;
             lastDir = lastDirUp;
             return;
-        case moveDown:
+        case inputDown:
             newSnakePos[0] = snakePos[0][0];
             newSnakePos[1] = snakePos[1][0] + 1;
             lastDir = lastDirDown;
             return;
-        case moveLeft:
+        case inputLeft:
             newSnakePos[0] = snakePos[0][0] - 1;
             newSnakePos[1] = snakePos[1][0];
             lastDir = lastDirLeft;
             return;
-        case moveRight:
+        case inputRight:
             newSnakePos[0] = snakePos[0][0] + 1;
             newSnakePos[1] = snakePos[1][0];
             lastDir = lastDirRight;
@@ -597,7 +598,7 @@ void snake::snake::increaseSnakeSpeed()
 /* fixes */
 void snake::snake::normaliseMovementSpeed() const
 {
-    if (input == moveUp || input == moveDown || input == noInput && lastDir == lastDirUp || input == noInput &&
+    if (input == inputUp || input == inputDown || input == noInput && lastDir == lastDirUp || input == noInput &&
         lastDir == lastDirDown)
     {
         utils::timer timer(140);
