@@ -91,7 +91,7 @@ void snake::snake::setDefaultPos()
 }
 void snake::snake::calcSpeedFactor()
 {
-    snakeSpeedFactor = (double)100 / ((screen[0] - 1) * (screen[1] - 1));
+    snakeSpeedFactor = (double)(maxSpeed - minSpeed) / 100 / (1 / ((double)100 / ((screen[0] - 1) * (screen[1] - 1))));
 }
 
 /* ==== drawing ==== */
@@ -543,7 +543,7 @@ void snake::snake::updateSnakePos()
 }
 void snake::snake::increaseSnakeSpeed()
 {
-    snakeSpeed = (unsigned int) (500 - snakeSpeedFactor * snakeLength / ((double)minSpeed / maxSpeed));
+    snakeSpeed = maxSpeed - (snakeSpeedFactor * snakeLength);
 }
 
 /* fixes */
