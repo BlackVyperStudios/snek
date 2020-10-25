@@ -18,9 +18,9 @@ endif (WIN32)
 set(snake-source src-old/snake.cpp src-old/utils.cpp)
 
 add_executable(snek-debugFront src-old/frontend-debug.cpp ${snake-source})
-target_include_directories(snek-debugFront PUBLIC ${PROJECT_BINARY_DIR}/src)
+target_include_directories(snek-debugFront PUBLIC ${PROJECT_BINARY_DIR}/src-old)
 target_link_libraries(snek-debugFront ncurses)
 
 add_executable(snek-releaseFront src-old/frontend-release.cpp ${snake-source})
-target_include_directories(snek-releaseFront PUBLIC ${PROJECT_BINARY_DIR}/src)
+target_include_directories(snek-releaseFront PUBLIC ${PROJECT_BINARY_DIR}/src-old)
 target_link_libraries(snek-releaseFront ncurses)
