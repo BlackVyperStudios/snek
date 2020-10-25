@@ -381,7 +381,7 @@ void snake::snake::updateApple()
     if (redAppleEaten())
     {
         // TODO animate score and tail changes
-        score += 10;
+        score += 1;
         snakeLength++;
         createApple(redApple);
         if (snakeLength % 5 == 0 && !magentaAppleExist)
@@ -397,7 +397,7 @@ void snake::snake::updateApple()
     }
     else if (magentaAppleEaten())
     {
-        score += 20;
+        score += 2;
         snakeLength++;
         magentaAppleExist = false;
         drawScore();
