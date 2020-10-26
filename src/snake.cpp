@@ -54,10 +54,10 @@ snake::snake::snake(bool initNcurses, bool startupAnimations, unsigned short _sc
     increaseSnakeSpeed();
 }
 snake::snake::snake(bool initNcurses, bool startupAnimations, bool _oppositeDir, unsigned short int _minSpeed,
-                    unsigned short int _maxSpeed, bool _movementFix, unsigned short int _screenX,
+                    unsigned short int _maxSpeed, unsigned short int _screenX,
                     unsigned short int _screenY, bool _enableColorMode)
                     : oppositeDir{_oppositeDir}, minSpeed{_minSpeed}, maxSpeed{_maxSpeed},
-                      movementFix{_movementFix}, screen{_screenX, _screenY}, consoleSupportsColors{_enableColorMode}
+                      screen{_screenX, _screenY}, consoleSupportsColors{_enableColorMode}
 {
     if (initNcurses)
     {
@@ -408,9 +408,6 @@ unsigned short int snake::snake::update()
     // check, if the user wants to exit the game
     else if (input == inputQuit)
         return 1;
-    // make up and down movement slower to make it feel as fast as left and right movement
-    if (movementFix)
-        normaliseMovementSpeed();
     // calculates the new snake position for illegalPosition() and updateSnake()
     calcNewSnakePos();
     // check, if the new snake destination is illegal (if that's true, the player looses)
@@ -543,17 +540,6 @@ void snake::snake::increaseSnakeSpeed()
 {
     if ((snakeLength -1) % 5 == 0)
         snakeSpeed = maxSpeed - (snakeSpeedFactor * snakeLength);
-}
-
-/* fixes */
-void snake::snake::normaliseMovementSpeed() const
-{
-    if (input == inputUp || input == inputDown || input == noInput && lastDir == lastDirUp || input == noInput &&
-        lastDir == lastDirDown)
-    {
-        utils::timer timer(140);
-        while (!timer.done());
-    }
 }
 snake::snake::~snake()
 {

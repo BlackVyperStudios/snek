@@ -33,8 +33,6 @@ namespace snake
         const unsigned short int minSpeed = 10;
         // maximum snake speed in micro seconds
         const unsigned short int maxSpeed = 500;
-        // toggles the slowing of the up and down speed to make it more natural
-        const bool movementFix = false;
         // game screen size screen[X/Y]
         const unsigned short int screen[2];
         /* automatic options */
@@ -79,20 +77,15 @@ namespace snake
         void calcNewSnakePos();
         // calculates the actual snake speed and stores it into snakeSpeed
         void increaseSnakeSpeed();
-
-        /* fixes */
-        // slows left and right movement to make it feel more natural
-        inline void normaliseMovementSpeed() const;
     public:
         // constructor for default game options
         explicit snake(bool, bool, unsigned short int, unsigned short int);
         // constructor for manual game options
-        snake(bool, bool, bool, unsigned short int, unsigned short int, bool, unsigned short int, unsigned short int,
+        snake(bool, bool, bool, unsigned short int, unsigned short int, unsigned short int, unsigned short int,
               bool);
         // updates the game state
         unsigned short int update();
         // destructor destroys game and ncurses
         virtual ~snake();
-        // toggles possible movement in the opposite direction
     };
 }
