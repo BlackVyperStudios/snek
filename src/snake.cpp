@@ -114,7 +114,7 @@ void snake::snake::drawApple(unsigned short int color)
     else if (color == redApple && !consoleSupportsColors)
         mvaddch(apple[redApple][1],apple[redApple][0], 'A');
     else if (color == magentaApple && !consoleSupportsColors)
-        mvaddch(apple[redApple][1],apple[redApple][0], 'S');
+        mvaddch(apple[magentaApple][1],apple[magentaApple][0], 'B');
 }
 void snake::snake::drawSnake()
 {
