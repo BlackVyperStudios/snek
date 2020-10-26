@@ -27,8 +27,6 @@ namespace snake
         // stores the actual snake speed
         unsigned short int snakeSpeed{};
         /* game options */
-        // toggles if the player can move 'back', so backwards (which will end the game)
-        const bool oppositeDir = false;
         // minimum snake speed in micro seconds
         const unsigned short int minSpeed = 10;
         // maximum snake speed in micro seconds
@@ -81,7 +79,7 @@ namespace snake
         // constructor for default game options
         explicit snake(bool, bool, unsigned short int, unsigned short int);
         // constructor for manual game options
-        snake(bool, bool, bool, unsigned short int, unsigned short int, unsigned short int, unsigned short int,
+        snake(bool, bool, unsigned short int, unsigned short int, unsigned short int, unsigned short int,
               bool);
         // updates the game state
         unsigned short int update();

@@ -53,10 +53,10 @@ snake::snake::snake(bool initNcurses, bool startupAnimations, unsigned short _sc
     calcSpeedFactor();
     increaseSnakeSpeed();
 }
-snake::snake::snake(bool initNcurses, bool startupAnimations, bool _oppositeDir, unsigned short int _minSpeed,
+snake::snake::snake(bool initNcurses, bool startupAnimations, unsigned short int _minSpeed,
                     unsigned short int _maxSpeed, unsigned short int _screenX,
                     unsigned short int _screenY, bool _enableColorMode)
-                    : oppositeDir{_oppositeDir}, minSpeed{_minSpeed}, maxSpeed{_maxSpeed},
+                    : minSpeed{_minSpeed}, maxSpeed{_maxSpeed},
                       screen{_screenX, _screenY}, consoleSupportsColors{_enableColorMode}
 {
     if (initNcurses)
@@ -435,22 +435,22 @@ void snake::snake::getInput()
             {
                 case KEY_UP:
                 case 'w':
-                    if (oppositeDir || !oppositeDir && lastDir != lastDirDown || snakeLength == 1)
+                    if (lastDir != lastDirDown || snakeLength == 1)
                         input = inputUp;
                     break;
                 case KEY_DOWN:
                 case 's':
-                    if (oppositeDir || !oppositeDir && lastDir != lastDirUp || snakeLength == 1)
+                    if (lastDir != lastDirUp || snakeLength == 1)
                         input = inputDown;
                     break;
                 case KEY_LEFT:
                 case 'a':
-                    if (oppositeDir || !oppositeDir && lastDir != lastDirRight || snakeLength == 1)
+                    if (lastDir != lastDirRight || snakeLength == 1)
                         input = inputLeft;
                     break;
                 case KEY_RIGHT:
                 case 'd':
-                    if (oppositeDir || !oppositeDir && lastDir != lastDirLeft || snakeLength == 1)
+                    if (lastDir != lastDirLeft || snakeLength == 1)
                         input = inputRight;
                     break;
                 case 27: // ESC key
