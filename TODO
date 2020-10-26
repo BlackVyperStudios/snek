@@ -20,15 +20,6 @@ move from ncurses to termbox
 + move from termbox to own reimplementation
 change include to import as c++20 introduced
 
-// bugs / fixes
-optimise movement fix to use movementFactor
-fix gameover if the snake is too long
-windows terminal bugs on resizing
-change score to 1 instead 10
-speed up version and name info drawing
-snake freezes if too big on debug window
-seconds apple doesn't spawn on colorless mode
-
 // documentation
 proper readme with compilation, dependencies and requirements
 + mention, that only MinGW works
