@@ -2,7 +2,7 @@
 // fix for MSYS2, because they are using the old directory structure
 #include <ncurses/ncurses>
 #elif (__linux__)
-//
+#include <ncurses.h>
 #endif
 #include "snake.hpp"
 #include "utils.hpp"
