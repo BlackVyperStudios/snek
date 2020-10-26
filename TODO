@@ -16,8 +16,7 @@ magenta apple vanishes after time
 yellowApple spawns at 2% vanishes quickly too
 
 // coding optimisations
-move from ncurses to termbox
-+ move from termbox to own reimplementation
+move from ncurses to a better implementation
 change include to import as c++20 introduced
 
 // documentation
