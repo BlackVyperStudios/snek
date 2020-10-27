@@ -12,17 +12,19 @@ add clock
 add leaderboard
 create game menu
 add second player
+magenta apple vanishes after time
+yellowApple spawns at 2% vanishes quickly too
 
 // coding optimisations
-move from ncurses to termbox
-+ move from termbox to own reimplementation
+move from ncurses to a better implementation
 change include to import as c++20 introduced
-
-// bugs
-optimise movement fix to use movementFactor
-fix gameover if the snake is too long
-windows terminal bugs on resizing
 
 // documentation
 proper readme with compilation, dependencies and requirements
 + mention, that only MinGW works
+
+//
+only set colormode if its not disabled
+only set colors if ncurses gets initialised but set colors to on / off
+add watermark in custom mode
+add watermark in dev mode

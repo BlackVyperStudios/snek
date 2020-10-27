@@ -1,25 +1,20 @@
-#include <chrono>
-#include <random>
-#include <cmath>
 #if defined(_WIN32)
+// fix for MSYS2, because they are using the old directory structure
 #include <ncurses/ncurses>
 #elif (__linux__)
-//
-#endif
 #include <ncurses.h>
-#include "snake.h"
+#endif
+#include "snake.hpp"
+#include "utils.hpp"
+#include "information.hpp"
 
-#define snakeVersionMajor 1
-#define snakeVersionMinor 0
-#define snakeVersionPatch 1
-#define snakeVersionRelease ' '
 // input parsing values
-#define moveUp 1
-#define moveDown 2
-#define moveLeft 3
-#define moveRight 4
+#define inputUp 1
+#define inputDown 2
+#define inputLeft 3
+#define inputRight 4
 #define noInput 0
-#define userQuit -1
+#define inputQuit -1
 // last direction parsing values
 #define notMovedYet 0
 #define lastDirUp 1
@@ -29,22 +24,28 @@
 // apple color
 #define redApple 0
 #define magentaApple 1
-// text color
-#define blueBackground 1
-#define greenText 2
-#define redText 3
-#define whiteText 4
-#define magentaText 5
-#define yellowText 6
 
 /* ==== pre-game ==== */
-snake::snake::snake()
+snake::snake::snake(bool initNcurses, bool startupAnimations, unsigned short _screenX, unsigned short int _screenY)
+                    : screen{_screenX, _screenY}
 {
-    utils::initNcurses();
-    initColorMode();
+    if (initNcurses)
+    {
+        utils::initNcurses();
+        utils::initColorMode();
+        consoleSupportsColors = has_colors();
+    }
     setDefaultPos();
-    drawField();
-    drawWatermark();
+    if (startupAnimations)
+    {
+        animateField();
+        animateWatermark();
+    }
+    else
+    {
+        drawField();
+        drawWatermark();
+    }
     drawSnake();
     createApple(redApple);
     drawApple(redApple);
@@ -52,19 +53,35 @@ snake::snake::snake()
     calcSpeedFactor();
     increaseSnakeSpeed();
 }
-void snake::snake::initColorMode()
+snake::snake::snake(bool initNcurses, bool startupAnimations, unsigned short int _minSpeed,
+                    unsigned short int _maxSpeed, unsigned short int _screenX,
+                    unsigned short int _screenY, bool _enableColorMode)
+                    : minSpeed{_minSpeed}, maxSpeed{_maxSpeed},
+                      screen{_screenX, _screenY}, consoleSupportsColors{_enableColorMode}
 {
-    consoleSupportsColors = has_colors();
-    if (consoleSupportsColors)
+    if (initNcurses)
     {
-        start_color();
-        init_pair(blueBackground, COLOR_BLUE, COLOR_BLUE);
-        init_pair(greenText, COLOR_GREEN, COLOR_BLACK);
-        init_pair(redText, COLOR_RED, COLOR_BLACK);
-        init_pair(whiteText, COLOR_WHITE, COLOR_BLACK);
-        init_pair(magentaText, COLOR_MAGENTA, COLOR_BLACK);
-        init_pair(yellowText,COLOR_YELLOW,COLOR_BLACK);
+        utils::initNcurses();
+        utils::initColorMode();
+        consoleSupportsColors = has_colors();
     }
+    setDefaultPos();
+    if (startupAnimations)
+    {
+        animateField();
+        animateWatermark();
+    }
+    else
+    {
+        drawField();
+        drawWatermark();
+    }
+    drawSnake();
+    createApple(redApple);
+    drawApple(redApple);
+    drawScore();
+    calcSpeedFactor();
+    increaseSnakeSpeed();
 }
 void snake::snake::setDefaultPos()
 {
@@ -74,7 +91,7 @@ void snake::snake::setDefaultPos()
 }
 void snake::snake::calcSpeedFactor()
 {
-    snakeSpeedFactor = (double)100 / ((screen[0] - 1) * (screen[1] - 1));
+    snakeSpeedFactor = (double)(maxSpeed - minSpeed) / 100 / (1 / ((double)100 / ((screen[0] - 1) * (screen[1] - 1))));
 }
 
 /* ==== drawing ==== */
@@ -97,28 +114,27 @@ void snake::snake::drawApple(unsigned short int color)
     else if (color == redApple && !consoleSupportsColors)
         mvaddch(apple[redApple][1],apple[redApple][0], 'A');
     else if (color == magentaApple && !consoleSupportsColors)
-        mvaddch(apple[redApple][1],apple[redApple][0], 'S');
+        mvaddch(apple[magentaApple][1],apple[magentaApple][0], 'B');
 }
 void snake::snake::drawSnake()
 {
     if (consoleSupportsColors)
         attron(COLOR_PAIR(greenText));
 
-    // tail gets erased before drawing the snake to avoid removing of the snake
+    // tail gets erased before drawing the snake to avoid removing of the snakeHead
     // erase tail, but dont erase on first move due to last location at 0,0
     if (snakePos[0][snakeLength] != 0 && snakePos[1][snakeLength] != 0)
         mvaddch(snakePos[1][snakeLength], snakePos[0][snakeLength], ' ');
 
     mvaddch(snakePos[1][0],snakePos[0][0], 'O');
 
-    for (unsigned short int i = 1; i < snakeLength; i++)
-    {
-        mvaddch(snakePos[1][i],snakePos[0][i], 'o');
-    }
+    if (snakeLength > 1)
+        mvaddch(snakePos[1][1],snakePos[0][1], 'o');
+
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(greenText));
 }
-void snake::snake::drawField()
+void snake::snake::animateField()
 {
     if (consoleSupportsColors)
         attron(COLOR_PAIR(blueBackground));
@@ -154,7 +170,34 @@ void snake::snake::drawField()
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(blueBackground));
 }
-void snake::snake::drawWatermark()
+void snake::snake::drawField()
+{
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(blueBackground));
+    for (unsigned short int i = 0; i < screen[0]; i++)
+    {
+        mvaddch(0,i,'#');
+        refresh();
+    }
+    for (unsigned short int i = 0; i < screen[1]; i++)
+    {
+        mvaddch(i,screen[0],'#');
+        refresh();
+    }
+    for (unsigned short int i = screen[0]; i > 0; i--)
+    {
+        mvaddch(screen[1],i,'#');
+        refresh();
+    }
+    for (unsigned short int i = screen[1]; i > 0; i--)
+    {
+        mvaddch(i,0,'#');
+        refresh();
+    }
+    if (consoleSupportsColors)
+        attroff(COLOR_PAIR(blueBackground));
+}
+void snake::snake::animateWatermark()
 {
     if (consoleSupportsColors)
         attron(COLOR_PAIR(redText));
@@ -208,7 +251,7 @@ void snake::snake::drawWatermark()
     refresh();
     timer.reset();
     while (!timer.done());
-    printw("%d", snakeVersionMajor);
+    printw("%d", SNAKE_VERSION_MAJOR);
     refresh();
     timer.reset();
     while (!timer.done());
@@ -216,78 +259,43 @@ void snake::snake::drawWatermark()
     refresh();
     timer.reset();
     while (!timer.done());
-    printw("%d", snakeVersionMinor);
+    printw("%d", SNAKE_VERSION_MINOR);
     refresh();
     timer.reset();
     while (!timer.done());
-    printw(".", snakeVersionMajor);
+    printw(".");
     refresh();
     timer.reset();
     while (!timer.done());
-    printw("%d", snakeVersionPatch);
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    printw("%c", snakeVersionRelease);
+    printw("%d", SNAKE_VERSION_PATCH);
     refresh();
     timer.reset();
     while (!timer.done());
 
     if (consoleSupportsColors)
         attron(COLOR_PAIR(redText));
-    mvaddch(3,screen[0] + 2, 'b');
+    mvprintw(3,screen[0] + 2, "by MCWertGaming");
     refresh();
     timer.reset();
     while (!timer.done());
-    addch('y');
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    mvaddch(3,screen[0] + 5, 'M');
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    addch('C');
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    addch('W');
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    addch('e');
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    addch('r');
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    addch('t');
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    addch('G');
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    addch('a');
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    addch('m');
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    addch('i');
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    addch('n');
-    refresh();
-    timer.reset();
-    while (!timer.done());
-    addch('g');
+    if (consoleSupportsColors)
+        attroff(COLOR_PAIR(blueBackground));
+}
+void snake::snake::drawWatermark()
+{
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(redText));
+    mvprintw(1,screen[0] + 8, "SNEK");
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(greenText));
+    mvprintw(1,screen[0] + 2,"Ooooo ");
+    mvprintw(1,screen[0] + 13,"ooooO");
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(redText));
+    mvprintw(2,screen[0] + 2, "Version: %d.%d.%d", SNAKE_VERSION_MAJOR, SNAKE_VERSION_MINOR, SNAKE_VERSION_PATCH);
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(redText));
+    mvprintw(3,screen[0] + 2, "by MCWertGaming");
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(blueBackground));
 }
@@ -324,9 +332,10 @@ void snake::snake::updateApple()
     if (redAppleEaten())
     {
         // TODO animate score and tail changes
-        score += 10;
+        score += 1;
         snakeLength++;
         createApple(redApple);
+        increaseSnakeSpeed();
         if ((snakeLength -1) % 5 == 0 && !magentaAppleExist)
         {
             createApple(magentaApple);
@@ -335,22 +344,20 @@ void snake::snake::updateApple()
         }
         drawApple(redApple);
         drawScore();
-        if ((snakeLength -1) % 5 == 0)
-            increaseSnakeSpeed();
     }
     else if (magentaAppleEaten())
     {
-        score += 20;
+        score += 2;
         snakeLength++;
         magentaAppleExist = false;
         drawScore();
-        if ((snakeLength -1) % 5 == 0)
-            increaseSnakeSpeed();
+        increaseSnakeSpeed();
     }
 }
 
 /* ==== checks ==== */
-bool snake::snake::illegalPosition(const unsigned short int *locationX, const unsigned short int *locationY, bool illegalApple)
+bool snake::snake::illegalPosition(const unsigned short int *locationX, const unsigned short int *locationY,
+                                   bool illegalApple)
 {
     // make apple pos illegal for the createApple()
     if (*locationX != 0 && *locationY != 0 && *locationX != screen[0] && *locationY != screen[1])
@@ -399,11 +406,8 @@ unsigned short int snake::snake::update()
     if (lastDir == notMovedYet && input == noInput)
         return 0;
     // check, if the user wants to exit the game
-    else if (input == userQuit)
+    else if (input == inputQuit)
         return 1;
-    // make up and down movement slower to make it feel as fast as left and right movement
-    if (movementFix)
-        normaliseMovementSpeed();
     // calculates the new snake position for illegalPosition() and updateSnake()
     calcNewSnakePos();
     // check, if the new snake destination is illegal (if that's true, the player looses)
@@ -431,27 +435,27 @@ void snake::snake::getInput()
             {
                 case KEY_UP:
                 case 'w':
-                    if (oppositeDir || !oppositeDir && lastDir != lastDirDown || snakeLength == 1)
-                        input = moveUp;
+                    if (lastDir != lastDirDown || snakeLength == 1)
+                        input = inputUp;
                     break;
                 case KEY_DOWN:
                 case 's':
-                    if (oppositeDir || !oppositeDir && lastDir != lastDirUp || snakeLength == 1)
-                        input = moveDown;
+                    if (lastDir != lastDirUp || snakeLength == 1)
+                        input = inputDown;
                     break;
                 case KEY_LEFT:
                 case 'a':
-                    if (oppositeDir || !oppositeDir && lastDir != lastDirRight || snakeLength == 1)
-                        input = moveLeft;
+                    if (lastDir != lastDirRight || snakeLength == 1)
+                        input = inputLeft;
                     break;
                 case KEY_RIGHT:
                 case 'd':
-                    if (oppositeDir || !oppositeDir && lastDir != lastDirLeft || snakeLength == 1)
-                        input = moveRight;
+                    if (lastDir != lastDirLeft || snakeLength == 1)
+                        input = inputRight;
                     break;
                 case 27: // ESC key
                 case 'q':
-                    input = userQuit;
+                    input = inputQuit;
                     break;
                 default:
                     input = noInput;
@@ -468,22 +472,22 @@ void snake::snake::calcNewSnakePos()
     {
         case noInput:
             break;
-        case moveUp:
+        case inputUp:
             newSnakePos[0] = snakePos[0][0];
             newSnakePos[1] = snakePos[1][0] - 1;
             lastDir = lastDirUp;
             return;
-        case moveDown:
+        case inputDown:
             newSnakePos[0] = snakePos[0][0];
             newSnakePos[1] = snakePos[1][0] + 1;
             lastDir = lastDirDown;
             return;
-        case moveLeft:
+        case inputLeft:
             newSnakePos[0] = snakePos[0][0] - 1;
             newSnakePos[1] = snakePos[1][0];
             lastDir = lastDirLeft;
             return;
-        case moveRight:
+        case inputRight:
             newSnakePos[0] = snakePos[0][0] + 1;
             newSnakePos[1] = snakePos[1][0];
             lastDir = lastDirRight;
@@ -534,57 +538,11 @@ void snake::snake::updateSnakePos()
 }
 void snake::snake::increaseSnakeSpeed()
 {
-    snakeSpeed = (unsigned int) (500 - snakeSpeedFactor * snakeLength / ((double)minSpeed / maxSpeed));
-}
-
-/* fixes */
-void snake::snake::normaliseMovementSpeed() const
-{
-    if (input == moveUp || input == moveDown || input == noInput && lastDir == lastDirUp || input == noInput && lastDir == lastDirDown)
-    {
-        utils::timer timer(140);
-        while (!timer.done());
-    }
+    if ((snakeLength -1) % 5 == 0)
+        snakeSpeed = maxSpeed - (snakeSpeedFactor * snakeLength);
 }
 snake::snake::~snake()
 {
     // destroys ncurses
     endwin();
-}
-/* utils */
-unsigned int snake::utils::getTimestamp()
-{
-    return std::chrono::time_point_cast<std::chrono::microseconds>(
-            std::chrono::high_resolution_clock::now()).time_since_epoch().count();
-}
-unsigned short int snake::utils::randomNum(const unsigned short int *maxNum)
-{
-    unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::mt19937_64 generator(seed);
-    return generator() % *maxNum; // lowers the number to the specified range
-}
-snake::utils::timer::timer(unsigned short int millisecondsToWait)
-{
-    startTime = getTimestamp();
-    timeToWait = millisecondsToWait;
-}
-bool snake::utils::timer::done() const
-{
-    unsigned int timeTaken = getTimestamp() - startTime;
-    return timeTaken / 1000 > timeToWait;
-}
-void snake::utils::timer::reset()
-{
-    startTime = getTimestamp();
-}
-void snake::utils::initNcurses()
-{
-    initscr();
-    cbreak();
-    noecho();
-    raw();
-    nodelay(stdscr, true);
-    scrollok(stdscr, true);
-    curs_set(0);
-    keypad(stdscr,true);
 }
