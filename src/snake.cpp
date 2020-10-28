@@ -9,11 +9,12 @@
 #include "information.hpp"
 
 // input parsing values
+#define noInput 0
 #define inputUp 1
 #define inputDown 2
 #define inputLeft 3
 #define inputRight 4
-#define noInput 0
+#define inputPause 5
 #define inputQuit -1
 // last direction parsing values
 #define notMovedYet 0
@@ -50,6 +51,7 @@ snake::snake::snake(bool initNcurses, bool startupAnimations, unsigned short _sc
     createApple(redApple);
     drawApple(redApple);
     drawScore();
+    drawPause();
     calcSpeedFactor();
     increaseSnakeSpeed();
 }
@@ -80,6 +82,7 @@ snake::snake::snake(bool initNcurses, bool startupAnimations, unsigned short int
     createApple(redApple);
     drawApple(redApple);
     drawScore();
+    drawPause();
     calcSpeedFactor();
     increaseSnakeSpeed();
 }
@@ -371,9 +374,7 @@ bool snake::snake::illegalPosition(const unsigned short int *locationX, const un
         for (unsigned short int i = 0; i < snakeLengthCopy; i++)
         {
             if (snakePos[0][i] == *locationX && snakePos[1][i] == *locationY)
-            {
                 return true;
-            }
         }
         if (illegalApple && apple[redApple][0] == *locationX && apple[redApple][1] == *locationY ||
             illegalApple && apple[magentaApple][0] == *locationX && apple[magentaApple][0] == *locationY)
@@ -402,12 +403,13 @@ unsigned short int snake::snake::update()
 {
     /* pre-move tasks */
     getInput();
-    // check, if the player newer moved to skip the other tasks
-    if (lastDir == notMovedYet && input == noInput)
-        return 0;
+    drawPause();
     // check, if the user wants to exit the game
-    else if (input == inputQuit)
+    if (input == inputQuit)
         return 1;
+    // check, if the player newer moved to skip the other tasks
+    else if (lastDir == notMovedYet && input == noInput || input == inputPause)
+        return 0;
     // calculates the new snake position for illegalPosition() and updateSnake()
     calcNewSnakePos();
     // check, if the new snake destination is illegal (if that's true, the player looses)
@@ -419,6 +421,26 @@ unsigned short int snake::snake::update()
     /* object updating */
     updateApple();
     return 0;
+}
+
+void snake::snake::drawPause()
+{
+    if (input == inputPause)
+    {
+        if (consoleSupportsColors)
+            attron(COLOR_PAIR(cyanText));
+        mvprintw(5,screen[0] + 2, "PAUSE");
+        if (consoleSupportsColors)
+            attroff(COLOR_PAIR(whiteText));
+    }
+    if (input != inputPause)
+    {
+        if (consoleSupportsColors)
+            attron(COLOR_PAIR(cyanText));
+        mvprintw(5,screen[0] + 2, "     ");
+        if (consoleSupportsColors)
+            attroff(COLOR_PAIR(whiteText));
+    }
 }
 
 /* game mechanics */
@@ -454,15 +476,20 @@ void snake::snake::getInput()
                         input = inputRight;
                     break;
                 case 27: // ESC key
-                case 'q':
                     input = inputQuit;
+                    break;
+                case 'q':
+                    if (input == inputPause)
+                        input = inputQuit;
+                    else
+                        input = inputPause;
                     break;
                 default:
                     input = noInput;
             }
         }
         // skip timer, if it's the first move
-        if (lastDir == notMovedYet)
+        if (lastDir == notMovedYet || input == inputPause)
             break;
     }
 }

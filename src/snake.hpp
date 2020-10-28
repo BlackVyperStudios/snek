@@ -45,6 +45,7 @@ namespace snake
 
         /* drawing */
         void drawScore();
+        void drawPause();
         void drawField();
         void animateField();
         void drawWatermark();

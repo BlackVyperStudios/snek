@@ -53,6 +53,7 @@ void utils::initColorMode()
         init_pair(redText, COLOR_RED, COLOR_BLACK);
         init_pair(whiteText, COLOR_WHITE, COLOR_BLACK);
         init_pair(magentaText, COLOR_MAGENTA, COLOR_BLACK);
-        init_pair(yellowText,COLOR_YELLOW,COLOR_BLACK);
+        init_pair(yellowText, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(cyanText, COLOR_CYAN, COLOR_BLACK);
     }
 }

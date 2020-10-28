@@ -7,6 +7,7 @@
 #define whiteText 4
 #define magentaText 5
 #define yellowText 6
+#define cyanText 7
 
 namespace utils
 {

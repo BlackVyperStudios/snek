@@ -14,6 +14,8 @@ create game menu
 add second player
 magenta apple vanishes after time
 yellowApple spawns at 2% vanishes quickly too
+save time from timer -> pause
+revive oppDirection
 
 // coding optimisations
 move from ncurses to a better implementation
