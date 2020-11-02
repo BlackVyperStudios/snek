@@ -22,6 +22,8 @@ namespace snake
         unsigned short int lastDir{};
         // stores the input, please use the definitions
         short int input{};
+        // stores the pause input, please use the definitions
+        short int pauseInput{};
         // stores the calculated snake speed factor for generating the actual snake speed
         double snakeSpeedFactor{};
         // stores the actual snake speed

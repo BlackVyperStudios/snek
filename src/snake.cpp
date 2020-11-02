@@ -16,6 +16,10 @@
 #define inputRight 4
 #define inputPause 5
 #define inputQuit -1
+// pause parsing values
+#define pauseResume 0
+#define pauseLeft 1
+#define pauseRight 2
 // last direction parsing values
 #define notMovedYet 0
 #define lastDirUp 1
@@ -51,7 +55,6 @@ snake::snake::snake(bool initNcurses, bool startupAnimations, unsigned short _sc
     createApple(redApple);
     drawApple(redApple);
     drawScore();
-    drawPause();
     calcSpeedFactor();
     increaseSnakeSpeed();
 }
@@ -82,7 +85,6 @@ snake::snake::snake(bool initNcurses, bool startupAnimations, unsigned short int
     createApple(redApple);
     drawApple(redApple);
     drawScore();
-    drawPause();
     calcSpeedFactor();
     increaseSnakeSpeed();
 }
@@ -403,7 +405,6 @@ unsigned short int snake::snake::update()
 {
     /* pre-move tasks */
     getInput();
-    drawPause();
     // check, if the user wants to exit the game
     if (input == inputQuit)
         return 1;
@@ -425,22 +426,82 @@ unsigned short int snake::snake::update()
 
 void snake::snake::drawPause()
 {
-    if (input == inputPause)
+    short int ch;
+    bool pause = true;
+    bool quit = false;
+
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(cyanText));
+    mvprintw(5,screen[0] / 2 - 3, "PAUSE.");
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(greenText));
+    mvprintw(7, 3, "resume");
+    if (consoleSupportsColors)
+        attron(COLOR_PAIR(whiteText));
+    mvprintw(7,screen[0] - 7, "quit");
+
+    while (pause)
     {
-        if (consoleSupportsColors)
-            attron(COLOR_PAIR(cyanText));
-        mvprintw(5,screen[0] + 2, "PAUSE");
-        if (consoleSupportsColors)
-            attroff(COLOR_PAIR(whiteText));
+        ch = getch();
+        if (ch != ERR)
+        {
+            switch (ch)
+            {
+                case KEY_RIGHT:
+                case 'd':
+                    quit = true;
+                    pauseInput = pauseRight;
+                    if (consoleSupportsColors)
+                        attron(COLOR_PAIR(whiteText));
+                    mvprintw(7, 3, "resume");
+                    if (consoleSupportsColors)
+                        attron(COLOR_PAIR(greenText));
+                    mvprintw(7,screen[0] - 7, "quit");
+                    if (consoleSupportsColors)
+                        attron(COLOR_PAIR(whiteText));
+                    break;
+                case KEY_LEFT:
+                case 'a':
+                    quit = false;
+                    pauseInput = pauseLeft;
+                    if (consoleSupportsColors)
+                        attron(COLOR_PAIR(greenText));
+                    mvprintw(7, 3, "resume");
+                    if (consoleSupportsColors)
+                        attron(COLOR_PAIR(whiteText));
+                    mvprintw(7,screen[0] - 7, "quit");
+                case 10: //ENTER key
+                    if (quit)
+                        input = inputQuit;
+                    if (!quit)
+                    {   if (consoleSupportsColors)
+                            attroff(COLOR_PAIR(whiteText));
+                        mvprintw(5,screen[0] / 2 - 3, "      ");
+                        mvprintw(7, 3, "      ");
+                        mvprintw(7,screen[0] - 7, "    ");
+                        pause = false;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (ch == 10) //ENTER key
+        {
+            if (consoleSupportsColors)
+                attroff(COLOR_PAIR(whiteText));
+            mvprintw(5,screen[0] / 2 - 3, "      ");
+            mvprintw(7, 3, "      ");
+            mvprintw(7,screen[0] - 7, "    ");
+            pauseInput = pauseResume;
+            pause = false;
+        }
     }
-    if (input != inputPause)
-    {
-        if (consoleSupportsColors)
-            attron(COLOR_PAIR(cyanText));
-        mvprintw(5,screen[0] + 2, "     ");
-        if (consoleSupportsColors)
-            attroff(COLOR_PAIR(whiteText));
-    }
+    
+    drawSnake();
+    drawApple(redApple);
+    if (magentaAppleExist)
+        drawApple(magentaApple);
 }
 
 /* game mechanics */
@@ -479,16 +540,13 @@ void snake::snake::getInput()
                     input = inputQuit;
                     break;
                 case 'q':
-                    if (input == inputPause)
-                        input = inputQuit;
-                    else
-                        input = inputPause;
+                    drawPause();
                     break;
                 default:
                     input = noInput;
             }
         }
-        // skip timer, if it's the first move
+        // skip timer, if it's the very first move or the last move before pause (=> instant pause)
         if (lastDir == notMovedYet || input == inputPause)
             break;
     }
