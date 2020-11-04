@@ -17,9 +17,8 @@
 #define inputPause 5
 #define inputQuit -1
 // pause parsing values
-#define pauseResume 0
-#define pauseLeft 1
-#define pauseRight 2
+#define pauseLeft 0
+#define pauseRight 1
 // last direction parsing values
 #define notMovedYet 0
 #define lastDirUp 1
@@ -201,6 +200,16 @@ void snake::snake::drawField()
     }
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(blueBackground));
+
+    if (screen[0] % 2 == 0)
+        screenSizeXEven = true;
+    else
+        screenSizeXEven = false;
+
+    if (screen[1] % 2 == 0)
+        screenSizeYEven = true;
+    else
+        screenSizeYEven = false;
 }
 void snake::snake::animateWatermark()
 {
@@ -428,11 +437,15 @@ void snake::snake::drawPause()
 {
     short int ch;
     bool pause = true;
-    bool quit = false;
-
+    
+    
     if (consoleSupportsColors)
         attron(COLOR_PAIR(cyanText));
-    mvprintw(5,screen[0] / 2 - 3, "PAUSE.");
+    if (screenSizeXEven)
+        mvprintw(5,screen[0] / 2 - 2, "PAUSE");
+    if (!screenSizeXEven)
+        mvprintw(5,screen[0] / 2 - 2, "PAUSE.");
+        
     if (consoleSupportsColors)
         attron(COLOR_PAIR(greenText));
     mvprintw(7, 3, "resume");
@@ -449,7 +462,6 @@ void snake::snake::drawPause()
             {
                 case KEY_RIGHT:
                 case 'd':
-                    quit = true;
                     pauseInput = pauseRight;
                     if (consoleSupportsColors)
                         attron(COLOR_PAIR(whiteText));
@@ -462,7 +474,6 @@ void snake::snake::drawPause()
                     break;
                 case KEY_LEFT:
                 case 'a':
-                    quit = false;
                     pauseInput = pauseLeft;
                     if (consoleSupportsColors)
                         attron(COLOR_PAIR(greenText));
@@ -470,31 +481,38 @@ void snake::snake::drawPause()
                     if (consoleSupportsColors)
                         attron(COLOR_PAIR(whiteText));
                     mvprintw(7,screen[0] - 7, "quit");
-                case 10: //ENTER key
-                    if (quit)
-                        input = inputQuit;
-                    if (!quit)
-                    {   if (consoleSupportsColors)
-                            attroff(COLOR_PAIR(whiteText));
-                        mvprintw(5,screen[0] / 2 - 3, "      ");
-                        mvprintw(7, 3, "      ");
-                        mvprintw(7,screen[0] - 7, "    ");
-                        pause = false;
-                    }
-                    break;
                 default:
                     break;
             }
-        }
-        if (ch == 10) //ENTER key
-        {
-            if (consoleSupportsColors)
-                attroff(COLOR_PAIR(whiteText));
-            mvprintw(5,screen[0] / 2 - 3, "      ");
-            mvprintw(7, 3, "      ");
-            mvprintw(7,screen[0] - 7, "    ");
-            pauseInput = pauseResume;
-            pause = false;
+
+            if (pauseInput == pauseRight && ch == 10)
+                input = inputQuit;
+            else if (pauseInput == pauseLeft && ch == 10)
+            {   
+                if (consoleSupportsColors)
+                    attroff(COLOR_PAIR(whiteText));
+                if (screenSizeXEven)
+                    mvprintw(5,screen[0] / 2 - 2, "     ");
+                if (!screenSizeXEven)
+                    mvprintw(5,screen[0] / 2 - 2, "      ");
+                mvprintw(7, 3, "      ");
+                mvprintw(7,screen[0] - 7, "    ");
+                
+                pause = false;
+            }
+            
+            if (ch == 10) // ENTER key
+            {
+                if (consoleSupportsColors)
+                    attroff(COLOR_PAIR(whiteText));
+                if (screenSizeXEven)
+                    mvprintw(5,screen[0] / 2 - 2, "     ");
+                if (!screenSizeXEven)
+                    mvprintw(5,screen[0] / 2 - 2, "      ");
+                mvprintw(7, 3, "      ");
+                mvprintw(7,screen[0] - 7, "    ");
+                pause = false;
+            }
         }
     }
     
