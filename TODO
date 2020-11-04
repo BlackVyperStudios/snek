@@ -14,8 +14,14 @@ create game menu
 add second player
 magenta apple vanishes after time
 yellowApple spawns at 2% vanishes quickly too
-save time from timer -> pause
 revive oppDirection
+
+// pause
+draw whole snek after continuing
+save time from timer -> pause
+other colors (resume, quit)?
+distances (resume, quit)
+rename resume into continue?
 
 // coding optimisations
 move from ncurses to a better implementation
