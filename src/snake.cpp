@@ -437,8 +437,9 @@ void snake::snake::drawPause()
 {
     short int ch;
     bool pause = true;
-    
-    
+    // stores the pause input, please use the definitions
+    unsigned short int pauseInput;
+
     if (consoleSupportsColors)
         attron(COLOR_PAIR(cyanText));
     if (screenSizeXEven)
@@ -493,12 +494,10 @@ void snake::snake::drawPause()
                     attroff(COLOR_PAIR(whiteText));
                 if (screenSizeXEven)
                     mvprintw(5,screen[0] / 2 - 2, "     ");
-                if (!screenSizeXEven)
+                else
                     mvprintw(5,screen[0] / 2 - 2, "      ");
                 mvprintw(7, 3, "      ");
                 mvprintw(7,screen[0] - 7, "    ");
-                
-                pause = false;
             }
             
             if (ch == 10) // ENTER key
@@ -507,7 +506,7 @@ void snake::snake::drawPause()
                     attroff(COLOR_PAIR(whiteText));
                 if (screenSizeXEven)
                     mvprintw(5,screen[0] / 2 - 2, "     ");
-                if (!screenSizeXEven)
+                else
                     mvprintw(5,screen[0] / 2 - 2, "      ");
                 mvprintw(7, 3, "      ");
                 mvprintw(7,screen[0] - 7, "    ");
@@ -642,7 +641,7 @@ void snake::snake::updateSnakePos()
 void snake::snake::increaseSnakeSpeed()
 {
     if ((snakeLength -1) % 5 == 0)
-        snakeSpeed = maxSpeed - (snakeSpeedFactor * snakeLength);
+        snakeSpeed = maxSpeed - (unsigned short int)(snakeSpeedFactor * snakeLength);
 }
 snake::snake::~snake()
 {

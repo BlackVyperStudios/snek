@@ -22,8 +22,6 @@ namespace snake
         unsigned short int lastDir{};
         // stores the input, please use the definitions
         short int input{};
-        // stores the pause input, please use the definitions
-        short int pauseInput{};
         // stores the calculated snake speed factor for generating the actual snake speed
         double snakeSpeedFactor{};
         // stores the actual snake speed
@@ -36,8 +34,8 @@ namespace snake
         // game screen size screen[X/Y]
         const unsigned short int screen[2];
         // for checking if the number of the screen/field size (x/y-coord) is even
-        bool screenSizeXEven;
-        bool screenSizeYEven;
+        bool screenSizeXEven{};
+        bool screenSizeYEven{};
         /* automatic options */
         // toggles, if the console supports colors
         bool consoleSupportsColors = true;
@@ -83,7 +81,7 @@ namespace snake
         void increaseSnakeSpeed();
     public:
         // constructor for default game options
-        explicit snake(bool, bool, unsigned short int, unsigned short int);
+        snake(bool, bool, unsigned short int, unsigned short int);
         // constructor for manual game options
         snake(bool, bool, unsigned short int, unsigned short int, unsigned short int, unsigned short int,
               bool);
