@@ -23,6 +23,12 @@ change include to import as c++20 introduced
 proper readme with compilation, dependencies and requirements
 + mention, that only MinGW works
 
+// optimise
+tighten update()
+move animations into second file
+reorder functions
+re-add opposite direction
+
 //
 only set colormode if its not disabled
 only set colors if ncurses gets initialised but set colors to on / off
