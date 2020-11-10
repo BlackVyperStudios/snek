@@ -22,7 +22,6 @@ save time from timer -> pause
 other colors (resume, quit)?
 distances (resume, quit)
 rename resume into continue?
-remove screenSizeYEven, or make screenSizeEven an array
 make screenSizeEven const, set it's value inside the constructor or replace it with a function (probably most efficient)
 
 // coding optimisations

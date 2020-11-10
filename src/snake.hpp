@@ -33,9 +33,8 @@ namespace snake
         const unsigned short int maxSpeed = 500;
         // game screen size screen[X/Y]
         const unsigned short int screen[2];
-        // for checking if the number of the screen/field size (x/y-coord) is even
-        bool screenSizeXEven{};
-        bool screenSizeYEven{};
+        // for checking if the number of the screen/field size [X/Y] is even
+        bool screenSizeEven[2];
         /* automatic options */
         // toggles, if the console supports colors
         bool consoleSupportsColors = true;
