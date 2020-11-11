@@ -132,6 +132,10 @@ void snake::snake::drawSnake()
 
     mvaddch(snakePos[1][0],snakePos[0][0], 'O');
 
+    if (drawWholeSnek)
+        for (unsigned short int i = 1; i < snakeLength; i++)
+            mvaddch(snakePos[1][i],snakePos[0][i], 'o');
+
     if (snakeLength > 1)
         mvaddch(snakePos[1][1],snakePos[0][1], 'o');
 
@@ -383,10 +387,8 @@ bool snake::snake::illegalPosition(const unsigned short int *locationX, const un
         if (illegalApple)
             snakeLengthCopy++;
         for (unsigned short int i = 0; i < snakeLengthCopy; i++)
-        {
             if (snakePos[0][i] == *locationX && snakePos[1][i] == *locationY)
                 return true;
-        }
         if (illegalApple && apple[redApple][0] == *locationX && apple[redApple][1] == *locationY ||
             illegalApple && apple[magentaApple][0] == *locationX && apple[magentaApple][0] == *locationY)
             return true;
@@ -515,7 +517,9 @@ void snake::snake::drawPause()
         }
     }
     
+    drawWholeSnek = true;
     drawSnake();
+    drawWholeSnek = false;
     drawApple(redApple);
     if (magentaAppleExist)
         drawApple(magentaApple);
