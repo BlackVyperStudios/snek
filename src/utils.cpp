@@ -2,7 +2,7 @@
 #include <chrono>
 #include <random>
 #if defined(_WIN32)
-#include <ncurses/ncurses>
+#include <ncurses/ncurses.h>
 #elif (__linux__)
 #include <ncurses.h>
 #endif
