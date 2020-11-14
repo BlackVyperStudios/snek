@@ -24,10 +24,14 @@ set_target_properties(cpp-terminal PROPERTIES
 
 set(snake-source src/snake.cpp src/utils.cpp)
 
-add_executable(snek-debugFront src/frontend-debug.cpp src/menu.cpp ${snake-source})
-target_include_directories(snek-debugFront PUBLIC ${PROJECT_BINARY_DIR}/src)
-target_link_libraries(snek-debugFront ncurses cpp-terminal)
+add_executable(test src/main.cpp src/menu.cpp src/utils.cpp src/animation.cpp)
+target_include_directories(test PUBLIC ${PROJECT_BINARY_DIR}/src)
+target_link_libraries(test cpp-terminal ncurses)
 
-add_executable(snek-releaseFront src/frontend-release.cpp ${snake-source})
-target_include_directories(snek-releaseFront PUBLIC ${PROJECT_BINARY_DIR}/src)
-target_link_libraries(snek-releaseFront ncurses)
+#add_executable(snek-debugFront src/frontend-debug.cpp src/menu.cpp ${snake-source})
+#target_include_directories(snek-debugFront PUBLIC ${PROJECT_BINARY_DIR}/src)
+#target_link_libraries(snek-debugFront ncurses cpp-terminal)
+
+#add_executable(snek-releaseFront src/frontend-release.cpp ${snake-source})
+#target_include_directories(snek-releaseFront PUBLIC ${PROJECT_BINARY_DIR}/src)
+#target_link_libraries(snek-releaseFront ncurses)

@@ -1,7 +1,11 @@
 #include "utils.hpp"
 #include <chrono>
 #include <random>
-#include <iostream>
+#if defined(_WIN32)
+#include <ncurses/ncurses.h>
+#elif (__linux__)
+#include <ncurses.h>
+#endif
 
 unsigned int utils::getTimestamp()
 {
@@ -27,4 +31,28 @@ bool utils::timer::done() const
 void utils::timer::reset()
 {
     startTime = getTimestamp();
+}
+void utils::initNcurses()
+{
+    initscr();
+    cbreak();
+    noecho();
+    raw();
+    nodelay(stdscr, true);
+    scrollok(stdscr, true);
+    curs_set(0);
+    keypad(stdscr,true);
+}
+void utils::initColorMode()
+{
+    if (has_colors())
+    {
+        start_color();
+        init_pair(blueBackground, COLOR_BLUE, COLOR_BLUE);
+        init_pair(greenText, COLOR_GREEN, COLOR_BLACK);
+        init_pair(redText, COLOR_RED, COLOR_BLACK);
+        init_pair(whiteText, COLOR_WHITE, COLOR_BLACK);
+        init_pair(magentaText, COLOR_MAGENTA, COLOR_BLACK);
+        init_pair(yellowText,COLOR_YELLOW,COLOR_BLACK);
+    }
 }
