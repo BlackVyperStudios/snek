@@ -1,6 +1,6 @@
 #if defined(_WIN32)
 // fix for MSYS2, because they are using the old directory structure
-#include <ncurses/ncurses>
+#include <ncurses/ncurses.h>
 #elif (__linux__)
 #include <ncurses.h>
 #endif
