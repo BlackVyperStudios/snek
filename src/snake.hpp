@@ -12,6 +12,7 @@ namespace snake
         unsigned short int newSnakePos[2]{0};
         // snakes length
         unsigned short int snakeLength = 1;
+        bool pause = false;
         // for checking if the whole snake should be drawn
         bool drawWholeSnek = false;
         // stores the apple positions apple[<appleDefinition>][<X/Y>], please use the apple definition
@@ -35,8 +36,6 @@ namespace snake
         const unsigned short int maxSpeed = 500;
         // game screen size screen[X/Y]
         const unsigned short int screen[2];
-        // for checking if the number of the screen/field size [X/Y] is even
-        bool screenSizeEven[2];
         /* automatic options */
         // toggles, if the console supports colors
         bool consoleSupportsColors = true;

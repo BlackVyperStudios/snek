@@ -204,16 +204,6 @@ void snake::snake::drawField()
     }
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(blueBackground));
-
-    if (screen[0] % 2 == 0)
-        screenSizeEven[0] = true;
-    else
-        screenSizeEven[0] = false;
-
-    if (screen[1] % 2 == 0)
-        screenSizeEven[1] = true;
-    else
-        screenSizeEven[1] = false;
 }
 void snake::snake::animateWatermark()
 {
@@ -438,13 +428,13 @@ unsigned short int snake::snake::update()
 void snake::snake::drawPause()
 {
     short int ch;
-    bool pause = true;
+    pause = true;
     // stores the pause input, please use the definitions
     unsigned short int pauseInput;
 
     if (consoleSupportsColors)
         attron(COLOR_PAIR(cyanText));
-    if (screenSizeEven[0])
+    if (screen[0] % 2 == 0)
         mvprintw(5,screen[0] / 2 - 2, "PAUSE");
     else
         mvprintw(5,screen[0] / 2 - 2, "PAUSE.");
@@ -494,7 +484,7 @@ void snake::snake::drawPause()
             {   
                 if (consoleSupportsColors)
                     attroff(COLOR_PAIR(whiteText));
-                if (screenSizeEven[0])
+                if (screen[0] % 2 == 0)
                     mvprintw(5,screen[0] / 2 - 2, "     ");
                 else
                     mvprintw(5,screen[0] / 2 - 2, "      ");
@@ -506,7 +496,7 @@ void snake::snake::drawPause()
             {
                 if (consoleSupportsColors)
                     attroff(COLOR_PAIR(whiteText));
-                if (screenSizeEven[0])
+                if (screen[0] % 2 == 0)
                     mvprintw(5,screen[0] / 2 - 2, "     ");
                 else
                     mvprintw(5,screen[0] / 2 - 2, "      ");

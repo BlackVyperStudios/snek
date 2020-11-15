@@ -15,14 +15,13 @@ add second player
 magenta apple vanishes after time
 yellowApple spawns at 2% vanishes quickly too
 revive oppDirection
+shouldn't be drawField() enough
 
 // pause
-draw whole snek after continuing
 save time from timer -> pause
 other colors (resume, quit)?
 distances (resume, quit)
 rename resume into continue?
-make screenSizeEven const, set it's value inside the constructor or replace it with a function (probably most efficient)
 
 // coding optimisations
 move from ncurses to a better implementation
