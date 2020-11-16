@@ -1,7 +1,6 @@
 #include "utils.hpp"
 #include <chrono>
 #include <random>
-#include <iostream>
 
 unsigned int utils::getTimestamp()
 {

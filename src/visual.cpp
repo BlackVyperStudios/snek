@@ -72,7 +72,6 @@ void anim::snekMenuBase()
                   << std::flush;
         while (!timer.done());
     }
-    // todo remove?
     std::cout << Term::color(Term::fg::green)
               << Term::color(Term::bg::reset)
               << std::flush;
@@ -128,7 +127,6 @@ void anim::snekMenuBase()
               << Term::color(Term::bg::reset)
               << Term::color(Term::fg::reset)
               << std::flush;
-    while (!timer.done());
 }
 
 void anim::snekHeader()
