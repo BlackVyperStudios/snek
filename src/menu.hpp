@@ -13,7 +13,7 @@ namespace menu
         menu() = default;
 
         // start the menu
-        unsigned short int start();
+        unsigned short int start(Term::Terminal *term);
 
         // base menu
         void updateCursor(unsigned short int);
