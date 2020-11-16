@@ -1,4 +1,4 @@
-#include "animation.hpp"
+#include "visual.hpp"
 #include <cpp-terminal/terminal.h>
 #include "utils.hpp"
 
@@ -180,4 +180,126 @@ void anim::snekHeader()
               << std::flush
               << Term::color(Term::fg::reset)
               << Term::color(Term::bg::reset);
+}
+
+
+/* === sub menu ====
+ * .----..-. .-..----..-. .-.
+ * { {__  |  `| || {_  | |/ /
+ * .-._} }| |\  || {__ | |\ \
+ * `----' `-' `-'`----'`-' `-'
+ * ###########################
+ * #      SINGLEPLAYER       #
+ * #    Ooooooooooooooooo    #
+ * #    Easy          <--    #
+ * #    Normal        <--    #
+ * #    hard          <--    #
+ * #    Nightmare     <--    #
+ * #    ==Special modes==    #
+ * #    infinite mode <--    #
+ * #    Chaos Mode    <--    #
+ * #    creative Mode <--    #
+ * #    ooooooooooooooooO    #
+ * #    >               <    #
+ * #                         #
+ * ###########################
+ */
+
+/* === Text sub menu ===
+ * .----..-. .-..----..-. .-.
+ * { {__  |  `| || {_  | |/ /
+ * .-._} }| |\  || {__ | |\ \
+ * `----' `-' `-'`----'`-' `-'
+ * ###########################
+ * #          ABOUT          #
+ * #    Ooooooooooooooooo    #
+ * #    SNEK V1.1.1 is a     #
+ * #    game developed by    #
+ * #    BlackVyperStudios    #
+ * #    and it's members:    #
+ * #    ~Damon Leven         #
+ * #    ~Alex Prosser        #
+ * #    And all contrib-     #
+ * #    buters on Github!    #
+ * #    ooooooooooooooooO    #
+ * #    >  Press ENTER  <    #
+ * #                         #
+ * ###########################
+ *
+ * size: 15x27
+ * inner size: 13x25
+ */
+
+ /* === settings sub menu ===
+ * .----..-. .-..----..-. .-.
+ * { {__  |  `| || {_  | |/ /
+ * .-._} }| |\  || {__ | |\ \
+ * `----' `-' `-'`----'`-' `-'
+ * ###########################
+ * #                         #
+ * #    Ooooooooooooooooo    #
+ * #    Singleplayer  <--    #
+ * #    Multiplayer   <--    #
+ * #    Online Mode   <--    #
+ * #    Settings      <--    #
+ * #    Manual        <--    #
+ * #    About         <--    #
+ * #    License       <--    #
+ * #    ???           <--    #
+ * #    ooooooooooooooooO    #
+ * #    >               <    #
+ * #                         #
+ * ###########################
+ *
+ * size: 15x27
+ * inner size: 13x25
+ *
+ */
+
+void draw::snekMenuBase()
+{
+    std::cout << Term::move_cursor(5,6)
+              << Term::color(Term::fg::green)
+              << Term::color(Term::bg::reset)
+              << "Ooooooooooooooooo"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(6,6)
+              << "Singleplayer"
+              << Term::move_cursor(7,6)
+              << "Multiplayer"
+              << Term::move_cursor(8,6)
+              << "Online Mode"
+              << Term::move_cursor(9,6)
+              << "Settings"
+              << Term::move_cursor(10,6)
+              << "Manual"
+              << Term::move_cursor(11,6)
+              << "About"
+              << Term::move_cursor(12,6)
+              << "License"
+              << Term::move_cursor(13,6)
+              << "???"
+              << Term::color(Term::fg::green)
+              << Term::move_cursor(14,6)
+              << "ooooooooooooooooO"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(15,6)
+              << ">               <"
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+void draw::clearField()
+{
+    std::cout << Term::color(Term::fg::reset)
+              << Term::color(Term::bg::reset);
+    for(unsigned short int i = 0; i < 13; i++)
+    {
+        std::cout << Term::move_cursor(6 + i, 2)
+                  << "                         ";
+    }
+    std::cout << std::flush;
+}
+void draw::dummyField()
+{
+
 }

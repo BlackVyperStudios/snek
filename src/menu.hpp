@@ -5,7 +5,7 @@ namespace menu
     class menu
     {
     private:
-        unsigned int cursorState = 1;
+        unsigned short int cursorState = 1;
         // indicates if the easter egg is unlocked
         bool eU = false;
     public:
@@ -13,8 +13,14 @@ namespace menu
 
         unsigned short int start();
 
-        void updateCursor(bool);
-        void updateDesc();
+        // base menu
+        void updateCursor(unsigned short int);
+        void updateDesc() const;
+
+        // menu entries
+
+        // dummy entry
+        void dummyEntry();
 
         virtual ~menu() = default;
     };

@@ -18,6 +18,7 @@ set_target_properties(cpp-terminal PROPERTIES
 # snake sources
 set(snake-source src/snake.cpp src/utils.cpp)
 
-add_executable(test src/main.cpp src/menu.cpp src/utils.cpp src/animation.cpp)
+# test target
+add_executable(test src/main.cpp src/menu.cpp src/utils.cpp src/visual.cpp)
 target_include_directories(test PUBLIC ${PROJECT_BINARY_DIR}/src)
 target_link_libraries(test cpp-terminal ncurses)
