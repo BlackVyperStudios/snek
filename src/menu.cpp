@@ -1,7 +1,6 @@
 #include <cpp-terminal/terminal.h>
 #include "menu.hpp"
 #include "visual.hpp"
-#include "utils.hpp"
 
 // definitions for updating the cursor
 #define notMovedCursor 0
@@ -156,8 +155,4 @@ void menu::menu::updateDesc() const
     }
     std::cout << Term::color(Term::fg::reset)
               << std::flush;
-}
-void menu::menu::dummyEntry()
-{
-
 }
