@@ -17,11 +17,6 @@ namespace menu
         void updateCursor(unsigned short int);
         void updateDesc() const;
 
-        // menu entries
-
-        // dummy entry
-        void dummyEntry();
-
         virtual ~menu() = default;
     };
 }
