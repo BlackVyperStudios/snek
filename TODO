@@ -24,21 +24,13 @@ distances (resume, quit)
 rename resume into continue?
 
 // coding optimisations
-move from ncurses to a better implementation
 change include to import as c++20 introduced
 
 // documentation
 proper readme with compilation, dependencies and requirements
-+ mention, that only MinGW works
 
 // optimise
 tighten update()
 move animations into second file
 reorder functions
 re-add opposite direction
-
-//
-only set colormode if its not disabled
-only set colors if ncurses gets initialised but set colors to on / off
-add watermark in custom mode
-add watermark in dev mode
