@@ -1,7 +1,12 @@
 #include <cpp-terminal/terminal.h>
 #include "menu.hpp"
-#include "animation.hpp"
+#include "visual.hpp"
 #include "utils.hpp"
+
+// definitions for updating the cursor
+#define notMovedCursor 0
+#define moveCursorUp 1
+#define moveCursorDown 2
 
 /*
  * .----..-. .-..----..-. .-.
@@ -34,7 +39,7 @@ unsigned short int menu::menu::start()
     try
     {
         // prerequisites
-        Term::Terminal term(true,false);
+        Term::Terminal term(true,true);
         term.save_screen();
         // turn off the cursor
         std::cout << Term::cursor_off();
@@ -43,6 +48,7 @@ unsigned short int menu::menu::start()
         anim::snekHeader();
         anim::snekMenuBase();
         updateDesc();
+        updateCursor(notMovedCursor);
 
         bool running = true;
         // menu loop
@@ -54,7 +60,7 @@ unsigned short int menu::menu::start()
                 case Term::Key::ARROW_UP:
                     if (cursorState != 1)
                     {
-                        updateCursor(true);
+                        updateCursor(moveCursorUp);
                         updateDesc();
                     }
                     break;
@@ -62,7 +68,7 @@ unsigned short int menu::menu::start()
                 case Term::Key::ARROW_DOWN:
                     if (cursorState != 7 && !eU || cursorState != 8 && eU)
                     {
-                        updateCursor(false);
+                        updateCursor(moveCursorDown);
                         updateDesc();
                     }
                     break;
@@ -76,7 +82,10 @@ unsigned short int menu::menu::start()
         }
 
         // make sure the terminal is reverted to its original state
-        std::cout << Term::color(Term::style::reset);
+        std::cout << Term::color(Term::style::reset)
+                  << Term::color(Term::fg::reset)
+                  << Term::color(Term::bg::reset)
+                  << Term::cursor_on();
     }
     catch(const std::runtime_error& re)
     {
@@ -91,15 +100,18 @@ unsigned short int menu::menu::start()
 
     return 0;
 }
-void menu::menu::updateCursor(bool movingUp)
+void menu::menu::updateCursor(unsigned short int moving)
 {
-    std::cout << Term::color(Term::fg::reset)
-              << Term::color(Term::bg::reset)
-              << Term::move_cursor(7 + cursorState,20)
-              << "   ";
-    if (movingUp)
+    if (moving != notMovedCursor)
+    {
+        std::cout << Term::color(Term::fg::reset)
+                  << Term::color(Term::bg::reset)
+                  << Term::move_cursor(7 + cursorState,20)
+                  << "   ";
+    }
+    if (moving == moveCursorUp)
         cursorState--;
-    else
+    else if (moving == moveCursorDown)
         cursorState++;
     std::cout << Term::color(Term::fg::red)
               << Term::move_cursor(7 + cursorState, 20)
@@ -107,7 +119,7 @@ void menu::menu::updateCursor(bool movingUp)
               << Term::color(Term::fg::reset)
               << std::flush;
 }
-void menu::menu::updateDesc()
+void menu::menu::updateDesc() const
 {
     std::cout << Term::color(Term::bg::reset)
               << Term::color(Term::fg::reset)
@@ -144,4 +156,8 @@ void menu::menu::updateDesc()
     }
     std::cout << Term::color(Term::fg::reset)
               << std::flush;
+}
+void menu::menu::dummyEntry()
+{
+
 }
