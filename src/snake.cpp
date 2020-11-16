@@ -282,7 +282,7 @@ void snake::snake::animateWatermark()
 
     if (consoleSupportsColors)
         attron(COLOR_PAIR(redText));
-    mvprintw(3,screen[0] + 2, "by MCWertGaming");
+    mvprintw(3,screen[0] + 2, "by BlackVyperStudios");
     refresh();
     timer.reset();
     while (!timer.done());
@@ -303,7 +303,7 @@ void snake::snake::drawWatermark()
     mvprintw(2,screen[0] + 2, "Version: %d.%d.%d", SNAKE_VERSION_MAJOR, SNAKE_VERSION_MINOR, SNAKE_VERSION_PATCH);
     if (consoleSupportsColors)
         attron(COLOR_PAIR(redText));
-    mvprintw(3,screen[0] + 2, "by MCWertGaming");
+    mvprintw(3,screen[0] + 2, "by BlackVyperStudios");
     if (consoleSupportsColors)
         attroff(COLOR_PAIR(blueBackground));
 }
