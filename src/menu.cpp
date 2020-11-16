@@ -129,28 +129,28 @@ void menu::menu::updateDesc() const
     switch (cursorState)
     {
         case 1:
-            std::cout << "Play alone!";
+            std::cout << "  Play alone!";
             break;
         case 2:
-            std::cout << "Play together!";
+            std::cout << " Play together";
             break;
         case 3:
-            std::cout << "Play online";
+            std::cout << "  Play online";
             break;
         case 4:
             std::cout << "Secret options!";
             break;
         case 5:
-            std::cout << "How do I play?";
+            std::cout << "How do I play??";
             break;
         case 6:
             std::cout << "Who did this???";
             break;
         case 7:
-            std::cout << "What's MIT?";
+            std::cout << "  What's MIT?";
             break;
         case 8:
-            std::cout << "Coming soon!";
+            std::cout << " Coming  soon!";
             break;
     }
     std::cout << Term::color(Term::fg::reset)
