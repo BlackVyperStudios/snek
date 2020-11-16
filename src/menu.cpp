@@ -33,68 +33,43 @@
  *
  */
 
-unsigned short int menu::menu::start()
+unsigned short int menu::menu::start(Term::Terminal *term)
 {
-    try
+    // draw menu
+    anim::snekHeader();
+    anim::snekMenuBase();
+    updateDesc();
+    updateCursor(notMovedCursor);
+
+    bool running = true;
+    // menu loop
+    while (running)
     {
-        // prerequisites
-        Term::Terminal term(true,true);
-        term.save_screen();
-        // turn off the cursor
-        std::cout << Term::cursor_off();
-
-        // draw menu
-        anim::snekHeader();
-        anim::snekMenuBase();
-        updateDesc();
-        updateCursor(notMovedCursor);
-
-        bool running = true;
-        // menu loop
-        while (running)
+        switch (term->read_key())
         {
-            switch (term.read_key())
-            {
-                case 'w':
-                case Term::Key::ARROW_UP:
-                    if (cursorState != 1)
-                    {
-                        updateCursor(moveCursorUp);
-                        updateDesc();
-                    }
-                    break;
-                case 's':
-                case Term::Key::ARROW_DOWN:
-                    if (cursorState != 7 && !eU || cursorState != 8 && eU)
-                    {
-                        updateCursor(moveCursorDown);
-                        updateDesc();
-                    }
-                    break;
-                case 'q':
-                case Term::Key::ESC:
-                    running = false;
-                case Term::Key::ENTER:
-                    // enter
-                    break;
-            }
+            case 'w':
+            case Term::Key::ARROW_UP:
+                if (cursorState != 1)
+                {
+                    updateCursor(moveCursorUp);
+                    updateDesc();
+                }
+                break;
+            case 's':
+            case Term::Key::ARROW_DOWN:
+                if (cursorState != 7 && !eU || cursorState != 8 && eU)
+                {
+                    updateCursor(moveCursorDown);
+                    updateDesc();
+                }
+                break;
+            case 'q':
+            case Term::Key::ESC:
+                running = false;
+            case Term::Key::ENTER:
+                // enter
+                break;
         }
-
-        // make sure the terminal is reverted to its original state
-        std::cout << Term::color(Term::style::reset)
-                  << Term::color(Term::fg::reset)
-                  << Term::color(Term::bg::reset)
-                  << Term::cursor_on();
-    }
-    catch(const std::runtime_error& re)
-    {
-        std::cerr << "Runtime error: " << re.what() << std::endl;
-        return 1;
-    }
-    catch (...)
-    {
-        std::cerr << "Unknown error." << std::endl;
-        return 2;
     }
 
     return 0;
