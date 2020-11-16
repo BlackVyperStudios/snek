@@ -12,9 +12,12 @@ namespace snake
         unsigned short int newSnakePos[2]{0};
         // snakes length
         unsigned short int snakeLength = 1;
+        bool pause = false;
+        // for checking if the whole snake should be drawn
+        bool drawWholeSnek = false;
         // stores the apple positions apple[<appleDefinition>][<X/Y>], please use the apple definition
         unsigned short int apple[2][2]{0};
-        // indicates, if the magenta apple exists currently
+        // indicates if the magenta apple exists currently
         bool magentaAppleExist = false;
         // score
         unsigned short int score = 0;
@@ -45,6 +48,7 @@ namespace snake
 
         /* drawing */
         void drawScore();
+        void drawPause();
         void drawField();
         void animateField();
         void drawWatermark();
@@ -77,7 +81,7 @@ namespace snake
         void increaseSnakeSpeed();
     public:
         // constructor for default game options
-        explicit snake(bool, bool, unsigned short int, unsigned short int);
+        snake(bool, bool, unsigned short int, unsigned short int);
         // constructor for manual game options
         snake(bool, bool, unsigned short int, unsigned short int, unsigned short int, unsigned short int,
               bool);
