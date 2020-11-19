@@ -129,6 +129,36 @@ void anim::snekMenuBase()
               << std::flush;
 }
 
+void anim::snekAbout()
+{
+    std::cout << Term::color(Term::bg::reset)
+              << Term::color(Term::fg::yellow)
+              << Term::move_cursor(6,12)
+              << "ABOUT"
+              << Term::color(Term::fg::red)
+              << Term::move_cursor(8,6)
+              << "SNEK V%d.%d.%d is a ", SNAKE_VERSION_MAJOR, SNAKE_VERSION_MINOR, SNAKE_VERSION_PATCH
+              << Term::move_cursor(9,6)
+              << "game developed by"
+              << Term::move_cursor(10,6)
+              << "BlackVyperStudios"
+              << Term::move_cursor(11,6)
+              << "and it's members:"
+              << Term::move_cursor(12,6)
+              << "~ Damon Leven"
+              << Term::move_cursor(13,6)
+              << "~ Alex Prosser"
+              << Term::move_cursor(14,6)
+              << "And all contribu-"
+              << Term::move_cursor(15,6)
+              << "tors on Github!"
+              << Term::move_cursor_right(16)
+              << ">  Press ENTER  <"
+              << Term::color(Term::bg::reset)
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+
 void anim::snekHeader()
 {
     utils::timer timer(70);
@@ -182,7 +212,7 @@ void anim::snekHeader()
 
 
 /* === sub menu ====
- * .----..-. .-..----..-. .-.
+ *  .----..-. .-..----..-. .-.
  * { {__  |  `| || {_  | |/ /
  * .-._} }| |\  || {__ | |\ \
  * `----' `-' `-'`----'`-' `-'
@@ -204,7 +234,7 @@ void anim::snekHeader()
  */
 
 /* === Text sub menu ===
- * .----..-. .-..----..-. .-.
+ *  .----..-. .-..----..-. .-.
  * { {__  |  `| || {_  | |/ /
  * .-._} }| |\  || {__ | |\ \
  * `----' `-' `-'`----'`-' `-'
@@ -215,10 +245,10 @@ void anim::snekHeader()
  * #    game developed by    #
  * #    BlackVyperStudios    #
  * #    and it's members:    #
- * #    ~Damon Leven         #
- * #    ~Alex Prosser        #
- * #    And all contrib-     #
- * #    buters on Github!    #
+ * #    ~ Damon Leven        #
+ * #    ~ Alex Prosser       #
+ * #    And all contribu-    #
+ * #    tors on Github!      #
  * #    ooooooooooooooooO    #
  * #    >  Press ENTER  <    #
  * #                         #
@@ -229,7 +259,7 @@ void anim::snekHeader()
  */
 
  /* === settings sub menu ===
- * .----..-. .-..----..-. .-.
+ *  .----..-. .-..----..-. .-.
  * { {__  |  `| || {_  | |/ /
  * .-._} }| |\  || {__ | |\ \
  * `----' `-' `-'`----'`-' `-'

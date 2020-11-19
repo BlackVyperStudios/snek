@@ -6,6 +6,8 @@ namespace anim
     void snekMenuBase();
     // animates the change from the main to the sub menu
     void switchSubMenu();
+    // about sub menu
+    void snekAbout();
     // animates the change from the sub to main menu
     void switchMainMenu();
 }
