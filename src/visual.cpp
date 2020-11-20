@@ -137,7 +137,7 @@ void anim::snekAbout()
               << "ABOUT"
               << Term::color(Term::fg::red)
               << Term::move_cursor(8,6)
-              << "SNEK V%d.%d.%d is a ", SNAKE_VERSION_MAJOR, SNAKE_VERSION_MINOR, SNAKE_VERSION_PATCH
+              << "SNEK V1.1.0 is a "
               << Term::move_cursor(9,6)
               << "game developed by"
               << Term::move_cursor(10,6)
@@ -152,8 +152,8 @@ void anim::snekAbout()
               << "And all contribu-"
               << Term::move_cursor(15,6)
               << "tors on Github!"
-              << Term::move_cursor_right(16)
-              << ">  Press ENTER  <"
+              << Term::move_cursor(17, 7)
+              << "  Press ENTER  "
               << Term::color(Term::bg::reset)
               << Term::color(Term::fg::reset)
               << std::flush;

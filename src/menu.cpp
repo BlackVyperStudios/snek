@@ -67,7 +67,12 @@ unsigned short int menu::menu::start(Term::Terminal *term)
             case Term::Key::ESC:
                 running = false;
             case Term::Key::ENTER:
-                // enter
+                if (cursorState == 6)
+                {
+                    noArrow = true;
+                    updateCursor(notMovedCursor);
+                    anim::snekAbout();
+                }
                 break;
         }
     }
@@ -76,22 +81,34 @@ unsigned short int menu::menu::start(Term::Terminal *term)
 }
 void menu::menu::updateCursor(unsigned short int moving)
 {
-    if (moving != notMovedCursor)
+    if (noArrow)
     {
         std::cout << Term::color(Term::fg::reset)
                   << Term::color(Term::bg::reset)
                   << Term::move_cursor(7 + cursorState,20)
                   << "   ";
     }
-    if (moving == moveCursorUp)
-        cursorState--;
-    else if (moving == moveCursorDown)
-        cursorState++;
-    std::cout << Term::color(Term::fg::red)
-              << Term::move_cursor(7 + cursorState, 20)
-              << "<--"
-              << Term::color(Term::fg::reset)
-              << std::flush;
+    else
+    {
+        if (moving != notMovedCursor)
+        {
+            std::cout << Term::color(Term::fg::reset)
+                      << Term::color(Term::bg::reset)
+                      << Term::move_cursor(7 + cursorState,20)
+                      << "   ";
+        }
+        if (moving == moveCursorUp)
+            cursorState--;
+        else if (moving == moveCursorDown)
+            cursorState++;
+        std::cout << Term::color(Term::fg::red)
+                  << Term::move_cursor(7 + cursorState, 20)
+                  << "<--"
+                  << Term::color(Term::fg::reset)
+                  << std::flush;
+    }
+    
+    
 }
 void menu::menu::updateDesc() const
 {
