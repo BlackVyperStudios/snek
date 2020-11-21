@@ -41,6 +41,9 @@ unsigned short int menu::menu::start(Term::Terminal *term)
     updateDesc();
     updateCursor(notMovedCursor);
 
+    // checks if you are in a sub menu
+    bool sub = false;
+
     bool running = true;
     // menu loop
     while (running)
@@ -64,14 +67,27 @@ unsigned short int menu::menu::start(Term::Terminal *term)
                 }
                 break;
             case 'q':
+                if (sub)
+                {
+                    draw::clearField();
+                    arrow = true;
+                    draw::snekMenuBase();
+                    updateDesc();
+                    updateCursor(notMovedCursor);
+                    sub = false;
+                }
+                else
+                    running = false;
+                break;
             case Term::Key::ESC:
                 running = false;
             case Term::Key::ENTER:
                 if (cursorState == 6)
                 {
-                    noArrow = true;
+                    arrow = false;
                     updateCursor(notMovedCursor);
                     anim::snekAbout();
+                    sub = true;
                 }
                 break;
         }
@@ -81,7 +97,7 @@ unsigned short int menu::menu::start(Term::Terminal *term)
 }
 void menu::menu::updateCursor(unsigned short int moving)
 {
-    if (noArrow)
+    if (!arrow)
     {
         std::cout << Term::color(Term::fg::reset)
                   << Term::color(Term::bg::reset)

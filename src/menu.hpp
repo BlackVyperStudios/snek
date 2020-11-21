@@ -15,7 +15,8 @@ namespace menu
         // start the menu
         unsigned short int start(Term::Terminal *term);
 
-        bool noArrow = false;
+        // if false, no selection arrow
+        bool arrow = true;
 
         // base menu
         void updateCursor(unsigned short int);
