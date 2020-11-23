@@ -1,6 +1,7 @@
 #include <cpp-terminal/terminal.h>
 #include "menu.hpp"
 #include "visual.hpp"
+#include "utils.hpp"
 
 // definitions for updating the cursor
 #define notMovedCursor 0
@@ -8,7 +9,7 @@
 #define moveCursorDown 2
 
 /*
- * .----..-. .-..----..-. .-.
+ *  .----..-. .-..----..-. .-.
  * { {__  |  `| || {_  | |/ /
  * .-._} }| |\  || {__ | |\ \
  * `----' `-' `-'`----'`-' `-'
@@ -41,8 +42,8 @@ unsigned short int menu::menu::start(Term::Terminal *term)
     updateDesc();
     updateCursor(notMovedCursor);
 
-    bool running = true;
     // menu loop
+    bool running = true;
     while (running)
     {
         switch (term->read_key())
@@ -71,7 +72,6 @@ unsigned short int menu::menu::start(Term::Terminal *term)
                 break;
         }
     }
-
     return 0;
 }
 void menu::menu::updateCursor(unsigned short int moving)
