@@ -131,3 +131,44 @@ void menu::menu::updateDesc() const
     std::cout << Term::color(Term::fg::reset)
               << std::flush;
 }
+/* microSnake source */
+menu::microSnake::microSnake()
+{
+    // set default snake coordinates
+    for (unsigned short int i = 0; i < 16; i++)
+    {
+        // set Y coordinate
+        snake1Pos[1][i] = 7;
+        snake2Pos[1][i] = 16;
+        // set X coordinate
+        snake1Pos[0][i] = 5 + i;
+        snake2Pos[0][1] = 22 - i;
+    }
+}
+void menu::microSnake::update()
+{
+    //
+}
+void menu::microSnake::updateSnakePos()
+{
+    // cache for the previous location
+    unsigned short int preLoc[2][2];
+    preLoc[0][0] = snake1Pos[0][0];
+    preLoc[0][1] = snake1Pos[1][0];
+
+
+    snake1Pos[0][0] = newSnakePos[0];
+    snake1Pos[1][0] = newSnakePos[1];
+
+    for (unsigned short int i = 1; i < snakeLength +1; i++)
+    {
+        preLoc[1][0] = snakePos[0][i];
+        preLoc[1][1] = snakePos[1][i];
+
+        snakePos[0][i] = preLoc[0][0];
+        snakePos[1][i] = preLoc[0][1];
+
+        preLoc[0][0] = preLoc[1][0];
+        preLoc[0][1] = preLoc[1][1];
+    }
+}
