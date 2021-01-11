@@ -1,8 +1,8 @@
 /*  =====================================
  *  Release interface for SNEK
- *  Created by MCWertGaming
+ *  Created by BlackVyperStudios
  *  Licensed under MIT on GitHub
- *  https://github.com/MCWertGaming/snek
+ *  https://github.com/BlackVyperStudios/snek
  * ===================================== */
 #include "snake.hpp"
 

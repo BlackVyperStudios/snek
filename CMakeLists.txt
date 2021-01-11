@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(snek
         VERSION 1.1.0
         DESCRIPTION "SNEK - A simple snake clone, playable in the commandline with some unique game modes."
-        HOMEPAGE_URL "https://github.com/MCWertGaming/snek"
+        HOMEPAGE_URL "https://github.com/BlackVyperStudios/snek"
         LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
