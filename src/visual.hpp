@@ -6,6 +6,10 @@ namespace anim
     void snekMenuBase();
     // animates the change from the main to the sub menu
     void switchSubMenu();
+    // highscores sub menu
+    void snekHighscores();
+    // settings sub menu
+    void snekSettings();
     // about sub menu
     void snekAbout();
     // animates the change from the sub to main menu

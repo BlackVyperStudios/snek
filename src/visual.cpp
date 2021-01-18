@@ -3,7 +3,7 @@
 #include "utils.hpp"
 
 /*
- * .----..-. .-..----..-. .-.
+ *  .----..-. .-..----..-. .-.
  * { {__  |  `| || {_  | |/ /
  * .-._} }| |\  || {__ | |\ \
  * `----' `-' `-'`----'`-' `-'
@@ -109,9 +109,9 @@ void anim::snekMenuBase()
               << Term::move_cursor(10,6)
               << "Online Mode"
               << Term::move_cursor(11,6)
-              << "Settings"
+              << "Highscores"
               << Term::move_cursor(12,6)
-              << "Manual"
+              << "Settings"
               << Term::move_cursor(13,6)
               << "About"
               << Term::move_cursor(14,6)
@@ -130,12 +130,46 @@ void anim::snekMenuBase()
               << std::flush;
 }
 
+void anim::snekSettings()
+{
+    std::cout << Term::move_cursor(7,10)
+              << Term::color(Term::fg::yellow)
+              << "SETTINGS!"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+
+void anim::snekHighscores()
+{
+    std::cout << Term::move_cursor(7,9)
+              << Term::color(Term::fg::yellow)
+              << "HIGHSCORES!"
+              << Term::move_cursor(8,4)
+              << Term::color(Term::fg::reset)
+              << "SINGLE"
+              << Term::move_cursor(8,12)
+              << "MULTI"
+              << Term::move_cursor(8,19)
+              << "ONLINE"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+
 void anim::snekAbout()
 {
-    std::cout << Term::move_cursor(6,6)
+    std::cout << Term::move_cursor(7,12)
               << Term::color(Term::bg::reset)
               << Term::color(Term::fg::yellow)
-              << Term::move_cursor(6,12)
               << "ABOUT"
               << Term::color(Term::fg::red)
               << Term::move_cursor(8,6)
@@ -156,7 +190,6 @@ void anim::snekAbout()
               << "tors on Github!"
               << Term::move_cursor(17, 7)
               << "    Press Q    "
-              << Term::color(Term::bg::reset)
               << Term::color(Term::fg::reset)
               << std::flush;
 }
@@ -300,9 +333,9 @@ void draw::snekMenuBase()
               << Term::move_cursor(10,6)
               << "Online Mode"
               << Term::move_cursor(11,6)
-              << "Settings"
+              << "Highscores"
               << Term::move_cursor(12,6)
-              << "Manual"
+              << "Settings"
               << Term::move_cursor(13,6)
               << "About"
               << Term::move_cursor(14,6)
@@ -314,7 +347,9 @@ void draw::snekMenuBase()
               << "ooooooooooooooooO"
               << Term::color(Term::fg::blue)
               << Term::move_cursor(17,6)
-              << ">               <"
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
               << Term::color(Term::fg::reset)
               << std::flush;
 }

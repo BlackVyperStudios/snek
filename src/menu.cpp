@@ -8,7 +8,7 @@
 #define moveCursorDown 2
 
 /*
- * .----..-. .-..----..-. .-.
+ *  .----..-. .-..----..-. .-.
  * { {__  |  `| || {_  | |/ /
  * .-._} }| |\  || {__ | |\ \
  * `----' `-' `-'`----'`-' `-'
@@ -40,9 +40,6 @@ unsigned short int menu::menu::start(Term::Terminal *term)
     anim::snekMenuBase();
     updateDesc();
     updateCursor(notMovedCursor);
-
-    // checks if you are in a sub menu
-    bool sub = false;
 
     bool running = true;
     // menu loop
@@ -82,18 +79,26 @@ unsigned short int menu::menu::start(Term::Terminal *term)
             case Term::Key::ESC:
                 running = false;
             case Term::Key::ENTER:
+                subMenu();
+                if (cursorState == 4)
+                    anim::snekHighscores();
+                if (cursorState == 5)
+                    anim::snekSettings();
                 if (cursorState == 6)
-                {
-                    arrow = false;
-                    updateCursor(notMovedCursor);
                     anim::snekAbout();
-                    sub = true;
-                }
                 break;
         }
     }
 
     return 0;
+}
+
+void menu::menu::subMenu()
+{
+    draw::clearField();
+    arrow = false;
+    updateCursor(notMovedCursor);
+    sub = true;
 }
 void menu::menu::updateCursor(unsigned short int moving)
 {
@@ -128,39 +133,42 @@ void menu::menu::updateCursor(unsigned short int moving)
 }
 void menu::menu::updateDesc() const
 {
-    std::cout << Term::color(Term::bg::reset)
-              << Term::color(Term::fg::reset)
-              << Term::move_cursor(17,7)
-              << "               "
-              << Term::color(Term::fg::red)
-              << Term::move_cursor(17,7);
-    switch (cursorState)
+    if (arrow)
     {
-        case 1:
-            std::cout << "  Play alone!";
-            break;
-        case 2:
-            std::cout << " Play together";
-            break;
-        case 3:
-            std::cout << "  Play online";
-            break;
-        case 4:
-            std::cout << "Secret options!";
-            break;
-        case 5:
-            std::cout << "How do I play??";
-            break;
-        case 6:
-            std::cout << "Who did this???";
-            break;
-        case 7:
-            std::cout << "  What's MIT?";
-            break;
-        case 8:
-            std::cout << " Coming  soon!";
-            break;
+        std::cout << Term::color(Term::bg::reset)
+                << Term::color(Term::fg::reset)
+                << Term::move_cursor(17,7)
+                << "               "
+                << Term::color(Term::fg::red)
+                << Term::move_cursor(17,7);
+        switch (cursorState)
+        {
+            case 1:
+                std::cout << "  Play alone!";
+                break;
+            case 2:
+                std::cout << " Play together";
+                break;
+            case 3:
+                std::cout << "  Play online";
+                break;
+            case 4:
+                std::cout << "Your best runs!";
+                break;
+            case 5:
+                std::cout << "Secret options!";
+                break;
+            case 6:
+                std::cout << "Who did this???";
+                break;
+            case 7:
+                std::cout << "  What's MIT?";
+                break;
+            case 8:
+                std::cout << " Coming  soon!";
+                break;
+        }
+        std::cout << Term::color(Term::fg::reset)
+                << std::flush;
     }
-    std::cout << Term::color(Term::fg::reset)
-              << std::flush;
 }
