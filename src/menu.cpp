@@ -151,24 +151,5 @@ void menu::microSnake::update()
 }
 void menu::microSnake::updateSnakePos()
 {
-    // cache for the previous location
-    unsigned short int preLoc[2][2];
-    preLoc[0][0] = snake1Pos[0][0];
-    preLoc[0][1] = snake1Pos[1][0];
-
-
-    snake1Pos[0][0] = newSnakePos[0];
-    snake1Pos[1][0] = newSnakePos[1];
-
-    for (unsigned short int i = 1; i < snakeLength +1; i++)
-    {
-        preLoc[1][0] = snakePos[0][i];
-        preLoc[1][1] = snakePos[1][i];
-
-        snakePos[0][i] = preLoc[0][0];
-        snakePos[1][i] = preLoc[0][1];
-
-        preLoc[0][0] = preLoc[1][0];
-        preLoc[0][1] = preLoc[1][1];
-    }
+    //
 }
