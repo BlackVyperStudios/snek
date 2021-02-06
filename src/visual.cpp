@@ -130,6 +130,48 @@ void anim::snekMenuBase()
               << std::flush;
 }
 
+void anim::snekSingle()
+{
+    std::cout << Term::move_cursor(7,8)
+              << Term::color(Term::fg::yellow)
+              << "SINGLEPLAYER!"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+
+void anim::snekMulti()
+{
+    std::cout << Term::move_cursor(7,9)
+              << Term::color(Term::fg::yellow)
+              << "MULTIPLAYER"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+
+void anim::snekOnline()
+{
+    std::cout << Term::move_cursor(7,9)
+              << Term::color(Term::fg::yellow)
+              << "ONLINE MODE"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+
 void anim::snekSettings()
 {
     std::cout << Term::move_cursor(7,10)
@@ -150,9 +192,12 @@ void anim::snekHighscores()
               << Term::color(Term::fg::yellow)
               << "HIGHSCORES!"
               << Term::move_cursor(8,4)
-              << Term::color(Term::fg::reset)
+              << Term::color(Term::fg::black)
+              << Term::color(Term::bg::gray)
               << "SINGLE"
               << Term::move_cursor(8,12)
+              << Term::color(Term::fg::reset)
+              << Term::color(Term::bg::reset)
               << "MULTI"
               << Term::move_cursor(8,19)
               << "ONLINE"
@@ -188,8 +233,25 @@ void anim::snekAbout()
               << "And all contribu-"
               << Term::move_cursor(15,6)
               << "tors on Github!"
-              << Term::move_cursor(17, 7)
-              << "    Press Q    "
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+
+void anim::snekLicense()
+{
+    std::cout << Term::move_cursor(7,11)
+              << Term::color(Term::fg::yellow)
+              << "LICENSE"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
               << Term::color(Term::fg::reset)
               << std::flush;
 }

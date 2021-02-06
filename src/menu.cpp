@@ -80,12 +80,6 @@ unsigned short int menu::menu::start(Term::Terminal *term)
                 running = false;
             case Term::Key::ENTER:
                 subMenu();
-                if (cursorState == 4)
-                    anim::snekHighscores();
-                if (cursorState == 5)
-                    anim::snekSettings();
-                if (cursorState == 6)
-                    anim::snekAbout();
                 break;
         }
     }
@@ -99,7 +93,44 @@ void menu::menu::subMenu()
     arrow = false;
     updateCursor(notMovedCursor);
     sub = true;
+
+    std::cout << Term::color(Term::bg::reset)
+              << Term::color(Term::fg::reset)
+              << Term::color(Term::fg::red)
+              << Term::move_cursor(17,7);
+    switch (cursorState)
+    {
+        case 1:
+            std::cout << "    Press Q";     // every "Press Q" is a placeholder except 6 and 7
+            anim::snekSingle();
+            break;
+        case 2:
+            std::cout << "    Press Q";
+            anim::snekMulti();
+            break;
+        case 3:
+            std::cout << "    Press Q";
+            anim::snekOnline();
+            break;
+        case 4:
+            std::cout << "    Press Q";
+            anim::snekHighscores();
+            break;
+        case 5:
+            std::cout << "    Press Q";
+            anim::snekSettings();
+            break;
+        case 6:
+            std::cout << "    Press Q";
+            anim::snekAbout();
+            break;
+        case 7:
+            std::cout << "    Press Q";
+            anim::snekLicense();
+            break;
+    }
 }
+
 void menu::menu::updateCursor(unsigned short int moving)
 {
     if (!arrow)
@@ -128,19 +159,17 @@ void menu::menu::updateCursor(unsigned short int moving)
                   << Term::color(Term::fg::reset)
                   << std::flush;
     }
-    
-    
 }
 void menu::menu::updateDesc() const
 {
     if (arrow)
     {
         std::cout << Term::color(Term::bg::reset)
-                << Term::color(Term::fg::reset)
-                << Term::move_cursor(17,7)
-                << "               "
-                << Term::color(Term::fg::red)
-                << Term::move_cursor(17,7);
+                  << Term::color(Term::fg::reset)
+                  << Term::move_cursor(17,7)
+                  << "               "
+                  << Term::color(Term::fg::red)
+                  << Term::move_cursor(17,7);
         switch (cursorState)
         {
             case 1:
@@ -169,6 +198,6 @@ void menu::menu::updateDesc() const
                 break;
         }
         std::cout << Term::color(Term::fg::reset)
-                << std::flush;
+                  << std::flush;
     }
 }
