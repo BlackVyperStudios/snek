@@ -18,7 +18,9 @@ namespace menu
         // for sub menus
         void subMenu();
         // checks if you are in a sub menu
-        bool sub;
+        bool sub = false;
+
+        short int lastCursorState = 1;
 
         // if false, no selection arrow
         bool arrow = true;

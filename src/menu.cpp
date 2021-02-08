@@ -49,7 +49,7 @@ unsigned short int menu::menu::start(Term::Terminal *term)
         {
             case 'w':
             case Term::Key::ARROW_UP:
-                if (cursorState != 1)
+                if (!sub && cursorState != 1 || sub && cursorState != 2)
                 {
                     updateCursor(moveCursorUp);
                     updateDesc();
@@ -57,7 +57,7 @@ unsigned short int menu::menu::start(Term::Terminal *term)
                 break;
             case 's':
             case Term::Key::ARROW_DOWN:
-                if (cursorState != 7 && !eU || cursorState != 8 && eU)
+                if (!sub && cursorState != 7 && !eU || !sub && cursorState != 8 && eU || sub && cursorState != 6)
                 {
                     updateCursor(moveCursorDown);
                     updateDesc();
@@ -66,12 +66,13 @@ unsigned short int menu::menu::start(Term::Terminal *term)
             case 'q':
                 if (sub)
                 {
-                    draw::clearField();
+                    sub = false;
                     arrow = true;
+                    draw::clearField();
+                    cursorState = lastCursorState;
                     draw::snekMenuBase();
                     updateDesc();
                     updateCursor(notMovedCursor);
-                    sub = false;
                 }
                 else
                     running = false;
@@ -79,7 +80,8 @@ unsigned short int menu::menu::start(Term::Terminal *term)
             case Term::Key::ESC:
                 running = false;
             case Term::Key::ENTER:
-                subMenu();
+                if (!sub)
+                    subMenu();
                 break;
         }
     }
@@ -89,6 +91,7 @@ unsigned short int menu::menu::start(Term::Terminal *term)
 
 void menu::menu::subMenu()
 {
+    lastCursorState = cursorState;
     draw::clearField();
     arrow = false;
     updateCursor(notMovedCursor);
@@ -102,14 +105,19 @@ void menu::menu::subMenu()
     {
         case 1:
             std::cout << "    Press Q";     // every "Press Q" is a placeholder except 6 and 7
+            arrow = true;
+            cursorState = 2;
             anim::snekSingle();
             break;
         case 2:
             std::cout << "    Press Q";
+            arrow = true;
             anim::snekMulti();
             break;
         case 3:
             std::cout << "    Press Q";
+            arrow = true;
+            cursorState = 2;
             anim::snekOnline();
             break;
         case 4:
@@ -117,6 +125,7 @@ void menu::menu::subMenu()
             anim::snekHighscores();
             break;
         case 5:
+            arrow = true;
             std::cout << "    Press Q";
             anim::snekSettings();
             break;
@@ -162,7 +171,7 @@ void menu::menu::updateCursor(unsigned short int moving)
 }
 void menu::menu::updateDesc() const
 {
-    if (arrow)
+    if (!sub)
     {
         std::cout << Term::color(Term::bg::reset)
                   << Term::color(Term::fg::reset)
