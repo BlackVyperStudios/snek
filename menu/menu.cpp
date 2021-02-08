@@ -1,7 +1,6 @@
 #include <cpp-terminal/terminal.h>
 #include "menu.hpp"
 #include "visual.hpp"
-#include "utils.hpp"
 
 // definitions for updating the cursor
 #define notMovedCursor 0
@@ -58,7 +57,7 @@ unsigned short int menu::menu::start(Term::Terminal *term)
                 break;
             case 's':
             case Term::Key::ARROW_DOWN:
-                if (cursorState != 7 && !eU || cursorState != 8 && eU)
+                if ((cursorState != 7 && !eU) || (cursorState != 8 && eU))
                 {
                     updateCursor(moveCursorDown);
                     updateDesc();

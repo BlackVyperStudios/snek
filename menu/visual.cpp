@@ -1,6 +1,6 @@
 #include "visual.hpp"
 #include <cpp-terminal/terminal.h>
-#include "utils.hpp"
+#include <folf/timeTools.hpp>
 
 /*
  * .----..-. .-..----..-. .-.
@@ -37,7 +37,7 @@ void anim::snekMenuBase()
               << Term::move_cursor(5,14)
               << " "
               << std::flush;
-    while (!timer.done());
+    folf_sleepFor(folf_millisecondsToMicroseconds(70));
 
     // draws the top line
     for (unsigned int i = 1; i < 14; i++)
