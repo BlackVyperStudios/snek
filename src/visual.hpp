@@ -6,12 +6,8 @@ namespace anim
     void snekMenuBase();
     // animates the change from the main to the sub menu
     void switchSubMenu();
-    // singleplayer sub menu
-    void snekSingle();
-    // multiplayer sub menu
-    void snekMulti();
-    // online mode sub menu
-    void snekOnline();
+    // sub menu for selecting gamemodes
+    void snekGamemodes();
     // highscores sub menu
     void snekHighscores();
     // settings sub menu

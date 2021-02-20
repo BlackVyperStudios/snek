@@ -97,28 +97,37 @@ void menu::menu::subMenu()
     updateCursor(notMovedCursor);
     sub = true;
 
-    std::cout << Term::color(Term::bg::reset)
-              << Term::color(Term::fg::reset)
-              << Term::color(Term::fg::red)
-              << Term::move_cursor(17,7);
+    std::cout << Term::color(Term::fg::reset)
+              << Term::move_cursor(17,7)
+              << Term::color(Term::fg::red);
     switch (cursorState)
     {
         case 1:
             std::cout << "    Press Q";     // every "Press Q" is a placeholder except 6 and 7
             arrow = true;
             cursorState = 2;
-            anim::snekSingle();
+            std::cout << Term::move_cursor(7,8)
+                      << Term::color(Term::fg::yellow)
+                      << "SINGLEPLAYER!";
+            anim::snekGamemodes();
             break;
         case 2:
             std::cout << "    Press Q";
             arrow = true;
-            anim::snekMulti();
+            cursorState = 2;
+            std::cout << Term::move_cursor(7,9)
+                      << Term::color(Term::fg::yellow)
+                      << "MULTIPLAYER";
+            anim::snekGamemodes();
             break;
         case 3:
             std::cout << "    Press Q";
             arrow = true;
             cursorState = 2;
-            anim::snekOnline();
+            std::cout << Term::move_cursor(7,9)
+                      << Term::color(Term::fg::yellow)
+                      << "ONLINE MODE";
+            anim::snekGamemodes();
             break;
         case 4:
             std::cout << "    Press Q";
