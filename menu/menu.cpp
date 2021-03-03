@@ -125,25 +125,3 @@ void menu::menu::updateDesc() const
     std::cout << Term::color(Term::fg::reset)
               << std::flush;
 }
-/* microSnake source */
-menu::microSnake::microSnake()
-{
-    // set default snake coordinates
-    for (unsigned short int i = 0; i < 16; i++)
-    {
-        // set Y coordinate
-        snake1Pos[1][i] = 7;
-        snake2Pos[1][i] = 16;
-        // set X coordinate
-        snake1Pos[0][i] = 5 + i;
-        snake2Pos[0][1] = 22 - i;
-    }
-}
-void menu::microSnake::update()
-{
-    //
-}
-void menu::microSnake::updateSnakePos()
-{
-    //
-}

@@ -21,21 +21,4 @@ namespace menu
 
         virtual ~menu() = default;
     };
-    class microSnake
-    {
-    private:
-
-        unsigned short int snake1Pos[2][16]{};
-        unsigned short int snake2Pos[2][16]{};
-    public:
-        microSnake();
-
-        void update();
-
-        void updateSnakePos();
-
-        void drawSnake();
-
-        virtual ~microSnake() = default;
-    };
 }
