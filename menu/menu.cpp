@@ -1,5 +1,5 @@
-#include <cpp-terminal/terminal.h>
 #include "menu.hpp"
+#include <cpp-terminal/terminal.h>
 #include "visual.hpp"
 
 /*
@@ -28,8 +28,7 @@
  *
  */
 
-unsigned short int menu::menu::start(Term::Terminal *term)
-{
+unsigned short int menu::menu::start(Term::Terminal* term) {
     // draw menu
     anim::snekHeader();
     anim::snekMenuBase();
@@ -38,22 +37,18 @@ unsigned short int menu::menu::start(Term::Terminal *term)
 
     // menu loop
     bool running = true;
-    while (running)
-    {
-        switch (term->read_key())
-        {
+    while (running) {
+        switch (term->read_key()) {
             case 'w':
             case Term::Key::ARROW_UP:
-                if (cursorState > 1)
-                {
+                if (cursorState > 1) {
                     updateCursor(cursor::up);
                     updateDesc();
                 }
                 break;
             case 's':
             case Term::Key::ARROW_DOWN:
-                if (cursorState <= 7)
-                {
+                if (cursorState <= 7) {
                     updateCursor(cursor::down);
                     updateDesc();
                 }
@@ -68,35 +63,25 @@ unsigned short int menu::menu::start(Term::Terminal *term)
     }
     return 0;
 }
-void menu::menu::updateCursor(cursor cursorDir)
-{
-    if (cursorDir != cursor::notMoved)
-    {
+void menu::menu::updateCursor(cursor cursorDir) {
+    if (cursorDir != cursor::notMoved) {
         std::cout << Term::color(Term::fg::reset)
                   << Term::color(Term::bg::reset)
-                  << Term::move_cursor(7 + cursorState,20)
-                  << "   ";
+                  << Term::move_cursor(7 + cursorState, 20) << "   ";
     }
     if (cursorDir == cursor::up)
         cursorState--;
     else if (cursorDir == cursor::down)
         cursorState++;
     std::cout << Term::color(Term::fg::red)
-              << Term::move_cursor(7 + cursorState, 20)
-              << "<--"
-              << Term::color(Term::fg::reset)
-              << std::flush;
+              << Term::move_cursor(7 + cursorState, 20) << "<--"
+              << Term::color(Term::fg::reset) << std::flush;
 }
-void menu::menu::updateDesc() const
-{
-    std::cout << Term::color(Term::bg::reset)
-              << Term::color(Term::fg::reset)
-              << Term::move_cursor(17,7)
-              << "               "
-              << Term::color(Term::fg::red)
-              << Term::move_cursor(17,7);
-    switch (cursorState)
-    {
+void menu::menu::updateDesc() const {
+    std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
+              << Term::move_cursor(17, 7) << "               "
+              << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
+    switch (cursorState) {
         case 1:
             std::cout << "  Play alone!";
             break;
@@ -122,6 +107,5 @@ void menu::menu::updateDesc() const
             std::cout << " Coming  soon!";
             break;
     }
-    std::cout << Term::color(Term::fg::reset)
-              << std::flush;
+    std::cout << Term::color(Term::fg::reset) << std::flush;
 }
