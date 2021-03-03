@@ -79,19 +79,19 @@ void anim::snekMenuBase()
     {
         timer.reset();
         // draw head
-        std::cout << Term::move_cursor(7,26 - i)
+        std::cout << Term::move_cursor(8,26 - i)
                   << "O"
                   << Term::move_cursor(16,2 + i)
                   << "O";
         // draw tail
         if (i > 0)
-            std::cout << Term::move_cursor(7,27 - i)
+            std::cout << Term::move_cursor(8,27 - i)
                       << "o"
                       << Term::move_cursor(16,1 + i)
                       << "o";
         // erase tail
         if (i > 16)
-            std::cout << Term::move_cursor(7,27-(i-16))
+            std::cout << Term::move_cursor(8,27-(i-16))
                       << " "
                       << Term::move_cursor(16,1+(i-16))
                       << " ";
@@ -99,31 +99,29 @@ void anim::snekMenuBase()
         std::cout << std::flush;
         while (!timer.done());
     }
-    std::cout << Term::move_cursor(8,6)
-              << Term::color(Term::bg::reset)
+    std::cout << Term::move_cursor(7,10)
+              << Term::color(Term::fg::yellow)
+              << "MAIN MENU"
               << Term::color(Term::fg::blue)
-              << Term::move_cursor(8,6)
-              << "Singleplayer"
               << Term::move_cursor(9,6)
-              << "Multiplayer"
+              << "Singleplayer"
               << Term::move_cursor(10,6)
-              << "Online Mode"
+              << "Multiplayer"
               << Term::move_cursor(11,6)
-              << "Highscores"
+              << "Online Mode"
               << Term::move_cursor(12,6)
-              << "Settings"
+              << "Highscores"
               << Term::move_cursor(13,6)
-              << "About"
+              << "Settings"
               << Term::move_cursor(14,6)
-              << "License"
+              << "About"
               << Term::move_cursor(15,6)
-              << "???"
+              << "License"
               << Term::move_cursor(17,6)
               << ">               <"
-              << Term::move_cursor(8,20)
+              << Term::move_cursor(9,20)
               << Term::color(Term::fg::red)
               << "<--"
-              << Term::color(Term::bg::reset)
               << Term::color(Term::fg::reset)
               << std::flush;
 }
@@ -373,35 +371,33 @@ void anim::snekHeader()
 
 void draw::snekMenuBase()
 {
-    std::cout << Term::move_cursor(7,6)
+    std::cout << Term::move_cursor(7,10)
+              << Term::color(Term::fg::yellow)
+              << "MAIN MENU"
               << Term::color(Term::fg::green)
-              << Term::color(Term::bg::reset)
+              << Term::move_cursor(8,6)
               << "Ooooooooooooooooo"
               << Term::color(Term::fg::blue)
-              << Term::move_cursor(8,6)
-              << "Singleplayer"
               << Term::move_cursor(9,6)
-              << "Multiplayer"
+              << "Singleplayer"
               << Term::move_cursor(10,6)
-              << "Online Mode"
+              << "Multiplayer"
               << Term::move_cursor(11,6)
-              << "Highscores"
+              << "Online Mode"
               << Term::move_cursor(12,6)
-              << "Settings"
+              << "Highscores"
               << Term::move_cursor(13,6)
-              << "About"
+              << "Settings"
               << Term::move_cursor(14,6)
-              << "License"
+              << "About"
               << Term::move_cursor(15,6)
-              << "???"
+              << "License"
               << Term::color(Term::fg::green)
               << Term::move_cursor(16,6)
               << "ooooooooooooooooO"
               << Term::color(Term::fg::blue)
               << Term::move_cursor(17,6)
-              << ">"
-              << Term::move_cursor_right(15)
-              << "<"
+              << ">               <"
               << Term::color(Term::fg::reset)
               << std::flush;
 }

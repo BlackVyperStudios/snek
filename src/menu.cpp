@@ -49,7 +49,7 @@ unsigned short int menu::menu::start(Term::Terminal *term)
         {
             case 'w':
             case Term::Key::ARROW_UP:
-                if (!sub && cursorState != 1 || sub && cursorState != 2)
+                if (cursorState != 1)
                 {
                     updateCursor(moveCursorUp);
                     updateDesc();
@@ -57,7 +57,12 @@ unsigned short int menu::menu::start(Term::Terminal *term)
                 break;
             case 's':
             case Term::Key::ARROW_DOWN:
-                if (!sub && cursorState != 7 && !eU || !sub && cursorState != 8 && eU || sub && cursorState != 6)
+                if (!sub && cursorState != 7)
+                {
+                    updateCursor(moveCursorDown);
+                    updateDesc();
+                }
+                else if (sub && cursorState != 5)
                 {
                     updateCursor(moveCursorDown);
                     updateDesc();
@@ -89,6 +94,7 @@ unsigned short int menu::menu::start(Term::Terminal *term)
     return 0;
 }
 
+// sub menu system
 void menu::menu::subMenu()
 {
     lastCursorState = cursorState;
@@ -105,7 +111,7 @@ void menu::menu::subMenu()
         case 1:
             std::cout << "    Press Q";     // every "Press Q" is a placeholder except 6 and 7
             arrow = true;
-            cursorState = 2;
+            cursorState = 1;
             std::cout << Term::move_cursor(7,8)
                       << Term::color(Term::fg::yellow)
                       << "SINGLEPLAYER!";
@@ -114,7 +120,7 @@ void menu::menu::subMenu()
         case 2:
             std::cout << "    Press Q";
             arrow = true;
-            cursorState = 2;
+            cursorState = 1;
             std::cout << Term::move_cursor(7,9)
                       << Term::color(Term::fg::yellow)
                       << "MULTIPLAYER";
@@ -123,7 +129,7 @@ void menu::menu::subMenu()
         case 3:
             std::cout << "    Press Q";
             arrow = true;
-            cursorState = 2;
+            cursorState = 1;
             std::cout << Term::move_cursor(7,9)
                       << Term::color(Term::fg::yellow)
                       << "ONLINE MODE";
@@ -164,7 +170,7 @@ void menu::menu::updateCursor(unsigned short int moving)
         {
             std::cout << Term::color(Term::fg::reset)
                       << Term::color(Term::bg::reset)
-                      << Term::move_cursor(7 + cursorState,20)
+                      << Term::move_cursor(8 + cursorState,20)
                       << "   ";
         }
         if (moving == moveCursorUp)
@@ -172,7 +178,7 @@ void menu::menu::updateCursor(unsigned short int moving)
         else if (moving == moveCursorDown)
             cursorState++;
         std::cout << Term::color(Term::fg::red)
-                  << Term::move_cursor(7 + cursorState, 20)
+                  << Term::move_cursor(8 + cursorState, 20)
                   << "<--"
                   << Term::color(Term::fg::reset)
                   << std::flush;
