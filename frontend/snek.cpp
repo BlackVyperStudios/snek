@@ -1,5 +1,5 @@
 #include <cpp-terminal/terminal.h>
-#include "menu.hpp"
+#include <menu/menu.hpp>
 
 int main()
 {

@@ -1,6 +1,7 @@
 #include "visual.hpp"
 #include <cpp-terminal/terminal.h>
-#include "utils.hpp"
+#include <thread>
+#include <chrono>
 
 /*
  * .----..-. .-..----..-. .-.
@@ -30,74 +31,68 @@
 
 void anim::snekMenuBase()
 {
-    utils::timer timer(70);
-
     std::cout << Term::color(Term::bg::blue)
               << Term::color(Term::fg::black)
               << Term::move_cursor(5,14)
-              << " "
+              << ' '
               << std::flush;
-    while (!timer.done());
+    std::this_thread::sleep_for(std::chrono::milliseconds(70));
 
     // draws the top line
     for (unsigned int i = 1; i < 14; i++)
     {
-        timer.reset();
         std::cout << Term::move_cursor(5,14 - i)
-                  << " "
+                  << ' '
                   << Term::move_cursor(5,14 + i)
-                  << " "
+                  << ' '
                   << std::flush;
-        while (!timer.done());
+        std::this_thread::sleep_for(std::chrono::milliseconds(70));
     }
     // left and right rows
     for (unsigned int i = 0; i < 14; i++)
     {
-        timer.reset();
         std::cout << Term::move_cursor(5 + i,1)
-                  << " "
+                  << ' '
                   << Term::move_cursor(5 + i,27)
-                  << " "
+                  << ' '
                   << std::flush;
-        while (!timer.done());
+        std::this_thread::sleep_for(std::chrono::milliseconds(70));
     }
     // bottom row
     for (unsigned int i = 0; i < 14; i++)
     {
-        timer.reset();
         std::cout << Term::move_cursor(19,1 + i)
-                  << " "
+                  << ' '
                   << Term::move_cursor(19,27 - i)
-                  << " "
+                  << ' '
                   << std::flush;
-        while (!timer.done());
+        std::this_thread::sleep_for(std::chrono::milliseconds(70));
     }
     std::cout << Term::color(Term::fg::green)
               << Term::color(Term::bg::reset)
               << std::flush;
     for (unsigned short int i = 0; i < 21; i++)
     {
-        timer.reset();
         // draw head
         std::cout << Term::move_cursor(7,26 - i)
-                  << "O"
+                  << 'O'
                   << Term::move_cursor(16,2 + i)
-                  << "O";
+                  << 'O';
         // draw tail
         if (i > 0)
             std::cout << Term::move_cursor(7,27 - i)
-                      << "o"
+                      << 'o'
                       << Term::move_cursor(16,1 + i)
-                      << "o";
+                      << 'o';
         // erase tail
         if (i > 16)
             std::cout << Term::move_cursor(7,27-(i-16))
-                      << " "
+                      << ' '
                       << Term::move_cursor(16,1+(i-16))
-                      << " ";
+                      << ' ';
         // flush iostream
         std::cout << std::flush;
-        while (!timer.done());
+        std::this_thread::sleep_for(std::chrono::milliseconds(70));
     }
     std::cout << Term::color(Term::bg::reset)
               << Term::color(Term::fg::blue)
@@ -118,9 +113,9 @@ void anim::snekMenuBase()
               << Term::move_cursor(15,6)
               << "???"
               << Term::move_cursor(17,6)
-              << ">"
+              << '>'
               << Term::move_cursor_right(15)
-              << "<"
+              << '<'
               << Term::move_cursor(8,20)
               << Term::color(Term::fg::red)
               << "<--"
@@ -131,8 +126,6 @@ void anim::snekMenuBase()
 
 void anim::snekHeader()
 {
-    utils::timer timer(70);
-
     std::cout << Term::color(Term::bg::reset)
               << Term::color(Term::fg::green)
               << Term::move_cursor(1,1)
@@ -144,8 +137,7 @@ void anim::snekHeader()
               << Term::move_cursor(4,1)
               << "`----' "
               << std::flush;
-    while (!timer.done());
-    timer.reset();
+    std::this_thread::sleep_for(std::chrono::milliseconds(70));
     std::cout << Term::move_cursor(1,8)
               << ".-. .-."
               << Term::move_cursor(2,8)
@@ -155,8 +147,7 @@ void anim::snekHeader()
               << Term::move_cursor(4,8)
               << "`-' `-'"
               << std::flush;
-    while (!timer.done());
-    timer.reset();
+    std::this_thread::sleep_for(std::chrono::milliseconds(70));
     std::cout << Term::move_cursor(1,15)
               << ".----."
               << Term::move_cursor(2,15)
@@ -166,7 +157,7 @@ void anim::snekHeader()
               << Term::move_cursor(4,15)
               << "`----'"
               << std::flush;
-    while (!timer.done());
+    std::this_thread::sleep_for(std::chrono::milliseconds(70));
     std::cout << Term::move_cursor(1,21)
               << ".-. .-."
               << Term::move_cursor(2,21)
@@ -182,7 +173,7 @@ void anim::snekHeader()
 
 
 /* === sub menu ====
- * .----..-. .-..----..-. .-.
+ *  .----..-. .-..----..-. .-.
  * { {__  |  `| || {_  | |/ /
  * .-._} }| |\  || {__ | |\ \
  * `----' `-' `-'`----'`-' `-'

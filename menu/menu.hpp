@@ -7,8 +7,8 @@ namespace menu
     private:
         // indicates the current state of the menu cursor (y = 7 + cursorState)
         unsigned short int cursorState = 1;
-        // indicates if the easter egg is unlocked
-        bool eU = false;
+        // cursor parsing
+        enum cursor {notMoved, up, down};
     public:
         menu() = default;
 
@@ -16,7 +16,7 @@ namespace menu
         unsigned short int start(Term::Terminal *term);
 
         // base menu
-        void updateCursor(unsigned short int);
+        void updateCursor(cursor cursorDir);
         void updateDesc() const;
 
         virtual ~menu() = default;
