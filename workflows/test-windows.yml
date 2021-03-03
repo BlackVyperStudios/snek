@@ -1,0 +1,20 @@
+name: windows-integration-testing
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v1
+      - name: compile
+        run: |
+          bash .ci\compile.bat
