@@ -10,7 +10,7 @@ class menu {
 
    public:
     menu() = default;
-
+ 
     // start the menu
     unsigned short int start(Term::Terminal* term);
 
