@@ -1,4 +1,5 @@
 #pragma once
+#include <cpp-terminal/terminal.h>
 
 namespace menu {
 class menu {
@@ -12,7 +13,7 @@ class menu {
     menu() = default;
  
     // start the menu
-    unsigned short int start(Term::Terminal* term);
+    unsigned short int start(Term::Terminal*term);
 
     // base menu
     void updateCursor(cursor cursorDir);
