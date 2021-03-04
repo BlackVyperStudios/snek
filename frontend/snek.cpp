@@ -9,6 +9,10 @@ int main() {
         // destructor
         Term::Terminal termObj(true, true);
         termObj.save_screen();
+
+        // clear screen
+        std::cout << "\033[2J" << std::flush;
+
         // turn off the cursor
         std::cout << Term::cursor_off();
 
@@ -20,6 +24,7 @@ int main() {
         std::cout << Term::color(Term::style::reset)
                   << Term::color(Term::fg::reset)
                   << Term::color(Term::bg::reset) << Term::cursor_on();
+        termObj.restore_screen();
     }
     // cpp-terminal will throw a runtime error on exceptions
     catch (const std::runtime_error& re) {
