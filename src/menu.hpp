@@ -5,10 +5,8 @@ namespace menu
     class menu
     {
     private:
-        // indicates the current state of the menu cursor (y = 7 + cursorState)
-        unsigned short int cursorState = 1;
-        // indicates if the easter egg is unlocked
-        bool eU = false;
+        // indicates the current state of the menu cursor (y = 8 + cursorState)
+        unsigned short int cursorState = 0;
     public:
         menu() = default;
 
