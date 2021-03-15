@@ -56,32 +56,45 @@ void anim::snekMenuBase() {
               << std::flush;
     for (unsigned short int i = 0; i < 21; i++) {
         // draw head
-        std::cout << Term::move_cursor(7, 26 - i) << 'O'
+        std::cout << Term::move_cursor(8, 26 - i) << 'O'
                   << Term::move_cursor(16, 2 + i) << 'O';
         // draw tail
         if (i > 0)
-            std::cout << Term::move_cursor(7, 27 - i) << 'o'
+            std::cout << Term::move_cursor(8, 27 - i) << 'o'
                       << Term::move_cursor(16, 1 + i) << 'o';
         // erase tail
         if (i > 16)
-            std::cout << Term::move_cursor(7, 27 - (i - 16)) << ' '
+            std::cout << Term::move_cursor(8, 27 - (i - 16)) << ' '
                       << Term::move_cursor(16, 1 + (i - 16)) << ' ';
         // flush iostream
         std::cout << std::flush;
         std::this_thread::sleep_for(std::chrono::milliseconds(70));
     }
-    std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::blue)
-              << Term::move_cursor(8, 6) << "Singleplayer"
-              << Term::move_cursor(9, 6) << "Multiplayer"
-              << Term::move_cursor(10, 6) << "Online Mode"
-              << Term::move_cursor(11, 6) << "Settings"
-              << Term::move_cursor(12, 6) << "Manual"
-              << Term::move_cursor(13, 6) << "About" << Term::move_cursor(14, 6)
-              << "License" << Term::move_cursor(15, 6) << "???"
-              << Term::move_cursor(17, 6) << '>' << Term::move_cursor_right(15)
-              << '<' << Term::move_cursor(8, 20) << Term::color(Term::fg::red)
-              << "<--" << Term::color(Term::bg::reset)
-              << Term::color(Term::fg::reset) << std::flush;
+    std::cout << Term::move_cursor(7,10)
+              << Term::color(Term::fg::yellow)
+              << "MAIN MENU"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(9,6)
+              << "Singleplayer"
+              << Term::move_cursor(10,6)
+              << "Multiplayer"
+              << Term::move_cursor(11,6)
+              << "Online Mode"
+              << Term::move_cursor(12,6)
+              << "Highscores"
+              << Term::move_cursor(13,6)
+              << "Settings"
+              << Term::move_cursor(14,6)
+              << "About"
+              << Term::move_cursor(15,6)
+              << "License"
+              << Term::move_cursor(17,6)
+              << ">               <"
+              << Term::move_cursor(9,20)
+              << Term::color(Term::fg::red)
+              << "<--"
+              << Term::color(Term::fg::reset)
+              << std::flush;
 }
 
 void anim::snekHeader() {
@@ -106,6 +119,125 @@ void anim::snekHeader() {
               << Term::color(Term::fg::reset) << Term::color(Term::bg::reset);
 }
 
+void anim::snekGamemodes()
+{
+    std::cout << Term::move_cursor(8,6)
+              << Term::color(Term::fg::green)
+              << "Ooooooooooooooooo"
+              << Term::move_cursor(9,6)
+              << Term::color(Term::fg::blue)
+              << "SNEK"
+              << Term::move_cursor(10,6)
+              << "Classic"
+              << Term::move_cursor(11,6)
+              << "Infinite"
+              << Term::move_cursor(12,6)
+              << "Chaos"
+              << Term::move_cursor(13,6)
+              << "Creative"
+              << Term::move_cursor(15,7)
+              << Term::color(Term::fg::red)
+              << "Select Gamemode"
+              << Term::move_cursor(16,6)
+              << Term::color(Term::fg::green)
+              << "ooooooooooooooooO"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
+              << Term::move_cursor(9,20)
+              << Term::color(Term::fg::red)
+              << "<--"
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+
+void anim::snekSettings()
+{
+    std::cout << Term::move_cursor(7,10)
+              << Term::color(Term::fg::yellow)
+              << "SETTINGS!"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+
+void anim::snekHighscores()
+{
+    std::cout << Term::move_cursor(7,9)
+              << Term::color(Term::fg::yellow)
+              << "HIGHSCORES!"
+              << Term::move_cursor(8,4)
+              << Term::color(Term::fg::black)
+              << Term::color(Term::bg::gray)
+              << "SINGLE"
+              << Term::move_cursor(8,12)
+              << Term::color(Term::fg::reset)
+              << Term::color(Term::bg::reset)
+              << "MULTI"
+              << Term::move_cursor(8,19)
+              << "ONLINE"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+
+void anim::snekAbout()
+{
+    std::cout << Term::move_cursor(7,12)
+              << Term::color(Term::bg::reset)
+              << Term::color(Term::fg::yellow)
+              << "ABOUT"
+              << Term::color(Term::fg::red)
+              << Term::move_cursor(8,6)
+              << "SNEK V1.1.0 is a "
+              << Term::move_cursor(9,6)
+              << "game developed by"
+              << Term::move_cursor(10,6)
+              << "BlackVyperStudios"
+              << Term::move_cursor(11,6)
+              << "and it's members:"
+              << Term::move_cursor(12,6)
+              << "~ Damon Leven"
+              << Term::move_cursor(13,6)
+              << "~ Alex Prosser"
+              << Term::move_cursor(14,6)
+              << "And all contribu-"
+              << Term::move_cursor(15,6)
+              << "tors on Github!"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+
+void anim::snekLicense()
+{
+    std::cout << Term::move_cursor(7,11)
+              << Term::color(Term::fg::yellow)
+              << "LICENSE"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">"
+              << Term::move_cursor_right(15)
+              << "<"
+              << Term::color(Term::fg::reset)
+              << std::flush;
+}
+
+
 /* === sub menu ====
  *  .----..-. .-..----..-. .-.
  * { {__  |  `| || {_  | |/ /
@@ -129,7 +261,7 @@ void anim::snekHeader() {
  */
 
 /* === Text sub menu ===
- * .----..-. .-..----..-. .-.
+ *  .----..-. .-..----..-. .-.
  * { {__  |  `| || {_  | |/ /
  * .-._} }| |\  || {__ | |\ \
  * `----' `-' `-'`----'`-' `-'
@@ -140,10 +272,10 @@ void anim::snekHeader() {
  * #    game developed by    #
  * #    BlackVyperStudios    #
  * #    and it's members:    #
- * #    ~Damon Leven         #
- * #    ~Alex Prosser        #
- * #    And all contrib-     #
- * #    buters on Github!    #
+ * #    ~ Damon Leven        #
+ * #    ~ Alex Prosser       #
+ * #    And all contribu-    #
+ * #    tors on Github!      #
  * #    ooooooooooooooooO    #
  * #    >  Press ENTER  <    #
  * #                         #
@@ -154,7 +286,7 @@ void anim::snekHeader() {
  */
 
 /* === settings sub menu ===
- * .----..-. .-..----..-. .-.
+ *  .----..-. .-..----..-. .-.
  * { {__  |  `| || {_  | |/ /
  * .-._} }| |\  || {__ | |\ \
  * `----' `-' `-'`----'`-' `-'
@@ -180,19 +312,35 @@ void anim::snekHeader() {
  */
 
 void draw::snekMenuBase() {
-    std::cout << Term::move_cursor(5, 6) << Term::color(Term::fg::green)
-              << Term::color(Term::bg::reset) << "Ooooooooooooooooo"
-              << Term::color(Term::fg::blue) << Term::move_cursor(6, 6)
-              << "Singleplayer" << Term::move_cursor(7, 6) << "Multiplayer"
-              << Term::move_cursor(8, 6) << "Online Mode"
-              << Term::move_cursor(9, 6) << "Settings"
-              << Term::move_cursor(10, 6) << "Manual"
-              << Term::move_cursor(11, 6) << "About" << Term::move_cursor(12, 6)
-              << "License" << Term::move_cursor(13, 6) << "???"
-              << Term::color(Term::fg::green) << Term::move_cursor(14, 6)
-              << "ooooooooooooooooO" << Term::color(Term::fg::blue)
-              << Term::move_cursor(15, 6) << ">               <"
-              << Term::color(Term::fg::reset) << std::flush;
+    std::cout << Term::move_cursor(7,10)
+              << Term::color(Term::fg::yellow)
+              << "MAIN MENU"
+              << Term::color(Term::fg::green)
+              << Term::move_cursor(8,6)
+              << "Ooooooooooooooooo"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(9,6)
+              << "Singleplayer"
+              << Term::move_cursor(10,6)
+              << "Multiplayer"
+              << Term::move_cursor(11,6)
+              << "Online Mode"
+              << Term::move_cursor(12,6)
+              << "Highscores"
+              << Term::move_cursor(13,6)
+              << "Settings"
+              << Term::move_cursor(14,6)
+              << "About"
+              << Term::move_cursor(15,6)
+              << "License"
+              << Term::color(Term::fg::green)
+              << Term::move_cursor(16,6)
+              << "ooooooooooooooooO"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(17,6)
+              << ">               <"
+              << Term::color(Term::fg::reset)
+              << std::flush;
 }
 void draw::clearField() {
     std::cout << Term::color(Term::fg::reset) << Term::color(Term::bg::reset);
