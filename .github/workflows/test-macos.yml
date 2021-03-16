@@ -22,7 +22,11 @@ jobs:
 
     steps:
       - name: checkout repo
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
+
       - name: compile
         run: |
           bash .ci/compile.sh
