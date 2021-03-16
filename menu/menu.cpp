@@ -32,7 +32,7 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
     // draw menu
     anim::snekHeader();
     anim::snekMenuBase();
-    updateDesc();
+    updateDescription();
     updateCursor(cursor::notMoved);
 
     // menu loop
@@ -43,17 +43,17 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
             case Term::Key::ARROW_UP:
                 if (cursorState > 0) {
                     updateCursor(cursor::up);
-                    updateDesc();
+                    updateDescription();
                 }
                 break;
             case 's':
             case Term::Key::ARROW_DOWN:
                 if (!sub && cursorState <= 5) {
                     updateCursor(cursor::down);
-                    updateDesc();
+                    updateDescription();
                 } else if (sub && cursorState <= 3) {
                     updateCursor(cursor::down);
-                    updateDesc();
+                    updateDescription();
                 }
                 break;
             case 'q':
@@ -63,7 +63,7 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                     draw::clearField();
                     cursorState = lastCursorState;
                     draw::snekMenuBase();
-                    updateDesc();
+                    updateDescription();
                     updateCursor(cursor::notMoved);
                 } else
                     running = false;
