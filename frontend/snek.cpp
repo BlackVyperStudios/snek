@@ -23,7 +23,8 @@ int main() {
         // make sure the terminal is reverted to its original state
         std::cout << Term::color(Term::style::reset)
                   << Term::color(Term::fg::reset)
-                  << Term::color(Term::bg::reset) << Term::cursor_on();
+                  << Term::color(Term::bg::reset)
+                  << Term::cursor_on();
         termObj.restore_screen();
     }
     // cpp-terminal will throw a runtime error on exceptions
