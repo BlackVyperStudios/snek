@@ -3,32 +3,32 @@
 
 namespace menu {
 class menu {
-    private:
-        // indicates the current state of the menu cursor (y = 8 + cursorState)
-        unsigned short int cursorState = 0;
-        // cursor parsing
-        enum cursor { notMoved, up, down };
-    
-    public:
-        menu() = default;
+   private:
+    // indicates the current state of the menu cursor (y = 8 + cursorState)
+    unsigned short int cursorState = 0;
+    // cursor parsing
+    enum cursor { notMoved, up, down };
 
-        // start the menu
-        unsigned short int start(Term::Terminal*term);
+   public:
+    menu() = default;
 
-        // for sub menus
-        void subMenu();
-        // checks if you are in a sub menu
-        bool sub = false;
+    // start the menu
+    unsigned short int start(Term::Terminal* term);
 
-        short int lastCursorState = 0;
+    // for sub menus
+    void subMenu();
+    // checks if you are in a sub menu
+    bool sub = false;
 
-        // if false, no selection arrow
-        bool arrow = true;
+    short int lastCursorState = 0;
 
-        // base menu
-        void updateCursor(cursor cursorDir);
-        void updateDesc() const;
+    // if false, no selection arrow
+    bool arrow = true;
 
-        virtual ~menu() = default;
+    // base menu
+    void updateCursor(cursor cursorDir);
+    void updateDesc() const;
+
+    virtual ~menu() = default;
 };
 }  // namespace menu
