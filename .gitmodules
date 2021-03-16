@@ -1,6 +1,0 @@
-[submodule "deps/cpp-terminal"]
-	path = deps/cpp-terminal
-	url = https://github.com/jupyter-xeus/cpp-terminal.git
-[submodule "deps/folf-namespace"]
-	path = deps/folf-namespace
-	url = https://github.com/FOLF-projects/folf-namespace.git

@@ -11,9 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED true)
 add_subdirectory(snake)
 add_subdirectory(menu)
 add_subdirectory(frontend)
-# dependencies
-add_subdirectory(deps/cpp-terminal)
-add_subdirectory(deps/folf-namespace)
+add_subdirectory(dependencies)
 
 set(FRONTEND_TARGETS)
 # enable warnings and set compile features
