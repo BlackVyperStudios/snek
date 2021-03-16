@@ -11,7 +11,7 @@ int main() {
         termObj.save_screen();
 
         // clear screen
-        std::cout << "\033[2J" << std::flush;
+        std::cout << Term::clear_screen_buffer() << std::flush;
 
         // turn off the cursor
         std::cout << Term::cursor_off();
