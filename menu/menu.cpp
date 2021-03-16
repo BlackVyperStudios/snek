@@ -159,14 +159,14 @@ void menu::menu::updateCursor(cursor cursorDir) {
             std::cout << Term::color(Term::fg::reset)
                       << Term::color(Term::bg::reset)
                       << Term::move_cursor(9 + cursorState, 20) << "   ";
+            if (cursorDir == cursor::up)
+                cursorState--;
+            else if (cursorDir == cursor::down)
+                cursorState++;
+            std::cout << Term::color(Term::fg::red)
+                      << Term::move_cursor(9 + cursorState, 20) << "<--"
+                      << Term::color(Term::fg::reset) << std::flush;
         }
-        if (cursorDir == cursor::up)
-            cursorState--;
-        else if (cursorDir == cursor::down)
-            cursorState++;
-        std::cout << Term::color(Term::fg::red)
-                  << Term::move_cursor(9 + cursorState, 20) << "<--"
-                  << Term::color(Term::fg::reset) << std::flush;
     }
 }
 void menu::menu::updateDesc() const {
