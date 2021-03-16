@@ -27,7 +27,7 @@ class menu {
 
         // base menu
         void updateCursor(cursor cursorDir);
-        void updateDesc() const;
+        void updateDescription() const;
 
         virtual ~menu() = default;
 };

@@ -169,7 +169,7 @@ void menu::menu::updateCursor(cursor cursorDir) {
                   << Term::color(Term::fg::reset) << std::flush;
     }
 }
-void menu::menu::updateDesc() const {
+void menu::menu::updateDescription() const {
     if (!sub)
     {
         std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
@@ -186,10 +186,10 @@ void menu::menu::updateDesc() const {
                 std::cout << "  Play online";
                 break;
             case 3:
-                std::cout << "Secret options!";
+                std::cout << "Your best runs!";
                 break;
             case 4:
-                std::cout << "How do I play??";
+                std::cout << "Secret options!";
                 break;
             case 5:
                 std::cout << "Who did this???";
