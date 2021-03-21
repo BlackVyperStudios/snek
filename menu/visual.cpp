@@ -123,36 +123,42 @@ void anim::snekGamemodes() {
 
 void anim::snekSettings() {
     std::cout << Term::move_cursor(7, 10) << Term::color(Term::fg::yellow)
-              << "SETTINGS!" << Term::color(Term::fg::blue)
+              << "SETTINGS!"
+              << Term::move_cursor(8, 6) << Term::color(Term::fg::green)
+              << "Ooooooooooooooooo" << Term::move_cursor(9, 6)
+              << Term::move_cursor(16, 6) << Term::color(Term::fg::green)
+              << "ooooooooooooooooO" << Term::color(Term::fg::blue)
               << Term::move_cursor(17, 6) << ">" << Term::move_cursor_right(15)
               << "<" << Term::color(Term::fg::reset) << std::flush;
 }
 
 void anim::snekHighscores() {
     std::cout << Term::move_cursor(7, 9) << Term::color(Term::fg::yellow)
-              << "HIGHSCORES!" << Term::move_cursor(8, 4)
-              << Term::color(Term::fg::black) << Term::color(Term::bg::gray)
-              << "SINGLE" << Term::move_cursor(8, 12)
+              << "HIGHSCORES!" << Term::move_cursor(8, 6) << Term::color(Term::fg::green)
+              << "Ooooooooooooooooo" << Term::move_cursor(9, 4)
+              << Term::color(Term::fg::black) << Term::color(Term::bg::white)
+              << "SINGLE" << Term::move_cursor(9, 12)
               << Term::color(Term::fg::reset) << Term::color(Term::bg::reset)
-              << "MULTI" << Term::move_cursor(8, 19) << "ONLINE"
-              << Term::color(Term::fg::blue) << Term::move_cursor(17, 6) << ">"
-              << Term::move_cursor_right(15) << "<"
+              << "MULTI" << Term::move_cursor(9, 19) 
+              << "ONLINE" << Term::color(Term::fg::blue) << Term::move_cursor(17, 6)
+              << Term::move_cursor(16, 6) << Term::color(Term::fg::green)
+              << "ooooooooooooooooO" << Term::color(Term::fg::blue) << Term::move_cursor(17, 6)
+              << ">" << Term::move_cursor_right(15) << "<"
               << Term::color(Term::fg::reset) << std::flush;
 }
 
 void anim::snekAbout() {
-    std::cout << Term::move_cursor(7, 12) << Term::color(Term::bg::reset)
-              << Term::color(Term::fg::yellow) << "ABOUT"
-              << Term::color(Term::fg::red) << Term::move_cursor(8, 6)
-              << "SNEK V1.1.0 is a " << Term::move_cursor(9, 6)
-              << "game developed by" << Term::move_cursor(10, 6)
-              << "BlackVyperStudios" << Term::move_cursor(11, 6)
-              << "and it's members:" << Term::move_cursor(12, 6)
-              << "~ Damon Leven" << Term::move_cursor(13, 6) << "~ Alex Prosser"
-              << Term::move_cursor(14, 6) << "And all contribu-"
-              << Term::move_cursor(15, 6) << "tors on Github!"
-              << Term::color(Term::fg::blue) << Term::move_cursor(17, 6) << ">"
-              << Term::move_cursor_right(15) << "<"
+    std::cout << Term::move_cursor(7, 12) << Term::color(Term::fg::yellow) 
+              << "ABOUT" << Term::move_cursor(8, 6) << Term::color(Term::fg::green)
+              << "Ooooooooooooooooo" << Term::color(Term::fg::red) << Term::move_cursor(10, 6)
+              << "SNEK V1.1.0 is a " << Term::move_cursor(11, 6)
+              << "game developed by" << Term::move_cursor(12, 6)
+              << "BlackVyperStudios" << Term::move_cursor(13, 6)
+              << "And all contribu-" << Term::move_cursor(14, 6)
+              << "tors on Github!" << Term::move_cursor(16, 6)
+              << Term::color(Term::fg::green)
+              << "ooooooooooooooooO" << Term::color(Term::fg::blue) << Term::move_cursor(17, 6)
+              << ">" << Term::move_cursor_right(15) << "<"
               << Term::color(Term::fg::reset) << std::flush;
 }
 
