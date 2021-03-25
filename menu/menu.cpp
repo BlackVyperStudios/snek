@@ -60,7 +60,7 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                 if (sub) {
                     sub = false;
                     arrow = true;
-                    draw::clearField();
+                    draw::clearMenu();
                     cursorState = lastCursorState;
                     draw::snekMenuBase();
                     updateDescription();
@@ -83,7 +83,7 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
 // sub menu system
 void menu::menu::subMenu() {
     lastCursorState = cursorState;
-    draw::clearField();
+    draw::clearMenu();
     arrow = false;
     updateCursor(cursor::notMoved);
     sub = true;
@@ -140,8 +140,9 @@ void menu::menu::updateCursor(cursor cursorDir) {
     if (!arrow) {
         std::cout << Term::color(Term::fg::reset)
                   << Term::color(Term::bg::reset)
-                  << Term::move_cursor(8 + cursorState, 20) << "   ";
-    } else {
+                  << Term::move_cursor(9 + cursorState, 20) << "   ";
+    }
+    else {
         if (cursorDir != cursor::notMoved) {
             std::cout << Term::color(Term::fg::reset)
                       << Term::color(Term::bg::reset)
@@ -151,9 +152,9 @@ void menu::menu::updateCursor(cursor cursorDir) {
             else if (cursorDir == cursor::down)
                 cursorState++;
         }
-    std::cout << Term::color(Term::fg::red)
-                      << Term::move_cursor(9 + cursorState, 20) << "<--"
-                      << Term::color(Term::fg::reset) << std::flush;
+        std::cout << Term::color(Term::fg::red)
+                  << Term::move_cursor(9 + cursorState, 20) << "<--"
+                  << Term::color(Term::fg::reset) << std::flush;
     }
 }
 void menu::menu::updateDescription() const {
