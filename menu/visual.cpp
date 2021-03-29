@@ -124,8 +124,7 @@ void anim::snekSettings() {
 
 void anim::snekHighscores() {
     std::cout << Term::move_cursor(7, 9) << Term::color(Term::fg::yellow)
-              << "HIGHSCORES!" << Term::move_cursor(8, 6) << Term::color(Term::fg::green)
-              << "Ooooooooooooooooo" << Term::move_cursor(9, 4)
+              << "HIGHSCORES!" << Term::move_cursor(9, 4)
               << Term::color(Term::fg::black) << Term::color(Term::bg::white)
               << "SINGLE" << Term::move_cursor(9, 12)
               << Term::color(Term::bg::reset)
@@ -226,7 +225,8 @@ void anim::snekLicense() {
 
 void draw::snekMenuBase() {
     std::cout << Term::move_cursor(7, 10) << Term::color(Term::fg::yellow)
-              << "MAIN MENU"
+              << "MAIN MENU" << Term::color(Term::fg::green)
+              << Term::move_cursor(8, 6) << "Ooooooooooooooooo"
               << Term::color(Term::fg::blue)
               << Term::move_cursor(9, 6) << "Singleplayer"
               << Term::move_cursor(10, 6) << "Multiplayer"
@@ -235,6 +235,8 @@ void draw::snekMenuBase() {
               << Term::move_cursor(13, 6) << "Settings"
               << Term::move_cursor(14, 6) << "About"
               << Term::move_cursor(15, 6) << "License"
+              << Term::color(Term::fg::green) << Term::move_cursor(16, 6)
+              << "ooooooooooooooooO"
               << Term::color(Term::fg::reset) << std::flush;
 }
 void draw::clearMenu() {
