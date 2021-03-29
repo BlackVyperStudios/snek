@@ -131,22 +131,6 @@ void menu::menu::subMenu() {
             anim::snekLicense();
             break;
     }
-
-    if (arrow)
-    {
-        std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
-                  << Term::move_cursor(17, 7) << "               "
-                  << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
-        switch (cursorState) {
-            case 0:
-                std::cout << "With power-ups!";
-                break;
-            case 1:
-                std::cout << "Classic Snake";
-            case 2:
-                std::cout << "   No walls!";
-        }
-    }
     std::cout << Term::color(Term::fg::reset) << std::flush;
 }
 
@@ -201,7 +185,7 @@ void menu::menu::updateDescription() const {
                 break;
         }
     }
-    if (sub && arrow)
+    else if (sub && arrow)
     {
         switch (cursorState) {
             case 0:
