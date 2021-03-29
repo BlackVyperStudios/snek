@@ -51,7 +51,8 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                 if (!sub && cursorState <= 5) {
                     updateCursor(cursor::down);
                     updateDescription();
-                } else if (sub && cursorState <= 3) {
+                }
+                else if (sub && cursorState <= 3) {
                     updateCursor(cursor::down);
                     updateDescription();
                 }
@@ -74,6 +75,26 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
             case Term::Key::ENTER:
                 if (!sub)
                     subMenu();
+                else if (arrow)
+                {
+                    switch (cursorState) {
+                        case 0:
+                            draw::clearField();
+                            break;
+                        case 1:
+                            draw::clearField();
+                            break;
+                        case 2:
+                            draw::clearField();
+                            break;
+                        case 3:
+                            draw::clearField();
+                            break;
+                        case 4:
+                            draw::clearField();
+                            break;
+                    }
+                }
                 break;
         }
     }
@@ -157,8 +178,8 @@ void menu::menu::updateCursor(cursor cursorDir) {
 }
 void menu::menu::updateDescription() const {
     std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
-                  << Term::move_cursor(17, 7) << "               "
-                  << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
+              << Term::move_cursor(17, 7) << "               "
+              << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
     if (!sub)
     {
         switch (cursorState) {
@@ -185,7 +206,7 @@ void menu::menu::updateDescription() const {
                 break;
         }
     }
-    else if (sub && arrow)
+    else if (arrow)
     {
         switch (cursorState) {
             case 0:
