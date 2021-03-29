@@ -103,11 +103,12 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
 
 // sub menu system
 void menu::menu::subMenu() {
+    sub = true;
     lastCursorState = cursorState;
     draw::clearMenu();
+    updateDescription();
     arrow = false;
     updateCursor(cursor::notMoved);
-    sub = true;
 
     switch (lastCursorState) {
         case 0:
@@ -199,7 +200,7 @@ void menu::menu::updateDescription() const {
                 std::cout << "Secret options!";
                 break;
             case 5:
-                std::cout << "Who did this???";
+                std::cout << " Who did this?";
                 break;
             case 6:
                 std::cout << "  What's MIT?";
@@ -225,6 +226,6 @@ void menu::menu::updateDescription() const {
                 std::cout << "Build your snek";
                 break;
         }
-        std::cout << Term::color(Term::fg::reset) << std::flush;
     }
+    std::cout << Term::color(Term::fg::reset) << std::flush;
 }
