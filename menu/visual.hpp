@@ -20,6 +20,7 @@ void switchMainMenu();
 }  // namespace anim
 namespace draw {
 void snekMenuBase();
+void clearMenu();
 void clearField();
 void dummyField();
 }  // namespace draw

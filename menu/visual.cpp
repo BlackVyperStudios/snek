@@ -106,67 +106,48 @@ void anim::snekHeader() {
 }
 
 void anim::snekGamemodes() {
-    std::cout << Term::move_cursor(8, 6) << Term::color(Term::fg::green)
-              << "Ooooooooooooooooo" << Term::move_cursor(9, 6)
-              << Term::color(Term::fg::blue) << "SNEK"
-              << Term::move_cursor(10, 6) << "Classic"
-              << Term::move_cursor(11, 6) << "Infinite"
-              << Term::move_cursor(12, 6) << "Chaos" << Term::move_cursor(13, 6)
+    std::cout << Term::move_cursor(9, 6) << Term::color(Term::fg::blue)
+              << "SNEK" << Term::move_cursor(10, 6)
+              << "Classic" << Term::move_cursor(11, 6)
+              << "Infinite" << Term::move_cursor(12, 6)
+              << "Chaos" << Term::move_cursor(13, 6)
               << "Creative" << Term::move_cursor(15, 7)
-              << Term::color(Term::fg::red) << "Select Gamemode"
-              << Term::move_cursor(16, 6) << Term::color(Term::fg::green)
-              << "ooooooooooooooooO" << Term::color(Term::fg::blue)
-              << Term::move_cursor(17, 6) << ">" << Term::move_cursor_right(15)
-              << "<" << Term::move_cursor(9, 20) << Term::color(Term::fg::red)
+              << Term::color(Term::fg::red) << "Select Gamemode" << Term::move_cursor(9, 20)
               << "<--" << Term::color(Term::fg::reset) << std::flush;
 }
 
 void anim::snekSettings() {
     std::cout << Term::move_cursor(7, 10) << Term::color(Term::fg::yellow)
               << "SETTINGS!"
-              << Term::move_cursor(8, 6) << Term::color(Term::fg::green)
-              << "Ooooooooooooooooo" << Term::move_cursor(9, 6)
-              << Term::move_cursor(16, 6) << Term::color(Term::fg::green)
-              << "ooooooooooooooooO" << Term::color(Term::fg::blue)
-              << Term::move_cursor(17, 6) << ">" << Term::move_cursor_right(15)
-              << "<" << Term::color(Term::fg::reset) << std::flush;
+              << Term::color(Term::fg::reset) << std::flush;
 }
 
 void anim::snekHighscores() {
     std::cout << Term::move_cursor(7, 9) << Term::color(Term::fg::yellow)
-              << "HIGHSCORES!" << Term::move_cursor(8, 6) << Term::color(Term::fg::green)
-              << "Ooooooooooooooooo" << Term::move_cursor(9, 4)
+              << "HIGHSCORES!" << Term::move_cursor(9, 4)
               << Term::color(Term::fg::black) << Term::color(Term::bg::white)
               << "SINGLE" << Term::move_cursor(9, 12)
-              << Term::color(Term::fg::reset) << Term::color(Term::bg::reset)
-              << "MULTI" << Term::move_cursor(9, 19) 
-              << "ONLINE" << Term::color(Term::fg::blue) << Term::move_cursor(17, 6)
-              << Term::move_cursor(16, 6) << Term::color(Term::fg::green)
-              << "ooooooooooooooooO" << Term::color(Term::fg::blue) << Term::move_cursor(17, 6)
-              << ">" << Term::move_cursor_right(15) << "<"
+              << Term::color(Term::bg::reset)
+              << "MULTI" << Term::move_cursor(9, 19)
+              << "ONLINE"
               << Term::color(Term::fg::reset) << std::flush;
 }
 
 void anim::snekAbout() {
     std::cout << Term::move_cursor(7, 12) << Term::color(Term::fg::yellow) 
-              << "ABOUT" << Term::move_cursor(8, 6) << Term::color(Term::fg::green)
-              << "Ooooooooooooooooo" << Term::color(Term::fg::red) << Term::move_cursor(10, 6)
+              << "ABOUT" << Term::color(Term::fg::red) << Term::move_cursor(10, 6)
               << "SNEK V1.1.0 is a " << Term::move_cursor(11, 6)
               << "game developed by" << Term::move_cursor(12, 6)
               << "BlackVyperStudios" << Term::move_cursor(13, 6)
               << "And all contribu-" << Term::move_cursor(14, 6)
               << "tors on Github!" << Term::move_cursor(16, 6)
-              << Term::color(Term::fg::green)
-              << "ooooooooooooooooO" << Term::color(Term::fg::blue) << Term::move_cursor(17, 6)
-              << ">" << Term::move_cursor_right(15) << "<"
               << Term::color(Term::fg::reset) << std::flush;
 }
 
 void anim::snekLicense() {
     std::cout << Term::move_cursor(7, 11) << Term::color(Term::fg::yellow)
               << "LICENSE" << Term::color(Term::fg::blue)
-              << Term::move_cursor(17, 6) << ">" << Term::move_cursor_right(15)
-              << "<" << Term::color(Term::fg::reset) << std::flush;
+              << Term::color(Term::fg::reset) << std::flush;
 }
 
 /* === sub menu ====
@@ -246,16 +227,26 @@ void draw::snekMenuBase() {
     std::cout << Term::move_cursor(7, 10) << Term::color(Term::fg::yellow)
               << "MAIN MENU" << Term::color(Term::fg::green)
               << Term::move_cursor(8, 6) << "Ooooooooooooooooo"
-              << Term::color(Term::fg::blue) << Term::move_cursor(9, 6)
-              << "Singleplayer" << Term::move_cursor(10, 6) << "Multiplayer"
+              << Term::color(Term::fg::blue)
+              << Term::move_cursor(9, 6) << "Singleplayer"
+              << Term::move_cursor(10, 6) << "Multiplayer"
               << Term::move_cursor(11, 6) << "Online Mode"
               << Term::move_cursor(12, 6) << "Highscores"
               << Term::move_cursor(13, 6) << "Settings"
-              << Term::move_cursor(14, 6) << "About" << Term::move_cursor(15, 6)
-              << "License" << Term::color(Term::fg::green)
-              << Term::move_cursor(16, 6) << "ooooooooooooooooO"
-              << Term::color(Term::fg::blue) << Term::move_cursor(17, 6)
-              << ">               <" << Term::color(Term::fg::reset)
+              << Term::move_cursor(14, 6) << "About"
+              << Term::move_cursor(15, 6) << "License"
+              << Term::color(Term::fg::green) << Term::move_cursor(16, 6)
+              << "ooooooooooooooooO"
+              << Term::color(Term::fg::reset) << std::flush;
+}
+void draw::clearMenu() {
+    std::cout << Term::color(Term::fg::reset) << Term::color(Term::bg::reset)
+              << Term::move_cursor(7, 2) << "                         ";
+    for (unsigned short int i = 0; i < 7; i++) {
+        std::cout << Term::move_cursor(9 + i, 2) << "                         ";
+    }
+    std::cout << Term::color(Term::fg::blue) << Term::move_cursor(17, 6)
+              << ">               <"
               << std::flush;
 }
 void draw::clearField() {
@@ -265,4 +256,3 @@ void draw::clearField() {
     }
     std::cout << std::flush;
 }
-void draw::dummyField() {}

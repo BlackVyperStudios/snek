@@ -51,7 +51,8 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                 if (!sub && cursorState <= 5) {
                     updateCursor(cursor::down);
                     updateDescription();
-                } else if (sub && cursorState <= 3) {
+                }
+                else if (sub && cursorState <= 3) {
                     updateCursor(cursor::down);
                     updateDescription();
                 }
@@ -60,7 +61,7 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                 if (sub) {
                     sub = false;
                     arrow = true;
-                    draw::clearField();
+                    draw::clearMenu();
                     cursorState = lastCursorState;
                     draw::snekMenuBase();
                     updateDescription();
@@ -74,6 +75,26 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
             case Term::Key::ENTER:
                 if (!sub)
                     subMenu();
+                else if (arrow)
+                {
+                    switch (cursorState) {
+                        case 0:
+                            draw::clearField();
+                            break;
+                        case 1:
+                            draw::clearField();
+                            break;
+                        case 2:
+                            draw::clearField();
+                            break;
+                        case 3:
+                            draw::clearField();
+                            break;
+                        case 4:
+                            draw::clearField();
+                            break;
+                    }
+                }
                 break;
         }
     }
@@ -82,66 +103,66 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
 
 // sub menu system
 void menu::menu::subMenu() {
+    sub = true;
     lastCursorState = cursorState;
-    draw::clearField();
+    draw::clearMenu();
+    updateDescription();
     arrow = false;
     updateCursor(cursor::notMoved);
-    sub = true;
 
-    std::cout << Term::color(Term::fg::reset) << Term::move_cursor(17, 7)
-              << Term::color(Term::fg::red);
-    switch (cursorState) {
+    switch (lastCursorState) {
         case 0:
-            std::cout << "    Press Q";  // every "Press Q" is a placeholder
-                                         // except 6 and 7
-            arrow = true;
-            cursorState = 0;
             std::cout << Term::move_cursor(7, 8)
                       << Term::color(Term::fg::yellow) << "SINGLEPLAYER!";
+            arrow = true;
+            cursorState = 0;
             anim::snekGamemodes();
             break;
         case 1:
-            std::cout << "    Press Q";
-            arrow = true;
-            cursorState = 0;
             std::cout << Term::move_cursor(7, 9)
                       << Term::color(Term::fg::yellow) << "MULTIPLAYER";
+            arrow = true;
+            cursorState = 0;
             anim::snekGamemodes();
             break;
         case 2:
-            std::cout << "    Press Q";
-            arrow = true;
-            cursorState = 0;
             std::cout << Term::move_cursor(7, 9)
                       << Term::color(Term::fg::yellow) << "ONLINE MODE";
+            arrow = true;
+            cursorState = 0;
             anim::snekGamemodes();
             break;
         case 3:
-            std::cout << "    Press Q";
+            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                      << "    Press Q";
             anim::snekHighscores();
             break;
         case 4:
-            arrow = true;
-            std::cout << "    Press Q";
+            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                      << "    Press Q";
             anim::snekSettings();
             break;
         case 5:
-            std::cout << "    Press Q";
+            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                      << "    Press Q";
             anim::snekAbout();
             break;
         case 6:
-            std::cout << "    Press Q";
+            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                      << "    Press Q";
             anim::snekLicense();
             break;
     }
+    std::cout << Term::color(Term::fg::reset) << std::flush;
 }
 
 void menu::menu::updateCursor(cursor cursorDir) {
     if (!arrow) {
         std::cout << Term::color(Term::fg::reset)
                   << Term::color(Term::bg::reset)
-                  << Term::move_cursor(8 + cursorState, 20) << "   ";
-    } else {
+                  << Term::move_cursor(9 + cursorState, 20) << "   ";
+    }
+    else {
         if (cursorDir != cursor::notMoved) {
             std::cout << Term::color(Term::fg::reset)
                       << Term::color(Term::bg::reset)
@@ -151,17 +172,17 @@ void menu::menu::updateCursor(cursor cursorDir) {
             else if (cursorDir == cursor::down)
                 cursorState++;
         }
-    std::cout << Term::color(Term::fg::red)
-                      << Term::move_cursor(9 + cursorState, 20) << "<--"
-                      << Term::color(Term::fg::reset) << std::flush;
+        std::cout << Term::color(Term::fg::red)
+                  << Term::move_cursor(9 + cursorState, 20) << "<--"
+                  << Term::color(Term::fg::reset) << std::flush;
     }
 }
 void menu::menu::updateDescription() const {
+    std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
+              << Term::move_cursor(17, 7) << "               "
+              << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
     if (!sub)
     {
-        std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
-                << Term::move_cursor(17, 7) << "               "
-                << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
         switch (cursorState) {
             case 0:
                 std::cout << "  Play alone!";
@@ -179,12 +200,32 @@ void menu::menu::updateDescription() const {
                 std::cout << "Secret options!";
                 break;
             case 5:
-                std::cout << "Who did this???";
+                std::cout << " Who did this?";
                 break;
             case 6:
                 std::cout << "  What's MIT?";
                 break;
         }
-        std::cout << Term::color(Term::fg::reset) << std::flush;
     }
+    else if (arrow)
+    {
+        switch (cursorState) {
+            case 0:
+                std::cout << "With power-ups!";
+                break;
+            case 1:
+                std::cout << " Classic Snake";
+                break;
+            case 2:
+                std::cout << "   No walls!";
+                break;
+            case 3:
+                std::cout << "MANY item drops";
+                break;
+            case 4:
+                std::cout << "Build your snek";
+                break;
+        }
+    }
+    std::cout << Term::color(Term::fg::reset) << std::flush;
 }
