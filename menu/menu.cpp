@@ -88,52 +88,66 @@ void menu::menu::subMenu() {
     updateCursor(cursor::notMoved);
     sub = true;
 
-    std::cout << Term::color(Term::fg::reset) << Term::move_cursor(17, 7)
-              << Term::color(Term::fg::red);
-    switch (cursorState) {
+    switch (lastCursorState) {
         case 0:
-            std::cout << "    Press Q";  // every "Press Q" is a placeholder
-                                         // except 6 and 7
-            arrow = true;
-            cursorState = 0;
             std::cout << Term::move_cursor(7, 8)
                       << Term::color(Term::fg::yellow) << "SINGLEPLAYER!";
+            arrow = true;
+            cursorState = 0;
             anim::snekGamemodes();
             break;
         case 1:
-            std::cout << "    Press Q";
-            arrow = true;
-            cursorState = 0;
             std::cout << Term::move_cursor(7, 9)
                       << Term::color(Term::fg::yellow) << "MULTIPLAYER";
+            arrow = true;
+            cursorState = 0;
             anim::snekGamemodes();
             break;
         case 2:
-            std::cout << "    Press Q";
-            arrow = true;
-            cursorState = 0;
             std::cout << Term::move_cursor(7, 9)
                       << Term::color(Term::fg::yellow) << "ONLINE MODE";
+            arrow = true;
+            cursorState = 0;
             anim::snekGamemodes();
             break;
         case 3:
-            std::cout << "    Press Q";
+            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                      << "    Press Q";
             anim::snekHighscores();
             break;
         case 4:
-            arrow = true;
-            std::cout << "    Press Q";
+            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                      << "    Press Q";
             anim::snekSettings();
             break;
         case 5:
-            std::cout << "    Press Q";
+            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                      << "    Press Q";
             anim::snekAbout();
             break;
         case 6:
-            std::cout << "    Press Q";
+            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                      << "    Press Q";
             anim::snekLicense();
             break;
     }
+
+    if (arrow)
+    {
+        std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
+                  << Term::move_cursor(17, 7) << "               "
+                  << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
+        switch (cursorState) {
+            case 0:
+                std::cout << "With power-ups!";
+                break;
+            case 1:
+                std::cout << "Classic Snake";
+            case 2:
+                std::cout << "   No walls!";
+        }
+    }
+    std::cout << Term::color(Term::fg::reset) << std::flush;
 }
 
 void menu::menu::updateCursor(cursor cursorDir) {
@@ -158,11 +172,11 @@ void menu::menu::updateCursor(cursor cursorDir) {
     }
 }
 void menu::menu::updateDescription() const {
+    std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
+                  << Term::move_cursor(17, 7) << "               "
+                  << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
     if (!sub)
     {
-        std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
-                << Term::move_cursor(17, 7) << "               "
-                << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
         switch (cursorState) {
             case 0:
                 std::cout << "  Play alone!";
@@ -184,6 +198,26 @@ void menu::menu::updateDescription() const {
                 break;
             case 6:
                 std::cout << "  What's MIT?";
+                break;
+        }
+    }
+    if (sub && arrow)
+    {
+        switch (cursorState) {
+            case 0:
+                std::cout << "With power-ups!";
+                break;
+            case 1:
+                std::cout << " Classic Snake";
+                break;
+            case 2:
+                std::cout << "   No walls!";
+                break;
+            case 3:
+                std::cout << "MANY item drops";
+                break;
+            case 4:
+                std::cout << "Build your snek";
                 break;
         }
         std::cout << Term::color(Term::fg::reset) << std::flush;
