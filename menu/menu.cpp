@@ -106,8 +106,8 @@ void menu::menu::subMenu() {
     sub = true;
     lastCursorState = cursorState;
     draw::clearMenu();
-    updateDescription();
     arrow = false;
+    cursorState = 0;
     updateCursor(cursor::notMoved);
 
     switch (lastCursorState) {
@@ -115,21 +115,21 @@ void menu::menu::subMenu() {
             std::cout << Term::move_cursor(7, 8)
                       << Term::color(Term::fg::yellow) << "SINGLEPLAYER!";
             arrow = true;
-            cursorState = 0;
+            updateDescription();
             anim::snekGamemodes();
             break;
         case 1:
             std::cout << Term::move_cursor(7, 9)
                       << Term::color(Term::fg::yellow) << "MULTIPLAYER";
             arrow = true;
-            cursorState = 0;
+            updateDescription();
             anim::snekGamemodes();
             break;
         case 2:
             std::cout << Term::move_cursor(7, 9)
                       << Term::color(Term::fg::yellow) << "ONLINE MODE";
             arrow = true;
-            cursorState = 0;
+            updateDescription();
             anim::snekGamemodes();
             break;
         case 3:
@@ -178,54 +178,57 @@ void menu::menu::updateCursor(cursor cursorDir) {
     }
 }
 void menu::menu::updateDescription() const {
-    std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
-              << Term::move_cursor(17, 7) << "               "
-              << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
-    if (!sub)
+    if (arrow)
     {
-        switch (cursorState) {
-            case 0:
-                std::cout << "  Play alone!";
-                break;
-            case 1:
-                std::cout << " Play together";
-                break;
-            case 2:
-                std::cout << "  Play online";
-                break;
-            case 3:
-                std::cout << "Your best runs!";
-                break;
-            case 4:
-                std::cout << "Secret options!";
-                break;
-            case 5:
-                std::cout << " Who did this?";
-                break;
-            case 6:
-                std::cout << "  What's MIT?";
-                break;
+        std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
+                  << Term::move_cursor(17, 7) << "               "
+                  << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
+        if (!sub)
+        {
+            switch (cursorState) {
+                case 0:
+                    std::cout << "  Play alone!";
+                    break;
+                case 1:
+                    std::cout << " Play together";
+                    break;
+                case 2:
+                    std::cout << "  Play online";
+                    break;
+                case 3:
+                    std::cout << "Your best runs!";
+                    break;
+                case 4:
+                    std::cout << "Secret options!";
+                    break;
+                case 5:
+                    std::cout << " Who did this?";
+                    break;
+                case 6:
+                    std::cout << "  What's MIT?";
+                    break;
+            }
         }
-    }
-    else if (arrow)
-    {
-        switch (cursorState) {
-            case 0:
-                std::cout << "With power-ups!";
-                break;
-            case 1:
-                std::cout << " Classic Snake";
-                break;
-            case 2:
-                std::cout << "   No walls!";
-                break;
-            case 3:
-                std::cout << "MANY item drops";
-                break;
-            case 4:
-                std::cout << "Build your snek";
-                break;
+        else if (arrow)
+        {
+            switch (cursorState) {
+                case 0:
+                    std::cout << "With power-ups!";
+                    break;
+                case 1:
+                    std::cout << " Classic Snake";
+                    break;
+                case 2:
+                    std::cout << "   No walls!";
+                    break;
+                case 3:
+                    std::cout << "MANY item drops";
+                    break;
+                case 4:
+                    std::cout << "Build your snek";
+                    break;
+            }
         }
+        std::cout << Term::color(Term::fg::reset) << std::flush;
     }
-    std::cout << Term::color(Term::fg::reset) << std::flush;
 }
