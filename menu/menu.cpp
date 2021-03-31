@@ -113,21 +113,21 @@ void menu::menu::subMenu() {
     switch (lastCursorState) {
         case 0:
             std::cout << Term::move_cursor(7, 8)
-                      << Term::color(Term::fg::yellow) << "SINGLEPLAYER!";
+                      << Term::color24_fg(255, 255, 0) << "SINGLEPLAYER!";
             arrow = true;
             updateDescription();
             anim::snekGamemodes();
             break;
         case 1:
             std::cout << Term::move_cursor(7, 9)
-                      << Term::color(Term::fg::yellow) << "MULTIPLAYER";
+                      << Term::color24_fg(255, 255, 0) << "MULTIPLAYER";
             arrow = true;
             updateDescription();
             anim::snekGamemodes();
             break;
         case 2:
             std::cout << Term::move_cursor(7, 9)
-                      << Term::color(Term::fg::yellow) << "ONLINE MODE";
+                      << Term::color24_fg(255, 255, 0) << "ONLINE MODE";
             arrow = true;
             updateDescription();
             anim::snekGamemodes();
