@@ -172,7 +172,7 @@ void menu::menu::updateCursor(cursor cursorDir) {
             else if (cursorDir == cursor::down)
                 cursorState++;
         }
-        std::cout << Term::color(Term::fg::red)
+        std::cout << Term::color24_fg(255, 64, 0)
                   << Term::move_cursor(9 + cursorState, 20) << "<--"
                   << Term::color(Term::fg::reset) << std::flush;
     }
@@ -182,7 +182,7 @@ void menu::menu::updateDescription() const {
     {
         std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
                   << Term::move_cursor(17, 7) << "               "
-                  << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
+                  << Term::color24_fg(255, 64, 0) << Term::move_cursor(17, 7);
         if (!sub)
         {
             switch (cursorState) {
