@@ -30,7 +30,7 @@
  */
 
 void anim::snekMenuBase() {
-    std::cout << Term::color24_bg(36, 115, 201) << Term::color(Term::fg::black)
+    std::cout << Term::color24_bg(32, 144, 255) << Term::color(Term::fg::black)
               << Term::move_cursor(5, 14) << ' ' << std::flush;
     std::this_thread::sleep_for(std::chrono::milliseconds(70));
 
@@ -52,7 +52,7 @@ void anim::snekMenuBase() {
                   << Term::move_cursor(19, 27 - i) << ' ' << std::flush;
         std::this_thread::sleep_for(std::chrono::milliseconds(70));
     }
-    std::cout << Term::color24_fg(72, 191, 132) << Term::color(Term::bg::reset)
+    std::cout << Term::color24_fg(80, 200, 120) << Term::color(Term::bg::reset)
               << std::flush;
     for (unsigned short int i = 0; i < 21; i++) {
         // draw head
@@ -71,7 +71,7 @@ void anim::snekMenuBase() {
         std::this_thread::sleep_for(std::chrono::milliseconds(70));
     }
     std::cout << Term::move_cursor(7, 10) << Term::color24_fg(255, 255, 0)
-              << "MAIN MENU" << Term::color24_fg(36, 115, 201)
+              << "MAIN MENU" << Term::color24_fg(21, 96, 189)
               << Term::move_cursor(9, 6) << "Singleplayer"
               << Term::move_cursor(10, 6) << "Multiplayer"
               << Term::move_cursor(11, 6) << "Online Mode"
@@ -85,7 +85,7 @@ void anim::snekMenuBase() {
 }
 
 void anim::snekHeader() {
-    std::cout << Term::color(Term::bg::reset) << Term::color24_fg(72, 191, 132)
+    std::cout << Term::color(Term::bg::reset) << Term::color24_fg(32, 255, 144)
               << Term::move_cursor(1, 1) << " .----." << Term::move_cursor(2, 1)
               << "{ {__  " << Term::move_cursor(3, 1) << ".-._} }"
               << Term::move_cursor(4, 1) << "`----' " << std::flush;
