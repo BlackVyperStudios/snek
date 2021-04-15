@@ -13,6 +13,9 @@ class menu {
         
         // checks if you are in a sub menu
         bool sub = false;
+        // toggles for the license sub menu
+        bool license_sub_open = false;
+        bool license_page_toggle = true;
         // if false, no selection arrow
         bool arrow = true;
     public:
