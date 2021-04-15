@@ -1,24 +1,12 @@
-# include cmake modules
-include(FetchContent)
+# disable cpp-terminal library targets
+set(CPPTERMINAL_BUILD_EXAMPLES OFF CACHE BOOL "don't build examples" FORCE)
+set(CPPTERMINAL_ENABLE_INSTALL OFF CACHE BOOL "disable install" FORCE)
+set(CPPTERMINAL_ENABLE_TESING OFF CACHE BOOL "disable testing of folf" FORCE)
 
-# download folf-namespace library
-FetchContent_Declare(folf_namespace
-        GIT_REPOSITORY https://github.com/FOLF-projects/folf-namespace.git
-        GIT_TAG V1.1.0
-)
-FetchContent_GetProperties(folf_namespace)
-if(NOT folf_namespace_POPULATED)
-        FetchContent_Populate(folf_namespace)
-        add_subdirectory(${folf_namespace_SOURCE_DIR} ${folf_namespace_BINARY_DIR} EXCLUDE_FROM_ALL)
-endif()
+# disable FOLF-namespace library targets
+set(FOLF_BUILD_EXAMPLES OFF CACHE BOOL "don't build examples" FORCE)
+set(FOLF_ENABLE_INSTALL OFF CACHE BOOL "disable install" FORCE)
+set(FOLF_ENABLE_TESTING OFF CACHE BOOL "disable testing of folf" FORCE)
 
-# download folf-namespace library
-FetchContent_Declare(cpp_terminal
-        GIT_REPOSITORY https://github.com/jupyter-xeus/cpp-terminal.git
-        GIT_TAG master
-)
-FetchContent_GetProperties(cpp_terminal)
-if(NOT cpp_terminal)
-        FetchContent_Populate(cpp_terminal)
-        add_subdirectory(${cpp_terminal_SOURCE_DIR} ${cpp_terminal_BINARY_DIR} EXCLUDE_FROM_ALL)
-endif()
+add_subdirectory(cpp-terminal)
+add_subdirectory(folf-namespace)
