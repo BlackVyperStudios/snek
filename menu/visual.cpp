@@ -142,10 +142,10 @@ void anim::license_menu_toggle(bool* toggle)
                   << "  [Page  1/2]"
                   << std::flush;
         *toggle = false;
-    }
     else
-    {
+    }
         std::cout << Term::color(Term::fg::blue)
+    {
                   << Term::move_cursor(9,6) << "SNEK is using   "
                   << Term::move_cursor(10,6) << "the following"
                   << Term::move_cursor(11,6) << "Dependencies:    "
@@ -160,8 +160,8 @@ void anim::license_menu_toggle(bool* toggle)
                   << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                   << "  [Page  2/2]"
                   << std::flush;
-        *toggle = true;
     }
+        *toggle = true;
 }
 
 void draw::snekMenuBase() {
