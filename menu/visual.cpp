@@ -2,6 +2,7 @@
 #include <cpp-terminal/terminal.h>
 #include <chrono>
 #include <thread>
+#include <snake/info.hpp>
 
 /*
  * .----..-. .-..----..-. .-.
@@ -136,7 +137,7 @@ void anim::snekHighscores() {
 void anim::snekAbout() {
     std::cout << Term::move_cursor(7, 12) << Term::color(Term::fg::yellow) 
               << "ABOUT" << Term::color(Term::fg::red) << Term::move_cursor(10, 6)
-              << "SNEK V1.1.0 is a " << Term::move_cursor(11, 6)
+              << "SNEK " << SNAKE_VERSION_STRING << " is a " << Term::move_cursor(11, 6)
               << "game developed by" << Term::move_cursor(12, 6)
               << "BlackVyperStudios" << Term::move_cursor(13, 6)
               << "And all contribu-" << Term::move_cursor(14, 6)
