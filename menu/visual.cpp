@@ -4,32 +4,6 @@
 #include <thread>
 #include <snake/info.hpp>
 
-/*
- * .----..-. .-..----..-. .-.
- * { {__  |  `| || {_  | |/ /
- * .-._} }| |\  || {__ | |\ \
- * `----' `-' `-'`----'`-' `-'
- * ###########################
- * #                         #
- * #    Ooooooooooooooooo    #
- * #    Singleplayer  <--    #
- * #    Multiplayer   <--    #
- * #    Online Mode   <--    #
- * #    Settings      <--    #
- * #    Manual        <--    #
- * #    About         <--    #
- * #    License       <--    #
- * #    ???           <--    #
- * #    ooooooooooooooooO    #
- * #    >               <    #
- * #                         #
- * ###########################
- *
- * size: 15x27
- * inner size: 13x25
- *
- */
-
 void anim::snekMenuBase() {
     std::cout << Term::color(Term::bg::blue) << Term::color(Term::fg::black)
               << Term::move_cursor(5, 14) << ' ' << std::flush;
@@ -83,7 +57,6 @@ void anim::snekMenuBase() {
               << Term::move_cursor(9, 20) << Term::color(Term::fg::red) << "<--"
               << Term::color(Term::fg::reset) << std::flush;
 }
-
 void anim::snekHeader() {
     std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::green)
               << Term::move_cursor(1, 1) << " .----." << Term::move_cursor(2, 1)
@@ -105,7 +78,6 @@ void anim::snekHeader() {
               << Term::move_cursor(4, 21) << "`-' `-'" << std::flush
               << Term::color(Term::fg::reset) << Term::color(Term::bg::reset);
 }
-
 void anim::snekGamemodes() {
     std::cout << Term::move_cursor(9, 6) << Term::color(Term::fg::blue)
               << "SNEK" << Term::move_cursor(10, 6)
@@ -116,13 +88,11 @@ void anim::snekGamemodes() {
               << Term::color(Term::fg::red) << "Select Gamemode" << Term::move_cursor(9, 20)
               << "<--" << Term::color(Term::fg::reset) << std::flush;
 }
-
 void anim::snekSettings() {
     std::cout << Term::move_cursor(7, 10) << Term::color(Term::fg::yellow)
               << "SETTINGS!"
               << Term::color(Term::fg::reset) << std::flush;
 }
-
 void anim::snekHighscores() {
     std::cout << Term::move_cursor(7, 9) << Term::color(Term::fg::yellow)
               << "HIGHSCORES!" << Term::move_cursor(9, 4)
@@ -133,7 +103,6 @@ void anim::snekHighscores() {
               << "ONLINE"
               << Term::color(Term::fg::reset) << std::flush;
 }
-
 void anim::snekAbout() {
     std::cout << Term::move_cursor(7, 12) << Term::color(Term::fg::yellow) 
               << "ABOUT" << Term::color(Term::fg::red) << Term::move_cursor(10, 6)
@@ -144,7 +113,6 @@ void anim::snekAbout() {
               << "tors on Github!" << Term::move_cursor(16, 6)
               << Term::color(Term::fg::reset) << std::flush;
 }
-
 void anim::snekLicense() {
     std::cout << Term::move_cursor(7, 11) << Term::color(Term::fg::yellow)
               << "LICENSE" << Term::color(Term::fg::blue)
@@ -157,23 +125,23 @@ void anim::license_menu_toggle(bool* toggle)
         std::cout << Term::color(Term::fg::blue)
                   << Term::move_cursor(9,6) << "SNEK is licensed"
                   << Term::move_cursor(10,6) << "under MIT on "
-                  << Term::move_cursor(11,6) << "http://github.com"
                   << Term::color(Term::fg::red)
+                  << Term::move_cursor(11,6) << "http://github.com"
                   << Term::move_cursor(12,6) << "Copyright 2020:"
                   << Term::color(Term::fg::blue)
                   << Term::move_cursor(13,6) << "Damon Leven     "
                   << Term::color(Term::fg::red)
                   << Term::move_cursor(14,6) << "Copyright 2021:"
-                  << Term::color(Term::fg::blue)
                   << Term::move_cursor(15,6) << "BlackVyperStudios"
+                  << Term::color(Term::fg::blue)
                   << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
                   << "  [Page  1/2]"
                   << std::flush;
         *toggle = false;
-    }
     else
-    {
+    }
         std::cout << Term::color(Term::fg::blue)
+    {
                   << Term::move_cursor(9,6) << "SNEK is using   "
                   << Term::move_cursor(10,6) << "the following"
                   << Term::move_cursor(11,6) << "Dependencies:    "
@@ -188,109 +156,9 @@ void anim::license_menu_toggle(bool* toggle)
                   << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
                   << "  [Page  2/2]"
                   << std::flush;
-        *toggle = true;
     }
+        *toggle = true;
 }
-
-/* === main menu ===
- * .----..-. .-..----..-. .-.
- * { {__  |  `| || {_  | |/ /
- * .-._} }| |\  || {__ | |\ \
- * `----' `-' `-'`----'`-' `-'
- * ###########################
- * #        LICENSE          #
- * #    Ooooooooooooooooo    #
- * #    SNEK ist using       #
- * #    the following        #
- * #    Dependencies:        #
- * #    cpp-terminal         #
- * #    by Ondřej Čertík     #
- * #    FOLF-namespace       #
- * #    by FOLF-projects     #
- * #    ooooooooooooooooO    #
- * #    >  [Page  1/2]  <    #
- * #                         #
- * ###########################
- *
- * size: 15x27
- * inner size: 13x25
- *
- */
-
-
-
-/* === sub menu ====
- *  .----..-. .-..----..-. .-.
- * { {__  |  `| || {_  | |/ /
- * .-._} }| |\  || {__ | |\ \
- * `----' `-' `-'`----'`-' `-'
- * ###########################
- * #      SINGLEPLAYER       #
- * #    Ooooooooooooooooo    #
- * #    Easy          <--    #
- * #    Normal        <--    #
- * #    hard          <--    #
- * #    Nightmare     <--    #
- * #    ==Special modes==    #
- * #    infinite mode <--    #
- * #    Chaos Mode    <--    #
- * #    creative Mode <--    #
- * #    ooooooooooooooooO    #
- * #    >               <    #
- * #                         #
- * ###########################
- */
-
-/* === Text sub menu ===
- *  .----..-. .-..----..-. .-.
- * { {__  |  `| || {_  | |/ /
- * .-._} }| |\  || {__ | |\ \
- * `----' `-' `-'`----'`-' `-'
- * ###########################
- * #          ABOUT          #
- * #    Ooooooooooooooooo    #
- * #    SNEK V1.1.1 is a     #
- * #    game developed by    #
- * #    BlackVyperStudios    #
- * #    and it's members:    #
- * #    ~ Damon Leven        #
- * #    ~ Alex Prosser       #
- * #    And all contribu-    #
- * #    tors on Github!      #
- * #    ooooooooooooooooO    #
- * #    >  Press ENTER  <    #
- * #                         #
- * ###########################
- *
- * size: 15x27
- * inner size: 13x25
- */
-
-/* === settings sub menu ===
- *  .----..-. .-..----..-. .-.
- * { {__  |  `| || {_  | |/ /
- * .-._} }| |\  || {__ | |\ \
- * `----' `-' `-'`----'`-' `-'
- * ###########################
- * #                         #
- * #    Ooooooooooooooooo    #
- * #    Singleplayer  <--    #
- * #    Multiplayer   <--    #
- * #    Online Mode   <--    #
- * #    Settings      <--    #
- * #    Manual        <--    #
- * #    About         <--    #
- * #    License       <--    #
- * #    ???           <--    #
- * #    ooooooooooooooooO    #
- * #    >               <    #
- * #                         #
- * ###########################
- *
- * size: 15x27
- * inner size: 13x25
- *
- */
 
 void draw::snekMenuBase() {
     std::cout << Term::move_cursor(7, 10) << Term::color(Term::fg::yellow)

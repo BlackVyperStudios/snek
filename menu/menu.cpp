@@ -2,32 +2,6 @@
 #include <cpp-terminal/terminal.h>
 #include "visual.hpp"
 
-/*
- *  .----..-. .-..----..-. .-.
- * { {__  |  `| || {_  | |/ /
- * .-._} }| |\  || {__ | |\ \
- * `----' `-' `-'`----'`-' `-'
- * ###########################
- * #                         #
- * #    Oooooooooooooooo     #
- * #    Singleplayer <--     #
- * #    Multiplayer  <--     #
- * #    Online Mode  <--     #
- * #    Settings     <--     #
- * #    Manual       <--     #
- * #    About        <--     #
- * #    License      <--     #
- * #    ???          <--     #
- * #    oooooooooooooooO     #
- * #    >              <     #
- * #                         #
- * ###########################
- *
- * size: 15x27
- * inner size: 13x25
- *
- */
-
 unsigned short int menu::menu::start(Term::Terminal* term) {
     // draw menu
     anim::snekHeader();
@@ -112,8 +86,6 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
     }
     return 0;
 }
-
-// sub menu system
 void menu::menu::subMenu() {
     sub = true;
     lastCursorState = cursorState;
