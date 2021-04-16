@@ -14,7 +14,10 @@ void snekSettings();
 // about sub menu
 void snekAbout();
 // license sub menu
+// prints the menu title
 void snekLicense();
+// toggles between the first and seconds License menu page
+void license_menu_toggle(bool*);
 // animates the change from the sub to main menu
 void switchMainMenu();
 }  // namespace anim

@@ -2,6 +2,7 @@
 #include <cpp-terminal/terminal.h>
 #include <chrono>
 #include <thread>
+#include <snake/info.hpp>
 
 /*
  * .----..-. .-..----..-. .-.
@@ -136,7 +137,7 @@ void anim::snekHighscores() {
 void anim::snekAbout() {
     std::cout << Term::move_cursor(7, 12) << Term::color(Term::fg::yellow) 
               << "ABOUT" << Term::color(Term::fg::red) << Term::move_cursor(10, 6)
-              << "SNEK V1.1.0 is a " << Term::move_cursor(11, 6)
+              << "SNEK " << SNAKE_VERSION_STRING << " is a " << Term::move_cursor(11, 6)
               << "game developed by" << Term::move_cursor(12, 6)
               << "BlackVyperStudios" << Term::move_cursor(13, 6)
               << "And all contribu-" << Term::move_cursor(14, 6)
@@ -149,6 +150,74 @@ void anim::snekLicense() {
               << "LICENSE" << Term::color(Term::fg::blue)
               << Term::color(Term::fg::reset) << std::flush;
 }
+void anim::license_menu_toggle(bool* toggle)
+{
+    if (*toggle)
+    {
+        std::cout << Term::color(Term::fg::blue)
+                  << Term::move_cursor(9,6) << "SNEK is licensed"
+                  << Term::move_cursor(10,6) << "under MIT on "
+                  << Term::move_cursor(11,6) << "http://github.com"
+                  << Term::color(Term::fg::red)
+                  << Term::move_cursor(12,6) << "Copyright 2020:"
+                  << Term::color(Term::fg::blue)
+                  << Term::move_cursor(13,6) << "Damon Leven     "
+                  << Term::color(Term::fg::red)
+                  << Term::move_cursor(14,6) << "Copyright 2021:"
+                  << Term::color(Term::fg::blue)
+                  << Term::move_cursor(15,6) << "BlackVyperStudios"
+                  << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                  << "  [Page  1/2]"
+                  << std::flush;
+        *toggle = false;
+    }
+    else
+    {
+        std::cout << Term::color(Term::fg::blue)
+                  << Term::move_cursor(9,6) << "SNEK is using   "
+                  << Term::move_cursor(10,6) << "the following"
+                  << Term::move_cursor(11,6) << "Dependencies:    "
+                  << Term::color(Term::fg::red)
+                  << Term::move_cursor(12,6) << "cpp-terminal   "
+                  << Term::color(Term::fg::blue)
+                  << Term::move_cursor(13,6) << "by Ondřej Čertík"
+                  << Term::color(Term::fg::red)
+                  << Term::move_cursor(14,6) << "FOLF-namespace "
+                  << Term::color(Term::fg::blue)
+                  << Term::move_cursor(15,6) << "by FOLF-projects "
+                  << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                  << "  [Page  2/2]"
+                  << std::flush;
+        *toggle = true;
+    }
+}
+
+/* === main menu ===
+ * .----..-. .-..----..-. .-.
+ * { {__  |  `| || {_  | |/ /
+ * .-._} }| |\  || {__ | |\ \
+ * `----' `-' `-'`----'`-' `-'
+ * ###########################
+ * #        LICENSE          #
+ * #    Ooooooooooooooooo    #
+ * #    SNEK ist using       #
+ * #    the following        #
+ * #    Dependencies:        #
+ * #    cpp-terminal         #
+ * #    by Ondřej Čertík     #
+ * #    FOLF-namespace       #
+ * #    by FOLF-projects     #
+ * #    ooooooooooooooooO    #
+ * #    >  [Page  1/2]  <    #
+ * #                         #
+ * ###########################
+ *
+ * size: 15x27
+ * inner size: 13x25
+ *
+ */
+
+
 
 /* === sub menu ====
  *  .----..-. .-..----..-. .-.

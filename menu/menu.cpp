@@ -41,14 +41,18 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
         switch (term->read_key()) {
             case 'w':
             case Term::Key::ARROW_UP:
-                if (cursorState > 0) {
+                if (license_sub_open)
+                    anim::license_menu_toggle(&license_page_toggle);
+                else if (cursorState > 0) {
                     updateCursor(cursor::up);
                     updateDescription();
                 }
                 break;
             case 's':
             case Term::Key::ARROW_DOWN:
-                if (!sub && cursorState <= 5) {
+                if (license_sub_open)
+                    anim::license_menu_toggle(&license_page_toggle);
+                else if (!sub && cursorState <= 5) {
                     updateCursor(cursor::down);
                     updateDescription();
                 }
@@ -57,9 +61,17 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                     updateDescription();
                 }
                 break;
+            case 'a':
+            case 'd':
+            case Term::Key::ARROW_LEFT:
+            case Term::Key::ARROW_RIGHT:
+                if (license_sub_open)
+                    anim::license_menu_toggle(&license_page_toggle);
+                break;
             case 'q':
                 if (sub) {
                     sub = false;
+                    license_sub_open = false;
                     arrow = true;
                     draw::clearMenu();
                     cursorState = lastCursorState;
@@ -148,9 +160,9 @@ void menu::menu::subMenu() {
             anim::snekAbout();
             break;
         case 6:
-            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
-                      << "    Press Q";
             anim::snekLicense();
+            license_sub_open = true;
+            anim::license_menu_toggle(&license_page_toggle);
             break;
     }
     std::cout << Term::color(Term::fg::reset) << std::flush;
