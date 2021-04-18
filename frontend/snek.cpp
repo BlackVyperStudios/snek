@@ -25,7 +25,7 @@ int main() {
                   << Term::color(Term::bg::reset)
                   << Term::cursor_on()
                   << Term::clear_screen_buffer()
-                  << Term::move_cursor(1,1);        
+                  << Term::move_cursor(1,1);
 
         // restore the screen
         termObj.restore_screen();
