@@ -88,13 +88,9 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
 }
 void menu::menu::subMenu() {
     sub = true;
-    lastCursorState = cursorState;
     draw::clearMenu();
-    arrow = false;
-    cursorState = 0;
-    updateCursor(cursor::notMoved);
 
-    switch (lastCursorState) {
+    switch (cursorState) {
         case 0:
             std::cout << Term::move_cursor(7, 8)
                       << Term::color(Term::fg::yellow) << "SINGLEPLAYER!";
@@ -119,24 +115,30 @@ void menu::menu::subMenu() {
         case 3:
             std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
                       << "    Press Q";
+            arrow = false;
             anim::snekHighscores();
             break;
         case 4:
             std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
                       << "    Press Q";
+            arrow = false;
             anim::snekSettings();
             break;
         case 5:
             std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
                       << "    Press Q";
+            arrow = false;
             anim::snekAbout();
             break;
         case 6:
             anim::snekLicense();
+            arrow = false;
             license_sub_open = true;
             anim::license_menu_toggle(&license_page_toggle);
             break;
     }
+    cursorState = 0;
+    updateCursor(cursor::notMoved);
     std::cout << Term::color(Term::fg::reset) << std::flush;
 }
 
