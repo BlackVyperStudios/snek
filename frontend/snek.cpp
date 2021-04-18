@@ -24,6 +24,11 @@ int main() {
         std::cout << Term::color(Term::style::reset)
                   << Term::color(Term::fg::reset)
                   << Term::color(Term::bg::reset) << Term::cursor_on();
+        
+        // clear screen, fixes TTY
+        std::cout << Term::clear_screen_buffer()
+                  << Term::move_cursor(1,1) << std::flush;
+
         termObj.restore_screen();
     }
     // cpp-terminal will throw a runtime error on exceptions
