@@ -133,22 +133,22 @@ void menu::menu::subMenu() {
             anim::snekGamemodes();
             break;
         case 3:
-            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+            std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
             anim::snekHighscores();
             break;
         case 4:
-            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+            std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
             anim::snekSettings();
             break;
         case 5:
-            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+            std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
             anim::snekAbout();
             break;
         case 6:
-            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+            std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
             anim::snekLicense();
             break;

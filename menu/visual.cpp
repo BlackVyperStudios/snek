@@ -137,10 +137,13 @@ void anim::snekHighscores() {
 void anim::snekAbout() {
     std::cout << Term::move_cursor(7, 12) << Term::color24_fg(255, 255, 0)
               << "ABOUT" << Term::color24_fg(255, 64, 0) << Term::move_cursor(10, 6)
-              << "SNEK V1.1.0 is a " << Term::move_cursor(11, 6)
+              << "SNEK V1.1.0" << Term::color24_fg(36, 115, 201)
+              << " is a" << Term::move_cursor(11, 6)
               << "game developed by" << Term::move_cursor(12, 6)
+              << Term::color24_fg(255, 64, 0)
               << "BlackVyperStudios" << Term::move_cursor(13, 6)
-              << "And all contribu-" << Term::move_cursor(14, 6)
+              << Term::color24_fg(36, 115, 201)
+              << "and all contribu-" << Term::move_cursor(14, 7)
               << "tors on Github!" << Term::move_cursor(16, 6)
               << Term::color(Term::fg::reset) << std::flush;
 }
