@@ -113,8 +113,9 @@ void anim::snekGamemodes() {
               << "Infinite" << Term::move_cursor(12, 6)
               << "Chaos" << Term::move_cursor(13, 6)
               << "Creative" << Term::move_cursor(15, 7)
-              << Term::color24_fg(255, 64, 0) << "Select Gamemode" << Term::move_cursor(9, 20)
-              << "<--" << Term::color(Term::fg::reset) << std::flush;
+              << Term::color24_fg(226, 61, 40) << "Select Gamemode"
+              << Term::move_cursor(9, 20) << Term::color24_fg(255, 64, 0) << "<--"
+              << Term::color(Term::fg::reset) << std::flush;
 }
 
 void anim::snekSettings() {
