@@ -127,9 +127,9 @@ void anim::snekSettings() {
 void anim::snekHighscores() {
     std::cout << Term::move_cursor(7, 9) << Term::color24_fg(255, 255, 0)
               << "HIGHSCORES!" << Term::move_cursor(9, 4)
-              << Term::color24_fg(0, 0, 0) << Term::color24_bg(255, 255, 255)
+              << Term::color24_fg(0, 0, 0) << Term::color24_bg(204, 204, 204)
               << "SINGLE" << Term::move_cursor(9, 12)
-              << Term::color24_fg(100, 100, 100) << Term::color24_bg(0, 0, 0)
+              << Term::color24_fg(51, 51, 51) << Term::color24_bg(0, 0, 0)
               << "MULTI" << Term::move_cursor(9, 19)
               << "ONLINE"
               << Term::color(Term::fg::reset) << Term::color(Term::bg::reset) << std::flush;
@@ -137,7 +137,8 @@ void anim::snekHighscores() {
 
 void anim::snekAbout() {
     std::cout << Term::move_cursor(7, 12) << Term::color24_fg(255, 255, 0)
-              << "ABOUT" << Term::color24_fg(255, 64, 0) << Term::move_cursor(10, 6)
+              << "ABOUT" << Term::move_cursor(9, 12) << Term::color24_fg(51, 51, 51)
+              << "~ ~ ~" << Term::move_cursor(10, 6) << Term::color24_fg(255, 64, 0)
               << "SNEK V1.1.0" << Term::color24_fg(36, 115, 201)
               << " is a" << Term::move_cursor(11, 6)
               << "game developed by" << Term::move_cursor(12, 6)
@@ -145,7 +146,8 @@ void anim::snekAbout() {
               << "BlackVyperStudios" << Term::move_cursor(13, 6)
               << Term::color24_fg(36, 115, 201)
               << "and all contribu-" << Term::move_cursor(14, 7)
-              << "tors on Github!" << Term::move_cursor(16, 6)
+              << "tors on Github!" << Term::move_cursor(15, 12)
+              << Term::color24_fg(51, 51, 51) << "~ ~ ~"
               << Term::color(Term::fg::reset) << std::flush;
 }
 
