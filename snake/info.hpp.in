@@ -1,7 +1,10 @@
 #pragma once
 
 // version
-#define SNAKE_VERSION_MAJOR @snek_VERSION_MAJOR @
-#define SNAKE_VERSION_MINOR @snek_VERSION_MINOR @
-#define SNAKE_VERSION_PATCH @snek_VERSION_PATCH @
+#define SNAKE_VERSION_MAJOR @snek_VERSION_MAJOR@
+#define SNAKE_VERSION_MINOR @snek_VERSION_MINOR@
+#define SNAKE_VERSION_PATCH @snek_VERSION_PATCH@
+// complete version string
+#define SNAKE_VERSION_STRING "V@snek_VERSION_MAJOR@.@snek_VERSION_MINOR@.@snek_VERSION_PATCH@"
+
 #define SNAKE_HOMEPAGE_URL "@snek_HOMEPAGE_URL@"
