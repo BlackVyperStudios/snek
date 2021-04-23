@@ -159,7 +159,7 @@ void menu::menu::subMenu() {
                       << "    Press Q";
             anim::snekAbout();
             break;
-        case 6
+        case 6:
             anim::snekLicense();
             license_sub_open = true;
             anim::license_menu_toggle(&license_page_toggle);
