@@ -2,32 +2,6 @@
 #include <cpp-terminal/terminal.h>
 #include "visual.hpp"
 
-/*
- *  .----..-. .-..----..-. .-.
- * { {__  |  `| || {_  | |/ /
- * .-._} }| |\  || {__ | |\ \
- * `----' `-' `-'`----'`-' `-'
- * ###########################
- * #                         #
- * #    Oooooooooooooooo     #
- * #    Singleplayer <--     #
- * #    Multiplayer  <--     #
- * #    Online Mode  <--     #
- * #    Settings     <--     #
- * #    Manual       <--     #
- * #    About        <--     #
- * #    License      <--     #
- * #    ???          <--     #
- * #    oooooooooooooooO     #
- * #    >              <     #
- * #                         #
- * ###########################
- *
- * size: 15x27
- * inner size: 13x25
- *
- */
-
 unsigned short int menu::menu::start(Term::Terminal* term) {
     // draw menu
     anim::snekHeader();
@@ -112,17 +86,11 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
     }
     return 0;
 }
-
-// sub menu system
 void menu::menu::subMenu() {
     sub = true;
-    lastCursorState = cursorState;
     draw::clearMenu();
-    arrow = false;
-    cursorState = 0;
-    updateCursor(cursor::notMoved);
 
-    switch (lastCursorState) {
+    switch (cursorState) {
         case 0:
             std::cout << Term::move_cursor(7, 8)
                       << Term::color24_fg(255, 255, 0) << "SINGLEPLAYER!";
@@ -147,24 +115,30 @@ void menu::menu::subMenu() {
         case 3:
             std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
+            arrow = false;
             anim::snekHighscores();
             break;
         case 4:
             std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
+            arrow = false;
             anim::snekSettings();
             break;
         case 5:
             std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
+            arrow = false;
             anim::snekAbout();
             break;
         case 6:
             anim::snekLicense();
+            arrow = false;
             license_sub_open = true;
             anim::license_menu_toggle(&license_page_toggle);
             break;
     }
+    cursorState = 0;
+    updateCursor(cursor::notMoved);
     std::cout << Term::color(Term::fg::reset) << std::flush;
 }
 

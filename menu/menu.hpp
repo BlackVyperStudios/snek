@@ -24,7 +24,7 @@ class menu {
         // start the menu
         unsigned short int start(Term::Terminal* term);
 
-        // for sub menus
+        // sub menu system
         void subMenu();
 
         // base menu
