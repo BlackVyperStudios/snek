@@ -5,7 +5,7 @@
 #include <snake/info.hpp>
 
 /*
- * .----..-. .-..----..-. .-.
+ *  .----..-. .-..----..-. .-.
  * { {__  |  `| || {_  | |/ /
  * .-._} }| |\  || {__ | |\ \
  * `----' `-' `-'`----'`-' `-'
@@ -31,7 +31,7 @@
  */
 
 void anim::snekMenuBase() {
-    std::cout << Term::color(Term::bg::blue) << Term::color(Term::fg::black)
+    std::cout << Term::color24_bg(32, 144, 255) << Term::color24_fg(0, 0, 0)
               << Term::move_cursor(5, 14) << ' ' << std::flush;
     std::this_thread::sleep_for(std::chrono::milliseconds(70));
 
@@ -53,7 +53,7 @@ void anim::snekMenuBase() {
                   << Term::move_cursor(19, 27 - i) << ' ' << std::flush;
         std::this_thread::sleep_for(std::chrono::milliseconds(70));
     }
-    std::cout << Term::color(Term::fg::green) << Term::color(Term::bg::reset)
+    std::cout << Term::color24_fg(80, 200, 120) << Term::color(Term::bg::reset)
               << std::flush;
     for (unsigned short int i = 0; i < 21; i++) {
         // draw head
@@ -71,8 +71,8 @@ void anim::snekMenuBase() {
         std::cout << std::flush;
         std::this_thread::sleep_for(std::chrono::milliseconds(70));
     }
-    std::cout << Term::move_cursor(7, 10) << Term::color(Term::fg::yellow)
-              << "MAIN MENU" << Term::color(Term::fg::blue)
+    std::cout << Term::move_cursor(7, 10) << Term::color24_fg(255, 255, 0)
+              << "MAIN MENU" << Term::color24_fg(21, 96, 189)
               << Term::move_cursor(9, 6) << "Singleplayer"
               << Term::move_cursor(10, 6) << "Multiplayer"
               << Term::move_cursor(11, 6) << "Online Mode"
@@ -80,12 +80,12 @@ void anim::snekMenuBase() {
               << Term::move_cursor(13, 6) << "Settings"
               << Term::move_cursor(14, 6) << "About" << Term::move_cursor(15, 6)
               << "License" << Term::move_cursor(17, 6) << ">               <"
-              << Term::move_cursor(9, 20) << Term::color(Term::fg::red) << "<--"
-              << Term::color(Term::fg::reset) << std::flush;
+              << Term::move_cursor(9, 20) << Term::color24_fg(255, 64, 0)
+              << "<--" << Term::color(Term::fg::reset) << std::flush;
 }
 
 void anim::snekHeader() {
-    std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::green)
+    std::cout << Term::color(Term::bg::reset) << Term::color24_fg(32, 255, 144)
               << Term::move_cursor(1, 1) << " .----." << Term::move_cursor(2, 1)
               << "{ {__  " << Term::move_cursor(3, 1) << ".-._} }"
               << Term::move_cursor(4, 1) << "`----' " << std::flush;
@@ -107,85 +107,89 @@ void anim::snekHeader() {
 }
 
 void anim::snekGamemodes() {
-    std::cout << Term::move_cursor(9, 6) << Term::color(Term::fg::blue)
-              << "SNEK" << Term::move_cursor(10, 6)
-              << "Classic" << Term::move_cursor(11, 6)
-              << "Infinite" << Term::move_cursor(12, 6)
-              << "Chaos" << Term::move_cursor(13, 6)
+    std::cout << Term::move_cursor(9, 6) << Term::color24_fg(36, 115, 201)
+              << "SNEK" << Term::move_cursor(10, 6) << "Classic"
+              << Term::move_cursor(11, 6) << "Infinite"
+              << Term::move_cursor(12, 6) << "Chaos" << Term::move_cursor(13, 6)
               << "Creative" << Term::move_cursor(15, 7)
-              << Term::color(Term::fg::red) << "Select Gamemode" << Term::move_cursor(9, 20)
+              << Term::color24_fg(226, 61, 40) << "Select Gamemode"
+              << Term::move_cursor(9, 20) << Term::color24_fg(255, 64, 0)
               << "<--" << Term::color(Term::fg::reset) << std::flush;
 }
 
 void anim::snekSettings() {
-    std::cout << Term::move_cursor(7, 10) << Term::color(Term::fg::yellow)
-              << "SETTINGS!"
-              << Term::color(Term::fg::reset) << std::flush;
+    std::cout << Term::move_cursor(7, 10) << Term::color24_fg(255, 255, 0)
+              << "SETTINGS!" << Term::color(Term::fg::reset) << std::flush;
 }
 
 void anim::snekHighscores() {
-    std::cout << Term::move_cursor(7, 9) << Term::color(Term::fg::yellow)
+    std::cout << Term::move_cursor(7, 9) << Term::color24_fg(255, 255, 0)
               << "HIGHSCORES!" << Term::move_cursor(9, 4)
-              << Term::color(Term::fg::black) << Term::color(Term::bg::white)
+              << Term::color24_fg(0, 0, 0) << Term::color24_bg(204, 204, 204)
               << "SINGLE" << Term::move_cursor(9, 12)
-              << Term::color(Term::bg::reset)
+              << Term::color24_fg(51, 51, 51) << Term::color24_bg(0, 0, 0)
               << "MULTI" << Term::move_cursor(9, 19)
               << "ONLINE"
-              << Term::color(Term::fg::reset) << std::flush;
+              << Term::color(Term::fg::reset) << Term::color(Term::bg::reset) << std::flush;
 }
 
 void anim::snekAbout() {
-    std::cout << Term::move_cursor(7, 12) << Term::color(Term::fg::yellow) 
-              << "ABOUT" << Term::color(Term::fg::red) << Term::move_cursor(10, 6)
-              << "SNEK " << SNAKE_VERSION_STRING << " is a " << Term::move_cursor(11, 6)
-              << "game developed by" << Term::move_cursor(12, 6)
+    std::cout << Term::move_cursor(7, 12) << Term::color24_fg(255, 255, 0)
+              << "ABOUT" << Term::move_cursor(9, 12)
+              << Term::color24_fg(51, 51, 51) << "~ ~ ~"
+              << Term::move_cursor(10, 6) << Term::color24_fg(255, 64, 0)
+              << "SNEK " << SNAKE_VERSION_STRING
+              << Term::color24_fg(36, 115, 201) << " is a"
+              << Term::move_cursor(11, 6) << "game developed by"
+              << Term::move_cursor(12, 6) << Term::color24_fg(255, 64, 0)
               << "BlackVyperStudios" << Term::move_cursor(13, 6)
-              << "And all contribu-" << Term::move_cursor(14, 6)
-              << "tors on Github!" << Term::move_cursor(16, 6)
-              << Term::color(Term::fg::reset) << std::flush;
+              << Term::color24_fg(36, 115, 201) << "and all contribu-"
+              << Term::move_cursor(14, 7) << "tors on Github!"
+              << Term::move_cursor(15, 12) << Term::color24_fg(51, 51, 51)
+              << "~ ~ ~" << Term::color(Term::fg::reset) << std::flush;
 }
 
 void anim::snekLicense() {
-    std::cout << Term::move_cursor(7, 11) << Term::color(Term::fg::yellow)
-              << "LICENSE" << Term::color(Term::fg::blue)
+    std::cout << Term::move_cursor(7, 11) << Term::color24_fg(255, 255, 0)
+              << "LICENSE" << Term::color24_fg(36, 115, 201)
               << Term::color(Term::fg::reset) << std::flush;
 }
 void anim::license_menu_toggle(bool* toggle)
 {
     if (*toggle)
     {
-        std::cout << Term::color(Term::fg::blue)
+        std::cout << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(9,6) << "SNEK is licensed"
                   << Term::move_cursor(10,6) << "under MIT on "
                   << Term::move_cursor(11,6) << "http://github.com"
-                  << Term::color(Term::fg::red)
+                  << Term::color24_fg(255, 64, 0)
                   << Term::move_cursor(12,6) << "Copyright 2020:"
-                  << Term::color(Term::fg::blue)
+                  << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(13,6) << "Damon Leven     "
-                  << Term::color(Term::fg::red)
+                  << Term::color24_fg(255, 64, 0)
                   << Term::move_cursor(14,6) << "Copyright 2021:"
-                  << Term::color(Term::fg::blue)
+                  << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(15,6) << "BlackVyperStudios"
-                  << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                  << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                   << "  [Page  1/2]"
                   << std::flush;
         *toggle = false;
     }
     else
     {
-        std::cout << Term::color(Term::fg::blue)
+        std::cout << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(9,6) << "SNEK is using   "
                   << Term::move_cursor(10,6) << "the following"
                   << Term::move_cursor(11,6) << "Dependencies:    "
-                  << Term::color(Term::fg::red)
+                  << Term::color24_fg(255, 64, 0)
                   << Term::move_cursor(12,6) << "cpp-terminal   "
-                  << Term::color(Term::fg::blue)
+                  << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(13,6) << "by Ondřej Čertík"
-                  << Term::color(Term::fg::red)
+                  << Term::color24_fg(255, 64, 0)
                   << Term::move_cursor(14,6) << "FOLF-namespace "
-                  << Term::color(Term::fg::blue)
+                  << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(15,6) << "by FOLF-projects "
-                  << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                  << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                   << "  [Page  2/2]"
                   << std::flush;
         *toggle = true;
@@ -293,10 +297,10 @@ void anim::license_menu_toggle(bool* toggle)
  */
 
 void draw::snekMenuBase() {
-    std::cout << Term::move_cursor(7, 10) << Term::color(Term::fg::yellow)
-              << "MAIN MENU" << Term::color(Term::fg::green)
+    std::cout << Term::move_cursor(7, 10) << Term::color24_fg(255, 255, 0)
+              << "MAIN MENU" << Term::color24_fg(72, 191, 132)
               << Term::move_cursor(8, 6) << "Ooooooooooooooooo"
-              << Term::color(Term::fg::blue)
+              << Term::color24_fg(36, 115, 201)
               << Term::move_cursor(9, 6) << "Singleplayer"
               << Term::move_cursor(10, 6) << "Multiplayer"
               << Term::move_cursor(11, 6) << "Online Mode"
@@ -304,7 +308,7 @@ void draw::snekMenuBase() {
               << Term::move_cursor(13, 6) << "Settings"
               << Term::move_cursor(14, 6) << "About"
               << Term::move_cursor(15, 6) << "License"
-              << Term::color(Term::fg::green) << Term::move_cursor(16, 6)
+              << Term::color24_fg(72, 191, 132) << Term::move_cursor(16, 6)
               << "ooooooooooooooooO"
               << Term::color(Term::fg::reset) << std::flush;
 }
@@ -314,7 +318,7 @@ void draw::clearMenu() {
     for (unsigned short int i = 0; i < 7; i++) {
         std::cout << Term::move_cursor(9 + i, 2) << "                         ";
     }
-    std::cout << Term::color(Term::fg::blue) << Term::move_cursor(17, 6)
+    std::cout << Term::color24_fg(36, 115, 201) << Term::move_cursor(17, 6)
               << ">               <"
               << std::flush;
 }

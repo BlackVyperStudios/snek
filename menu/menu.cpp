@@ -125,37 +125,37 @@ void menu::menu::subMenu() {
     switch (lastCursorState) {
         case 0:
             std::cout << Term::move_cursor(7, 8)
-                      << Term::color(Term::fg::yellow) << "SINGLEPLAYER!";
+                      << Term::color24_fg(255, 255, 0) << "SINGLEPLAYER!";
             arrow = true;
             updateDescription();
             anim::snekGamemodes();
             break;
         case 1:
             std::cout << Term::move_cursor(7, 9)
-                      << Term::color(Term::fg::yellow) << "MULTIPLAYER";
+                      << Term::color24_fg(255, 255, 0) << "MULTIPLAYER";
             arrow = true;
             updateDescription();
             anim::snekGamemodes();
             break;
         case 2:
             std::cout << Term::move_cursor(7, 9)
-                      << Term::color(Term::fg::yellow) << "ONLINE MODE";
+                      << Term::color24_fg(255, 255, 0) << "ONLINE MODE";
             arrow = true;
             updateDescription();
             anim::snekGamemodes();
             break;
         case 3:
-            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+            std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
             anim::snekHighscores();
             break;
         case 4:
-            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+            std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
             anim::snekSettings();
             break;
         case 5:
-            std::cout << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+            std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
             anim::snekAbout();
             break;
@@ -184,7 +184,7 @@ void menu::menu::updateCursor(cursor cursorDir) {
             else if (cursorDir == cursor::down)
                 cursorState++;
         }
-        std::cout << Term::color(Term::fg::red)
+        std::cout << Term::color24_fg(255, 64, 0)
                   << Term::move_cursor(9 + cursorState, 20) << "<--"
                   << Term::color(Term::fg::reset) << std::flush;
     }
@@ -194,7 +194,7 @@ void menu::menu::updateDescription() const {
     {
         std::cout << Term::color(Term::bg::reset) << Term::color(Term::fg::reset)
                   << Term::move_cursor(17, 7) << "               "
-                  << Term::color(Term::fg::red) << Term::move_cursor(17, 7);
+                  << Term::color24_fg(255, 64, 0) << Term::move_cursor(17, 7);
         if (!sub)
         {
             switch (cursorState) {
