@@ -2,9 +2,9 @@ name: macos-integration-testing
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 env:
   # Make Homebrew installation a little quicker
