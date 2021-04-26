@@ -1,28 +1,28 @@
 namespace anim {
 // animates the snek header
-void snekHeader();
+void snakeHeader();
 // animates the main menu
-void snekMenuBase();
+void snakeMenuBase();
 // animates the change from the main to the sub menu
 void switchSubMenu();
 // sub menu for selecting gamemodes
-void snekGamemodes();
+void snakeGamemodes();
 // highscores sub menu
-void snekHighscores();
+void snakeHighscores();
 // settings sub menu
-void snekSettings();
+void snakeSettings();
 // about sub menu
-void snekAbout();
+void snakeAbout();
 // license sub menu
 // prints the menu title
-void snekLicense();
+void snakeLicense();
 // toggles between the first and seconds License menu page
 void license_menu_toggle(bool*);
 // animates the change from the sub to main menu
 void switchMainMenu();
 }  // namespace anim
 namespace draw {
-void snekMenuBase();
+void snakeMenuBase();
 void clearMenu();
 void clearField();
 void dummyField();
