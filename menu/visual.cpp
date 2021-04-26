@@ -31,7 +31,7 @@
  */
 
 void anim::snekMenuBase() {
-    std::cout << Term::color24_bg(32, 144, 255) << Term::color(Term::fg::black)
+    std::cout << Term::color24_bg(32, 144, 255) << Term::color24_fg(0, 0, 0)
               << Term::move_cursor(5, 14) << ' ' << std::flush;
     std::this_thread::sleep_for(std::chrono::milliseconds(70));
 
@@ -158,38 +158,38 @@ void anim::license_menu_toggle(bool* toggle)
 {
     if (*toggle)
     {
-        std::cout << Term::color(Term::fg::blue)
+        std::cout << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(9,6) << "SNEK is licensed"
                   << Term::move_cursor(10,6) << "under MIT on "
                   << Term::move_cursor(11,6) << "http://github.com"
-                  << Term::color(Term::fg::red)
+                  << Term::color24_fg(255, 64, 0)
                   << Term::move_cursor(12,6) << "Copyright 2020:"
-                  << Term::color(Term::fg::blue)
+                  << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(13,6) << "Damon Leven     "
-                  << Term::color(Term::fg::red)
+                  << Term::color24_fg(255, 64, 0)
                   << Term::move_cursor(14,6) << "Copyright 2021:"
-                  << Term::color(Term::fg::blue)
+                  << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(15,6) << "BlackVyperStudios"
-                  << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                  << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                   << "  [Page  1/2]"
                   << std::flush;
         *toggle = false;
     }
     else
     {
-        std::cout << Term::color(Term::fg::blue)
+        std::cout << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(9,6) << "SNEK is using   "
                   << Term::move_cursor(10,6) << "the following"
                   << Term::move_cursor(11,6) << "Dependencies:    "
-                  << Term::color(Term::fg::red)
+                  << Term::color24_fg(255, 64, 0)
                   << Term::move_cursor(12,6) << "cpp-terminal   "
-                  << Term::color(Term::fg::blue)
+                  << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(13,6) << "by Ondřej Čertík"
-                  << Term::color(Term::fg::red)
+                  << Term::color24_fg(255, 64, 0)
                   << Term::move_cursor(14,6) << "FOLF-namespace "
-                  << Term::color(Term::fg::blue)
+                  << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(15,6) << "by FOLF-projects "
-                  << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                  << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                   << "  [Page  2/2]"
                   << std::flush;
         *toggle = true;
