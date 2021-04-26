@@ -4,8 +4,8 @@
 
 unsigned short int menu::menu::start(Term::Terminal* term) {
     // draw menu
-    anim::snekHeader();
-    anim::snekMenuBase();
+    anim::snakeHeader();
+    anim::snakeMenuBase();
     updateDescription();
     updateCursor(cursor::notMoved);
 
@@ -49,7 +49,7 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                     arrow = true;
                     draw::clearMenu();
                     cursorState = lastCursorState;
-                    draw::snekMenuBase();
+                    draw::snakeMenuBase();
                     updateDescription();
                     updateCursor(cursor::notMoved);
                 } else
@@ -96,42 +96,42 @@ void menu::menu::subMenu() {
                       << Term::color24_fg(255, 255, 0) << "SINGLEPLAYER!";
             arrow = true;
             updateDescription();
-            anim::snekGamemodes();
+            anim::snakeGamemodes();
             break;
         case 1:
             std::cout << Term::move_cursor(7, 9)
                       << Term::color24_fg(255, 255, 0) << "MULTIPLAYER";
             arrow = true;
             updateDescription();
-            anim::snekGamemodes();
+            anim::snakeGamemodes();
             break;
         case 2:
             std::cout << Term::move_cursor(7, 9)
                       << Term::color24_fg(255, 255, 0) << "ONLINE MODE";
             arrow = true;
             updateDescription();
-            anim::snekGamemodes();
+            anim::snakeGamemodes();
             break;
         case 3:
             std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
             arrow = false;
-            anim::snekHighscores();
+            anim::snakeHighscores();
             break;
         case 4:
             std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
             arrow = false;
-            anim::snekSettings();
+            anim::snakeSettings();
             break;
         case 5:
             std::cout << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                       << "    Press Q";
             arrow = false;
-            anim::snekAbout();
+            anim::snakeAbout();
             break;
         case 6:
-            anim::snekLicense();
+            anim::snakeLicense();
             arrow = false;
             license_sub_open = true;
             anim::license_menu_toggle(&license_page_toggle);
