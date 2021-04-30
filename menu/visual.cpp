@@ -138,7 +138,6 @@ void anim::license_menu_toggle(bool* toggle)
                   << Term::move_cursor(14,6) << "Copyright 2021:"
                   << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(15,6) << "BlackVyperStudios"
-                  << Term::color(Term::fg::blue)
                   << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                   << "  [Page  1/2]"
                   << std::flush;
