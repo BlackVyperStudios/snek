@@ -97,10 +97,10 @@ void anim::snekHighscores() {
               << "HIGHSCORES!" << Term::move_cursor(9, 4)
               << Term::color24_fg(0, 0, 0) << Term::color24_bg(204, 204, 204)
               << "SINGLE" << Term::move_cursor(9, 12)
-              << Term::color24_fg(51, 51, 51) << Term::color24_bg(0, 0, 0)
+              << Term::color24_fg(51, 51, 51) << Term::color(Term::bg::reset)
               << "MULTI" << Term::move_cursor(9, 19)
               << "ONLINE"
-              << Term::color(Term::fg::reset) << Term::color(Term::bg::reset) << std::flush;
+              << Term::color(Term::fg::reset) << std::flush;
 }
 void anim::snekAbout() {
     std::cout << Term::move_cursor(7, 12) << Term::color24_fg(255, 255, 0)
