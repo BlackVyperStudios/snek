@@ -138,6 +138,7 @@ void menu::menu::subMenu() {
             anim::license_menu_toggle(&license_page_toggle);
             break;
     }
+    lastCursorState = cursorState;
     cursorState = 0;
     updateCursor(cursor::notMoved);
     std::cout << Term::color(Term::fg::reset) << std::flush;
