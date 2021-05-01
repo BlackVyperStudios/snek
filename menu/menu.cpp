@@ -89,7 +89,6 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
 void menu::menu::subMenu() {
     sub = true;
     draw::clearMenu();
-    updateCursor(cursor::notMoved);
 
     switch (cursorState) {
         case 0:
