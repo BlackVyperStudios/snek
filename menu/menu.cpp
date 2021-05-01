@@ -89,6 +89,7 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
 void menu::menu::subMenu() {
     sub = true;
     draw::clearMenu();
+    updateCursor(cursor::notMoved);
 
     switch (cursorState) {
         case 0:
@@ -140,7 +141,6 @@ void menu::menu::subMenu() {
     }
     lastCursorState = cursorState;
     cursorState = 0;
-    updateCursor(cursor::notMoved);
     std::cout << Term::color(Term::fg::reset) << std::flush;
 }
 
