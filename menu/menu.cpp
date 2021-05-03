@@ -134,11 +134,12 @@ void menu::menu::subMenu() {
             anim::snekLicense();
             arrow = false;
             license_sub_open = true;
+            license_page_toggle = true;
             anim::license_menu_toggle(&license_page_toggle);
             break;
     }
+    lastCursorState = cursorState;
     cursorState = 0;
-    updateCursor(cursor::notMoved);
     std::cout << Term::color(Term::fg::reset) << std::flush;
 }
 

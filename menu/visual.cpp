@@ -97,10 +97,10 @@ void anim::snekHighscores() {
               << "HIGHSCORES!" << Term::move_cursor(9, 4)
               << Term::color24_fg(0, 0, 0) << Term::color24_bg(204, 204, 204)
               << "SINGLE" << Term::move_cursor(9, 12)
-              << Term::color24_fg(51, 51, 51) << Term::color24_bg(0, 0, 0)
+              << Term::color24_fg(51, 51, 51) << Term::color(Term::bg::reset)
               << "MULTI" << Term::move_cursor(9, 19)
               << "ONLINE"
-              << Term::color(Term::fg::reset) << Term::color(Term::bg::reset) << std::flush;
+              << Term::color(Term::fg::reset) << std::flush;
 }
 void anim::snekAbout() {
     std::cout << Term::move_cursor(7, 12) << Term::color24_fg(255, 255, 0)
@@ -129,23 +129,23 @@ void anim::license_menu_toggle(bool* toggle)
         std::cout << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(9,6) << "SNEK is licensed"
                   << Term::move_cursor(10,6) << "under MIT on "
-                  << Term::color(Term::fg::red)
+                  << Term::color24_fg(255, 64, 0)
                   << Term::move_cursor(11,6) << "http://github.com"
                   << Term::move_cursor(12,6) << "Copyright 2020:"
                   << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(13,6) << "Damon Leven     "
                   << Term::color24_fg(255, 64, 0)
                   << Term::move_cursor(14,6) << "Copyright 2021:"
+                  << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(15,6) << "BlackVyperStudios"
-                  << Term::color(Term::fg::blue)
-                  << Term::move_cursor(17, 7) << Term::color(Term::fg::red)
+                  << Term::move_cursor(17, 7) << Term::color24_fg(255, 64, 0)
                   << "  [Page  1/2]"
                   << std::flush;
         *toggle = false;
     }
     else
     {
-        std::cout << Term::color(Term::fg::blue)
+        std::cout << Term::color24_fg(36, 115, 201)
                   << Term::move_cursor(9,6) << "SNEK is using   "
                   << Term::move_cursor(10,6) << "the following"
                   << Term::move_cursor(11,6) << "Dependencies:    "
