@@ -66,8 +66,7 @@ void snake::snake::drawSnake()
 {
     // tail gets erased before drawing the snake to avoid removing of the snakeHead
     // erase tail, but dont erase on first move due to last location at 0,0
-    if (snakePos[0][snakeLength] != 0 && snakePos[1][snakeLength] != 0 &&
-        !(snakePos[1][snakeLength] == applePos[1] && snakePos[0][snakeLength] == applePos[0]))
+    if (snakePos[0][snakeLength] != 0 && snakePos[1][snakeLength] != 0)
             std::cout << move_cursor(snakePos[1][snakeLength], snakePos[0][snakeLength]) << ' ';
     
     // draw the snake head
@@ -75,11 +74,11 @@ void snake::snake::drawSnake()
               << move_cursor(snakePos[1][0],snakePos[0][0]) << 'O';
 
     // change the old snake head to snake body
-    if (snakeLength > 1)
+    if (snakeLength > 1) {
         std::cout << move_cursor(snakePos[1][1],snakePos[0][1]) << 'o';
-
-    // flush the iostream
-    std::cout << std::flush;
+        // redraw apple in case it got erased
+        drawApple();
+    }
 }
 
 void snake::snake::getInput(Term::Terminal& term)
@@ -227,7 +226,12 @@ void snake::snake::createApple()
         applePos[1] = 1 + randomNum(screenSize::s_row - 2);
     }
     while(isOnSnake(applePos[0], applePos[1]) || (snakePos[0][0] == applePos[0] && snakePos[1][0] == applePos[1]));
-    std::cout << move_cursor(applePos[1], applePos[0]) << Term::color(Term::fg::red) << 'O' << Term::color(Term::fg::reset) << std::flush;
+    drawApple();
+}
+
+void snake::snake::drawApple()
+{
+        std::cout << move_cursor(applePos[1], applePos[0]) << Term::color(Term::fg::red) << 'O' << Term::color(Term::fg::reset) << std::flush;
 }
 
 unsigned short int snake::snake::run(Term::Terminal& term)

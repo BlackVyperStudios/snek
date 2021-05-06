@@ -63,6 +63,8 @@ class snake {
         void drawScore();
         // sets applePos[] and draws the apple
         void createApple();
+        // draws the apple
+        void drawApple();
         // draws the field - used for testing
         void drawField();
         // the pause sequence
