@@ -17,7 +17,7 @@ int main() {
 
         // start the menu
         snake::snake snakeObj(true);
-        // snakeObj.start(&termObj);
+        snakeObj.run(termObj);
 
         // make sure the terminal is reverted to its original state
         std::cout << Term::color(Term::style::reset)
