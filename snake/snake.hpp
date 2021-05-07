@@ -75,6 +75,8 @@ class snake {
         bool looseScreen(Term::Terminal&);
         // clears the field
         void clearField();
+        // clears the field and display
+        void clearFieldDisplay();
         // prepares the game
         void prepareGame();
 

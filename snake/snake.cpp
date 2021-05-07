@@ -249,11 +249,14 @@ unsigned short int snake::snake::run(Term::Terminal& term)
             drawApple();
         }
         clearField();
-        if (looseScreen(term))
+        if (looseScreen(term)) {
+            clearFieldDisplay();
             return 0;
+        }
         clearField();
         prepareGame();
     }
+    clearFieldDisplay();
     return 0;
 }
 
@@ -352,6 +355,12 @@ void snake::snake::clearField()
               << Term::move_cursor(17,2) << "                         " << std::flush;
 }
 
+void snake::snake::clearFieldDisplay()
+{
+    clearField();
+    std::cout << Term::move_cursor(6,2) << "                         "
+              << Term::move_cursor(18,2) << "                         " << std::flush;
+}
 
 
 
