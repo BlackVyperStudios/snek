@@ -7,7 +7,7 @@ namespace snake
     private:
         /* game variables */
         // stores the snakes position
-        unsigned short int snakePos[2][100]{0};
+        unsigned short int snakePos[2][100]({0});
         // temporarily stores the next snake movement
         unsigned short int newSnakePos[2]{0};
         // snakes length

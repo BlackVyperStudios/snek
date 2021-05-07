@@ -43,6 +43,7 @@ void snake::snake::prepareGame()
     // draw snake
     drawSnake();
     createApple();
+    drawApple();
     setSnakeSpeed();
     input = Input::none;
 }
@@ -76,9 +77,8 @@ void snake::snake::drawSnake()
     // change the old snake head to snake body
     if (snakeLength > 1) {
         std::cout << move_cursor(snakePos[1][1],snakePos[0][1]) << 'o';
-        // redraw apple in case it got erased
-        drawApple();
     }
+    std::cout << std::flush;
 }
 
 void snake::snake::getInput(Term::Terminal& term)
@@ -226,7 +226,6 @@ void snake::snake::createApple()
         applePos[1] = 1 + randomNum(screenSize::s_row - 2);
     }
     while(isOnSnake(applePos[0], applePos[1]) || (snakePos[0][0] == applePos[0] && snakePos[1][0] == applePos[1]));
-    drawApple();
 }
 
 void snake::snake::drawApple()
@@ -236,15 +235,18 @@ void snake::snake::drawApple()
 
 unsigned short int snake::snake::run(Term::Terminal& term)
 {
+    unsigned int game_state = 0;
     while(true) // loose loop
     {
         while (true) // actual game loop
         {
             getInput(term);
             moveSnake();
-            if(check_game_state() == 1) break;
-            else if(check_game_state() == 2) return 1;
+            game_state = check_game_state();
+            if(game_state == 1) break;
+            else if(game_state == 2) return 1;
             drawSnake();
+            drawApple();
         }
         clearField();
         if (looseScreen(term))
