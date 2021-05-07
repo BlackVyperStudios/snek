@@ -83,6 +83,7 @@ void snake::snake::drawSnake()
 
 void snake::snake::getInput(Term::Terminal& term)
 {
+    Input inputCopy = input;
     timer timer(snakeSpeed);
     while(!timer.done() || input == Input::none)
     {
@@ -90,19 +91,23 @@ void snake::snake::getInput(Term::Terminal& term)
         {
             case 'w':
             case Term::Key::ARROW_UP:
-                input = Input::up;
+                if(snakeLength == 1 || inputCopy != Input::down) // preventing the user from going into the opposite direction
+                    input = Input::up;
                 break;
             case 's':
             case Term::Key::ARROW_DOWN:
-                input = Input::down;
+                if(snakeLength == 1 || inputCopy != Input::up)
+                    input = Input::down;
                 break;
             case 'a':
             case Term::Key::ARROW_LEFT:
-                input = Input::left;
+                if (snakeLength == 1 || inputCopy != Input::right)
+                    input = Input::left;
                 break;
             case 'd':
             case Term::Key::ARROW_RIGHT:
-                input = Input::right;
+                if (snakeLength == 1 || inputCopy != Input::left)
+                    input = Input::right;
                 break;
             case 'q':
             case Term::Key::ESC:
