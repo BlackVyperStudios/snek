@@ -28,6 +28,8 @@ cmake-build-debug-cygwin/
 cmake-build-minsizerel/
 cmake-build-relwithdebinfo/
 cmake-build-debug-mingw/
+cmake-build-default/
+cmake-build-debug-clang/
 .idea/
 # binaries
 *.a
