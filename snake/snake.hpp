@@ -5,7 +5,7 @@ namespace snake {
 class snake {
    private:
         // stores the coordinates of the snake snakePos[X/Y][snakeLength]
-        unsigned short int snakePos[2][100]({0});
+        unsigned short int snakePos[2][100]{{0}};
         // stores the apple's position applePos[X/Y]
         unsigned short int applePos[2]{0};
         // length of the snake
