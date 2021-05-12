@@ -245,7 +245,10 @@ unsigned short int snake::snake::run(Term::Terminal& term)
             moveSnake();
             game_state = check_game_state();
             if(game_state == 1) break;
-            else if(game_state == 2) return 1;
+            else if (game_state == 2) {
+                clearFieldDisplay();
+                return 1;
+            }
             drawSnake();
             drawApple();
         }
