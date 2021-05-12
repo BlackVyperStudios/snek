@@ -176,6 +176,7 @@ void draw::snakeMenuBase() {
               << Term::move_cursor(13, 6) << "Settings"
               << Term::move_cursor(14, 6) << "About"
               << Term::move_cursor(15, 6) << "License"
+              << Term::move_cursor(17, 6) << ">               <"
               << Term::color24_fg(72, 191, 132) << Term::move_cursor(16, 6)
               << "ooooooooooooooooO"
               << Term::color(Term::fg::reset) << std::flush;
