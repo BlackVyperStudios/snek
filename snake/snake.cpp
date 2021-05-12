@@ -109,7 +109,6 @@ void snake::snake::getInput(Term::Terminal& term)
                 if (snakeLength == 1 || inputCopy != Input::left)
                     input = Input::right;
                 break;
-            case 'q':
             case Term::Key::ESC:
             case Term::Key::CTRL + 'c':
                 input = Input::quit;
