@@ -109,14 +109,10 @@ void snake::snake::getInput(Term::Terminal& term)
                 if (snakeLength == 1 || inputCopy != Input::left)
                     input = Input::right;
                 break;
-            case 'q':
             case Term::Key::ESC:
             case Term::Key::CTRL + 'c':
                 input = Input::quit;
                 return;
-                break;
-            case 'j':
-                snakeLength++;
                 break;
             case ' ': // space for pause
                 timer.pause();
@@ -249,7 +245,10 @@ unsigned short int snake::snake::run(Term::Terminal& term)
             moveSnake();
             game_state = check_game_state();
             if(game_state == 1) break;
-            else if(game_state == 2) return 1;
+            else if (game_state == 2) {
+                clearFieldDisplay();
+                return 1;
+            }
             drawSnake();
             drawApple();
         }

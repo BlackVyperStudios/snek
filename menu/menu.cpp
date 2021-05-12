@@ -1,6 +1,7 @@
 #include "menu.hpp"
 #include <cpp-terminal/terminal.h>
 #include "visual.hpp"
+#include <snake/snake.hpp>
 
 unsigned short int menu::menu::start(Term::Terminal* term) {
     // draw menu
@@ -63,21 +64,39 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                     subMenu();
                 else if (arrow)
                 {
+                    sub = false;
+                    draw::clearField();
+                    snake::snake snakeObj(false);
                     switch (cursorState) {
                         case 0:
-                            draw::clearField();
+                            snakeObj.run(*term);
+                            draw::snakeMenuBase();
+                            updateDescription();
+                            updateCursor(cursor::notMoved);
                             break;
                         case 1:
-                            draw::clearField();
+                            snakeObj.run(*term);
+                            draw::snakeMenuBase();
+                            updateDescription();
+                            updateCursor(cursor::notMoved);
                             break;
                         case 2:
-                            draw::clearField();
+                            snakeObj.run(*term);
+                            draw::snakeMenuBase();
+                            updateDescription();
+                            updateCursor(cursor::notMoved);
                             break;
                         case 3:
-                            draw::clearField();
+                            snakeObj.run(*term);
+                            draw::snakeMenuBase();
+                            updateDescription();
+                            updateCursor(cursor::notMoved);
                             break;
                         case 4:
-                            draw::clearField();
+                            snakeObj.run(*term);
+                            draw::snakeMenuBase();
+                            updateDescription();
+                            updateCursor(cursor::notMoved);
                             break;
                     }
                 }
