@@ -114,9 +114,6 @@ void snake::snake::getInput(Term::Terminal& term)
                 input = Input::quit;
                 return;
                 break;
-            case 'j':
-                snakeLength++;
-                break;
             case ' ': // space for pause
                 timer.pause();
                 pauseMenu(term);
