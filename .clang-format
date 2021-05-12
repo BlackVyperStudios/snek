@@ -1,0 +1,7 @@
+# Defines the Chromium style for automatic reformatting.
+# http://clang.llvm.org/docs/ClangFormatStyleOptions.html
+# manually format a file:
+# clang-format -i --style=file <file>
+BasedOnStyle: Chromium
+Language: Cpp
+IndentWidth: 4
