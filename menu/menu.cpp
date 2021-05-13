@@ -57,7 +57,7 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                 break;
             case Term::Key::ESC:
                 running = false;
-                [[fallthrough]];
+                break;
             case Term::Key::ENTER:
                 if (!sub)
                     subMenu();
