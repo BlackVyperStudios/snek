@@ -91,12 +91,12 @@ void snake::snake::getInput(Term::Terminal& term)
         {
             case 'w':
             case Term::Key::ARROW_UP:
-                if(snakeLength == 1 || inputCopy != Input::down) // preventing the user from going into the opposite direction
+                if (snakeLength == 1 || inputCopy != Input::down) // preventing the user from going into the opposite direction
                     input = Input::up;
                 break;
             case 's':
             case Term::Key::ARROW_DOWN:
-                if(snakeLength == 1 || inputCopy != Input::up)
+                if (snakeLength == 1 || inputCopy != Input::up)
                     input = Input::down;
                 break;
             case 'a':
@@ -208,11 +208,11 @@ void snake::snake::drawScore()
 {
     std::cout << Term::color24_bg(153,0,76)
               << Term::color24_fg(255,255,255);
-    if(score >= 1000)
+    if (score >= 1000)
         std::cout << Term::move_cursor(FieldPos::f_row, FieldPos::f_column + 8) << score;
-    else if(score >= 100)
+    else if (score >= 100)
         std::cout << Term::move_cursor(FieldPos::f_row, FieldPos::f_column + 8) << ' ' << score;
-    else if(score >= 10)
+    else if (score >= 10)
         std::cout << Term::move_cursor(FieldPos::f_row, FieldPos::f_column + 8) << "  " << score;
     else
         std::cout << Term::move_cursor(FieldPos::f_row, FieldPos::f_column + 8) << "   " << score;
@@ -244,7 +244,7 @@ unsigned short int snake::snake::run(Term::Terminal& term)
             getInput(term);
             moveSnake();
             game_state = check_game_state();
-            if(game_state == 1) break;
+            if (game_state == 1) break;
             else if (game_state == 2) {
                 clearFieldDisplay();
                 return 1;
@@ -334,7 +334,7 @@ bool snake::snake::looseScreen(Term::Terminal& term)
                 return true; //quit
                 break;
             case Term::Key::ENTER:
-                if(selection)
+                if (selection)
                     return false;
                 else
                     return true;

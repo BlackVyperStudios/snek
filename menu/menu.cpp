@@ -53,7 +53,8 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                     draw::snakeMenuBase();
                     updateDescription();
                     updateCursor(cursor::notMoved);
-                } else
+                }
+                else
                     running = false;
                 break;
             case Term::Key::ESC:

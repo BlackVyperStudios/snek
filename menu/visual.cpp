@@ -113,7 +113,7 @@ void anim::snakeAbout() {
               << Term::move_cursor(12, 6) << Term::color24_fg(255, 64, 0)
               << "BlackVyperStudios" << Term::move_cursor(13, 6)
               << Term::color24_fg(36, 115, 201) << "and all contribu-"
-              << Term::move_cursor(14, 7) << "tors on Github!"
+              << Term::move_cursor(14, 7) << "tors on GitHub!"
               << Term::move_cursor(15, 12) << Term::color24_fg(51, 51, 51)
               << "~ ~ ~" << Term::color(Term::fg::reset) << std::flush;
 }
