@@ -1,0 +1,17 @@
+name: clang-format-applied-check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: clang-format Check
+        uses: jidicula/clang-format-action@v3.3.0
