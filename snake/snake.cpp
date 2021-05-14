@@ -1,8 +1,8 @@
-#include "snake.hpp"
 #include <cpp-terminal/terminal.h>
 #include <folf/timeTools.hpp>
 #include <iostream>
 #include <snake/info.hpp>
+#include <snake/snake.hpp>
 
 // TODO: move to library
 #include <random>
