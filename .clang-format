@@ -2,6 +2,9 @@
 # http://clang.llvm.org/docs/ClangFormatStyleOptions.html
 # manually format a file:
 # clang-format -i --style=file <file>
-BasedOnStyle: Chromium
 Language: Cpp
+BasedOnStyle: Chromium
 IndentWidth: 4
+BreakBeforeBraces: Custom
+BraceWrapping:
+  BeforeElse: true
