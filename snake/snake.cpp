@@ -1,34 +1,29 @@
 #include "snake.hpp"
-#include <iostream>
 #include <cpp-terminal/terminal.h>
-#include <snake/info.hpp>
 #include <folf/timeTools.hpp>
+#include <iostream>
+#include <snake/info.hpp>
 
 // TODO: move to library
 #include <random>
-static unsigned long long randomNum(unsigned long long maxNum)
-{
+static unsigned long long randomNum(unsigned long long maxNum) {
     unsigned long long randomNumber;
-    do
-    {
+    do {
         // make the generator ready
         std::mt19937_64 generator(snake::get_timepoint());
-        randomNumber = generator() % (maxNum +1);
-    }
-    while (randomNumber == 0);
-    
-    return randomNumber -1;
+        randomNumber = generator() % (maxNum + 1);
+    } while (randomNumber == 0);
+
+    return randomNumber - 1;
 }
 
-snake::snake::snake(bool testing)
-{
+snake::snake::snake(bool testing) {
     if (testing)
         drawField();
     prepareGame();
 }
 
-void snake::snake::prepareGame()
-{
+void snake::snake::prepareGame() {
     // draws the HUD
     drawDisplay();
     // set snake start:
@@ -48,50 +43,49 @@ void snake::snake::prepareGame()
     input = Input::none;
 }
 
-inline std::string snake::snake::move_cursor(unsigned short int& row, unsigned short int& column) {
-    return Term::move_cursor(row + FieldPos::f_row, column + FieldPos::f_column);
+inline std::string snake::snake::move_cursor(unsigned short int& row,
+                                             unsigned short int& column) {
+    return Term::move_cursor(row + FieldPos::f_row,
+                             column + FieldPos::f_column);
 }
 
-void snake::snake::drawDisplay()
-{
-    std::cout << Term::color24_bg(153,0,76)
-              << Term::color24_fg(255,255,255)
-              << Term::move_cursor(6,2)
-              << " Score    0 | Time 00:00 "
-              << Term::move_cursor(18,2)
-              << " " << SNAKE_VERSION_STRING << " |       | by BVS "
-              << Term::color(Term::style::reset)
+void snake::snake::drawDisplay() {
+    std::cout << Term::color24_bg(153, 0, 76) << Term::color24_fg(255, 255, 255)
+              << Term::move_cursor(6, 2) << " Score    0 | Time 00:00 "
+              << Term::move_cursor(18, 2) << " " << SNAKE_VERSION_STRING
+              << " |       | by BVS " << Term::color(Term::style::reset)
               << std::flush;
 }
-void snake::snake::drawSnake()
-{
-    // tail gets erased before drawing the snake to avoid removing of the snakeHead
-    // erase tail, but dont erase on first move due to last location at 0,0
+void snake::snake::drawSnake() {
+    // tail gets erased before drawing the snake to avoid removing of the
+    // snakeHead erase tail, but dont erase on first move due to last location
+    // at 0,0
     if (snakePos[0][snakeLength] != 0 && snakePos[1][snakeLength] != 0)
-            std::cout << move_cursor(snakePos[1][snakeLength], snakePos[0][snakeLength]) << ' ';
-    
+        std::cout << move_cursor(snakePos[1][snakeLength],
+                                 snakePos[0][snakeLength])
+                  << ' ';
+
     // draw the snake head
-    std::cout << Term::color(Term::fg::green) 
-              << move_cursor(snakePos[1][0],snakePos[0][0]) << 'O';
+    std::cout << Term::color(Term::fg::green)
+              << move_cursor(snakePos[1][0], snakePos[0][0]) << 'O';
 
     // change the old snake head to snake body
     if (snakeLength > 1) {
-        std::cout << move_cursor(snakePos[1][1],snakePos[0][1]) << 'o';
+        std::cout << move_cursor(snakePos[1][1], snakePos[0][1]) << 'o';
     }
     std::cout << std::flush;
 }
 
-void snake::snake::getInput(Term::Terminal& term)
-{
+void snake::snake::getInput(Term::Terminal& term) {
     Input inputCopy = input;
     timer timer(snakeSpeed);
-    while(!timer.done() || input == Input::none)
-    {
-        switch(term.read_key0())
-        {
+    while (!timer.done() || input == Input::none) {
+        switch (term.read_key0()) {
             case 'w':
             case Term::Key::ARROW_UP:
-                if (snakeLength == 1 || inputCopy != Input::down) // preventing the user from going into the opposite direction
+                if (snakeLength == 1 ||
+                    inputCopy != Input::down)  // preventing the user from going
+                                               // into the opposite direction
                     input = Input::up;
                 break;
             case 's':
@@ -114,10 +108,11 @@ void snake::snake::getInput(Term::Terminal& term)
                 input = Input::quit;
                 return;
                 break;
-            case ' ': // space for pause
+            case ' ':  // space for pause
                 timer.pause();
                 pauseMenu(term);
-                if (input == Input::quit) return;
+                if (input == Input::quit)
+                    return;
                 timer.resume();
                 break;
             default:
@@ -125,29 +120,23 @@ void snake::snake::getInput(Term::Terminal& term)
         }
     }
 }
-void snake::snake::moveSnake()
-{
-    switch(input)
-    {
+void snake::snake::moveSnake() {
+    switch (input) {
         case Input::quit:
             break;
         case Input::up:
-            updateSnake(snakePos[0][0],
-                        snakePos[1][0] - 1);
+            updateSnake(snakePos[0][0], snakePos[1][0] - 1);
             break;
         case Input::down:
-            updateSnake(snakePos[0][0],
-                        snakePos[1][0] + 1);
+            updateSnake(snakePos[0][0], snakePos[1][0] + 1);
             break;
         case Input::left:
-            updateSnake(snakePos[0][0] - 1,
-                        snakePos[1][0]);
+            updateSnake(snakePos[0][0] - 1, snakePos[1][0]);
             break;
         case Input::right:
-            updateSnake(snakePos[0][0] + 1,
-                        snakePos[1][0]);
+            updateSnake(snakePos[0][0] + 1, snakePos[1][0]);
             break;
-        
+
         default:
             throw std::runtime_error("No input");
             break;
@@ -155,8 +144,8 @@ void snake::snake::moveSnake()
 
     std::cout << std::flush;
 }
-void snake::snake::updateSnake(unsigned short int posX, unsigned short int posY)
-{
+void snake::snake::updateSnake(unsigned short int posX,
+                               unsigned short int posY) {
     unsigned short int preLoc[2][2];
 
     preLoc[0][0] = snakePos[0][0];
@@ -165,8 +154,7 @@ void snake::snake::updateSnake(unsigned short int posX, unsigned short int posY)
     snakePos[0][0] = posX;
     snakePos[1][0] = posY;
 
-    for (unsigned short int i = 1; i < snakeLength + 1; i++)
-    {
+    for (unsigned short int i = 1; i < snakeLength + 1; i++) {
         preLoc[1][0] = snakePos[0][i];
         preLoc[1][1] = snakePos[1][i];
 
@@ -177,15 +165,15 @@ void snake::snake::updateSnake(unsigned short int posX, unsigned short int posY)
         preLoc[0][1] = preLoc[1][1];
     }
 }
-unsigned short int snake::snake::check_game_state()
-{
+unsigned short int snake::snake::check_game_state() {
     if (snakePos[0][0] == 0 || snakePos[1][0] == 0 ||
-        snakePos[0][0] == screenSize::s_column || snakePos[1][0] == screenSize::s_row ||
+        snakePos[0][0] == screenSize::s_column ||
+        snakePos[1][0] == screenSize::s_row ||
         isOnSnake(snakePos[0][0], snakePos[1][0]))
-        return 1; // TODO loose screen
-        // TODO: check if snake collides with itself
+        return 1;  // TODO loose screen
+    // TODO: check if snake collides with itself
     else if (input == Input::quit)
-        return 2; // quit
+        return 2;  // quit
     else if (snakePos[0][0] == applePos[0] && snakePos[1][0] == applePos[1]) {
         createApple();
         score++;
@@ -195,56 +183,58 @@ unsigned short int snake::snake::check_game_state()
     }
     return 0;
 }
-bool snake::snake::isOnSnake(unsigned short int& posX, unsigned short int& PosY)
-{
-    for (unsigned short int i = 1; i <= snakeLength - 1; i++)
-    {
+bool snake::snake::isOnSnake(unsigned short int& posX,
+                             unsigned short int& PosY) {
+    for (unsigned short int i = 1; i <= snakeLength - 1; i++) {
         if (snakePos[0][i] == posX && snakePos[1][i] == PosY)
             return true;
     }
     return false;
 }
-void snake::snake::drawScore()
-{
-    std::cout << Term::color24_bg(153,0,76)
-              << Term::color24_fg(255,255,255);
+void snake::snake::drawScore() {
+    std::cout << Term::color24_bg(153, 0, 76)
+              << Term::color24_fg(255, 255, 255);
     if (score >= 1000)
-        std::cout << Term::move_cursor(FieldPos::f_row, FieldPos::f_column + 8) << score;
+        std::cout << Term::move_cursor(FieldPos::f_row, FieldPos::f_column + 8)
+                  << score;
     else if (score >= 100)
-        std::cout << Term::move_cursor(FieldPos::f_row, FieldPos::f_column + 8) << ' ' << score;
+        std::cout << Term::move_cursor(FieldPos::f_row, FieldPos::f_column + 8)
+                  << ' ' << score;
     else if (score >= 10)
-        std::cout << Term::move_cursor(FieldPos::f_row, FieldPos::f_column + 8) << "  " << score;
+        std::cout << Term::move_cursor(FieldPos::f_row, FieldPos::f_column + 8)
+                  << "  " << score;
     else
-        std::cout << Term::move_cursor(FieldPos::f_row, FieldPos::f_column + 8) << "   " << score;
-    std::cout << Term::color(Term::fg::reset) << Term::color(Term::bg::reset) << std::flush;
+        std::cout << Term::move_cursor(FieldPos::f_row, FieldPos::f_column + 8)
+                  << "   " << score;
+    std::cout << Term::color(Term::fg::reset) << Term::color(Term::bg::reset)
+              << std::flush;
 }
 
-void snake::snake::createApple()
-{
-    do
-    {
+void snake::snake::createApple() {
+    do {
         applePos[0] = 1 + randomNum(screenSize::s_column - 2);
         applePos[1] = 1 + randomNum(screenSize::s_row - 2);
-    }
-    while(isOnSnake(applePos[0], applePos[1]) || (snakePos[0][0] == applePos[0] && snakePos[1][0] == applePos[1]));
+    } while (isOnSnake(applePos[0], applePos[1]) ||
+             (snakePos[0][0] == applePos[0] && snakePos[1][0] == applePos[1]));
 }
 
-void snake::snake::drawApple()
-{
-        std::cout << move_cursor(applePos[1], applePos[0]) << Term::color(Term::fg::red) << 'O' << Term::color(Term::fg::reset) << std::flush;
+void snake::snake::drawApple() {
+    std::cout << move_cursor(applePos[1], applePos[0])
+              << Term::color(Term::fg::red) << 'O'
+              << Term::color(Term::fg::reset) << std::flush;
 }
 
-unsigned short int snake::snake::run(Term::Terminal& term)
-{
+unsigned short int snake::snake::run(Term::Terminal& term) {
     unsigned int game_state = 0;
-    while(true) // loose loop
+    while (true)  // loose loop
     {
-        while (true) // actual game loop
+        while (true)  // actual game loop
         {
             getInput(term);
             moveSnake();
             game_state = check_game_state();
-            if (game_state == 1) break;
+            if (game_state == 1)
+                break;
             else if (game_state == 2) {
                 clearFieldDisplay();
                 return 1;
@@ -264,22 +254,22 @@ unsigned short int snake::snake::run(Term::Terminal& term)
     return 0;
 }
 
-void snake::snake::pauseMenu(Term::Terminal& term)
-{
-    std::cout << Term::color24_bg(153,0,76) << Term::color24_fg(255,255,255) << Term::move_cursor(18, 12) << "PAUSE" << std::flush;
-    while(true)
-    {
-        switch (term.read_key0())
-        {
+void snake::snake::pauseMenu(Term::Terminal& term) {
+    std::cout << Term::color24_bg(153, 0, 76) << Term::color24_fg(255, 255, 255)
+              << Term::move_cursor(18, 12) << "PAUSE" << std::flush;
+    while (true) {
+        switch (term.read_key0()) {
             case ' ':
-                std::cout << Term::move_cursor(18, 12) << "     " << Term::color(Term::style::reset) << std::flush;
+                std::cout << Term::move_cursor(18, 12) << "     "
+                          << Term::color(Term::style::reset) << std::flush;
                 return;
                 break;
             case 'q':
             case Term::Key::ESC:
             case Term::Key::CTRL + 'c':
                 input = Input::quit;
-                std::cout << Term::move_cursor(18, 12) << "     " <<  Term::color(Term::style::reset) << std::flush;
+                std::cout << Term::move_cursor(18, 12) << "     "
+                          << Term::color(Term::style::reset) << std::flush;
                 return;
                 break;
             default:
@@ -289,9 +279,10 @@ void snake::snake::pauseMenu(Term::Terminal& term)
 }
 
 // TODO: make universal / variable
-void snake::snake::setSnakeSpeed()
-{
-    snakeSpeed = 500 - (snakeLength * ((speed::max - speed::min) / (screenSize::s_row * screenSize::s_column)));
+void snake::snake::setSnakeSpeed() {
+    snakeSpeed =
+        500 - (snakeLength * ((speed::max - speed::min) /
+                              (screenSize::s_row * screenSize::s_column)));
 
     // // calculated using (maxSpeed - minSpeed) / (fieldX * fieldY)
     // const bool speedMultiplyer = 1.781;
@@ -299,39 +290,44 @@ void snake::snake::setSnakeSpeed()
     // snakeSpeed = 500 - (snakeLength * speedMultiplyer);
 }
 
-bool snake::snake::looseScreen(Term::Terminal& term)
-{
-    std::cout << Term::move_cursor(9, 10) << Term::color(Term::fg::yellow) << "You Loose"
-              << Term::move_cursor(10, 9) << Term::color(Term::fg::green) << "OoooooooooO"
+bool snake::snake::looseScreen(Term::Terminal& term) {
+    std::cout << Term::move_cursor(9, 10) << Term::color(Term::fg::yellow)
+              << "You Loose" << Term::move_cursor(10, 9)
+              << Term::color(Term::fg::green) << "OoooooooooO"
               << Term::move_cursor(14, 7) << Term::color(Term::fg::red) << ">"
-              << Term::color(Term::fg::blue) << "  Try again  " << Term::color(Term::fg::red) << "<"
-              << Term::move_cursor(15, 9) << Term::color(Term::fg::blue) << "To the Menu"
+              << Term::color(Term::fg::blue) << "  Try again  "
+              << Term::color(Term::fg::red) << "<" << Term::move_cursor(15, 9)
+              << Term::color(Term::fg::blue) << "To the Menu"
               << Term::color(Term::style::reset) << std::flush;
     bool selection = true;
-    while (true)
-    {
-        switch(term.read_key())
-        {
+    while (true) {
+        switch (term.read_key()) {
             case 'w':
             case Term::Key::ARROW_UP:
-                std::cout << Term::move_cursor(14, 7) << Term::color(Term::fg::red) << ">"
-                          << Term::color(Term::fg::blue) << "  Try again  " << Term::color(Term::fg::red) << "<" 
-                          << Term::move_cursor(15, 7) << Term::color(Term::fg::blue) << "  To the Menu  " 
+                std::cout << Term::move_cursor(14, 7)
+                          << Term::color(Term::fg::red) << ">"
+                          << Term::color(Term::fg::blue) << "  Try again  "
+                          << Term::color(Term::fg::red) << "<"
+                          << Term::move_cursor(15, 7)
+                          << Term::color(Term::fg::blue) << "  To the Menu  "
                           << Term::color(Term::style::reset) << std::flush;
                 selection = true;
                 break;
             case 's':
             case Term::Key::ARROW_DOWN:
-                std::cout << Term::move_cursor(14, 7) << Term::color(Term::fg::blue) << "   Try again   "
-                          << Term::move_cursor(15, 7) << Term::color(Term::fg::red) << ">"
-                          << Term::color(Term::fg::blue) << " To the Menu " << Term::color(Term::fg::red) << "<"
+                std::cout << Term::move_cursor(14, 7)
+                          << Term::color(Term::fg::blue) << "   Try again   "
+                          << Term::move_cursor(15, 7)
+                          << Term::color(Term::fg::red) << ">"
+                          << Term::color(Term::fg::blue) << " To the Menu "
+                          << Term::color(Term::fg::red) << "<"
                           << Term::color(Term::style::reset) << std::flush;
                 selection = false;
                 break;
             case 'q':
             case Term::Key::ESC:
             case Term::Key::CTRL + 'c':
-                return true; //quit
+                return true;  // quit
                 break;
             case Term::Key::ENTER:
                 if (selection)
@@ -344,30 +340,27 @@ bool snake::snake::looseScreen(Term::Terminal& term)
         }
     }
 }
-void snake::snake::clearField()
-{
-    std::cout << Term::move_cursor(7,2) << "                         "
-              << Term::move_cursor(8,2) << "                         "
-              << Term::move_cursor(9,2) << "                         "
-              << Term::move_cursor(10,2) << "                         "
-              << Term::move_cursor(11,2) << "                         "
-              << Term::move_cursor(12,2) << "                         "
-              << Term::move_cursor(13,2) << "                         "
-              << Term::move_cursor(14,2) << "                         "
-              << Term::move_cursor(15,2) << "                         "
-              << Term::move_cursor(16,2) << "                         "
-              << Term::move_cursor(17,2) << "                         " << std::flush;
+void snake::snake::clearField() {
+    std::cout << Term::move_cursor(7, 2) << "                         "
+              << Term::move_cursor(8, 2) << "                         "
+              << Term::move_cursor(9, 2) << "                         "
+              << Term::move_cursor(10, 2) << "                         "
+              << Term::move_cursor(11, 2) << "                         "
+              << Term::move_cursor(12, 2) << "                         "
+              << Term::move_cursor(13, 2) << "                         "
+              << Term::move_cursor(14, 2) << "                         "
+              << Term::move_cursor(15, 2) << "                         "
+              << Term::move_cursor(16, 2) << "                         "
+              << Term::move_cursor(17, 2) << "                         "
+              << std::flush;
 }
 
-void snake::snake::clearFieldDisplay()
-{
+void snake::snake::clearFieldDisplay() {
     clearField();
-    std::cout << Term::move_cursor(6,2) << "                         "
-              << Term::move_cursor(18,2) << "                         " << std::flush;
+    std::cout << Term::move_cursor(6, 2) << "                         "
+              << Term::move_cursor(18, 2) << "                         "
+              << std::flush;
 }
-
-
-
 
 /* stuff */
 

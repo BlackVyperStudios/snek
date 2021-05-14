@@ -3,34 +3,36 @@
 
 namespace menu {
 class menu {
-    private:
-        // indicates the current state of the menu cursor (y = 8 + cursorState)
-        unsigned short int cursorState = 0;
-        // saves the state of the menu cursor from the menu before (y = 8 + cursorState)
-        unsigned short int lastCursorState = 0;
-        // cursor parsing
-        enum cursor { notMoved, up, down };
-        
-        // checks if you are in a sub menu
-        bool sub = false;
-        // toggles for the license sub menu
-        bool license_sub_open = false;
-        bool license_page_toggle = true;
-        // if false, no selection arrow
-        bool arrow = true;
-    public:
-        menu() = default;
+   private:
+    // indicates the current state of the menu cursor (y = 8 + cursorState)
+    unsigned short int cursorState = 0;
+    // saves the state of the menu cursor from the menu before (y = 8 +
+    // cursorState)
+    unsigned short int lastCursorState = 0;
+    // cursor parsing
+    enum cursor { notMoved, up, down };
 
-        // start the menu
-        unsigned short int start(Term::Terminal* term);
+    // checks if you are in a sub menu
+    bool sub = false;
+    // toggles for the license sub menu
+    bool license_sub_open = false;
+    bool license_page_toggle = true;
+    // if false, no selection arrow
+    bool arrow = true;
 
-        // sub menu system
-        void subMenu();
+   public:
+    menu() = default;
 
-        // base menu
-        void updateCursor(cursor cursorDir);
-        void updateDescription() const;
+    // start the menu
+    unsigned short int start(Term::Terminal* term);
 
-        virtual ~menu() = default;
+    // sub menu system
+    void subMenu();
+
+    // base menu
+    void updateCursor(cursor cursorDir);
+    void updateDescription() const;
+
+    virtual ~menu() = default;
 };
 }  // namespace menu

@@ -1,5 +1,5 @@
-#include <snake/snake.hpp>
 #include <cpp-terminal/terminal.h>
+#include <snake/snake.hpp>
 
 int main() {
     // try/catch to make sure the destructor of Term::Terminal gets called to
@@ -11,8 +11,7 @@ int main() {
         termObj.save_screen();
 
         // prepare the screen
-        std::cout << Term::clear_screen_buffer()
-                  << Term::cursor_off()
+        std::cout << Term::clear_screen_buffer() << Term::cursor_off()
                   << std::flush;
 
         // start the menu
@@ -22,10 +21,8 @@ int main() {
         // make sure the terminal is reverted to its original state
         std::cout << Term::color(Term::style::reset)
                   << Term::color(Term::fg::reset)
-                  << Term::color(Term::bg::reset)
-                  << Term::cursor_on()
-                  << Term::clear_screen_buffer()
-                  << Term::move_cursor(1,1);
+                  << Term::color(Term::bg::reset) << Term::cursor_on()
+                  << Term::clear_screen_buffer() << Term::move_cursor(1, 1);
 
         // restore the screen
         termObj.restore_screen();
@@ -42,4 +39,3 @@ int main() {
     }
     return 0;
 }
-
