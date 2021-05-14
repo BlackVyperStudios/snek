@@ -30,7 +30,8 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                 else if (!sub && cursorState <= 5) {
                     updateCursor(cursor::down);
                     updateDescription();
-                } else if (sub && cursorState <= 3) {
+                }
+                else if (sub && cursorState <= 3) {
                     updateCursor(cursor::down);
                     updateDescription();
                 }
@@ -52,7 +53,8 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                     draw::snakeMenuBase();
                     updateDescription();
                     updateCursor(cursor::notMoved);
-                } else
+                }
+                else
                     running = false;
                 break;
             case Term::Key::ESC:
@@ -165,7 +167,8 @@ void menu::menu::updateCursor(cursor cursorDir) {
         std::cout << Term::color(Term::fg::reset)
                   << Term::color(Term::bg::reset)
                   << Term::move_cursor(9 + cursorState, 20) << "   ";
-    } else {
+    }
+    else {
         if (cursorDir != cursor::notMoved) {
             std::cout << Term::color(Term::fg::reset)
                       << Term::color(Term::bg::reset)
@@ -210,7 +213,8 @@ void menu::menu::updateDescription() const {
                     std::cout << "  What's MIT?";
                     break;
             }
-        } else if (arrow) {
+        }
+        else if (arrow) {
             switch (cursorState) {
                 case 0:
                     std::cout << "With power-ups!";
