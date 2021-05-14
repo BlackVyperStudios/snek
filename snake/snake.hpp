@@ -1,3 +1,4 @@
+#pragma once
 #include <cpp-terminal/terminal.h>
 #include <string>
 

@@ -1,7 +1,7 @@
-#include "menu.hpp"
 #include <cpp-terminal/terminal.h>
+#include <menu/menu.hpp>
+#include <menu/visual.hpp>
 #include <snake/snake.hpp>
-#include "visual.hpp"
 
 unsigned short int menu::menu::start(Term::Terminal* term) {
     // draw menu

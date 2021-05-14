@@ -1,6 +1,6 @@
-#include "visual.hpp"
 #include <cpp-terminal/terminal.h>
 #include <chrono>
+#include <menu/visual.hpp>
 #include <snake/info.hpp>
 #include <thread>
 
