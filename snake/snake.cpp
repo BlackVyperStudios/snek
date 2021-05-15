@@ -2,6 +2,8 @@
 #include <cpp-terminal/terminal.h>
 #include <folf/timeTools.hpp>
 #include <iostream>
+#include <fstream>
+#include <algorithm>
 #include <snake/info.hpp>
 
 // TODO: move to library
@@ -299,6 +301,7 @@ bool snake::snake::looseScreen(Term::Terminal& term) {
               << Term::color(Term::fg::red) << "<" << Term::move_cursor(15, 9)
               << Term::color(Term::fg::blue) << "To the Menu"
               << Term::color(Term::style::reset) << std::flush;
+    highscore();
     bool selection = true;
     while (true) {
         switch (term.read_key()) {
@@ -339,6 +342,16 @@ bool snake::snake::looseScreen(Term::Terminal& term) {
                 break;
         }
     }
+}
+void snake::snake::highscore() {
+    highscores[10] = score;
+    std::sort(highscores, highscores + 11);
+    std::ofstream outputFile("scores.txt", std::ios::trunc);
+    for (short int i = 10; i > 0; i--) {
+        outputFile << highscores[i] << std::endl;
+        std::cout << highscores[i];
+    }
+    outputFile.close();
 }
 void snake::snake::clearField() {
     std::cout << Term::move_cursor(7, 2) << "                         "
