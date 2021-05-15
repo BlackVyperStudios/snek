@@ -349,7 +349,6 @@ void snake::snake::highscore() {
     std::ofstream outputFile("scores.txt", std::ios::trunc);
     for (short int i = 10; i > 0; i--) {
         outputFile << highscores[i] << std::endl;
-        std::cout << highscores[i];
     }
     outputFile.close();
 }
