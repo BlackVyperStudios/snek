@@ -1,9 +1,9 @@
 #include "snake.hpp"
 #include <cpp-terminal/terminal.h>
-#include <folf/timeTools.hpp>
-#include <iostream>
-#include <fstream>
 #include <algorithm>
+#include <folf/timeTools.hpp>
+#include <fstream>
+#include <iostream>
 #include <snake/info.hpp>
 
 // TODO: move to library
