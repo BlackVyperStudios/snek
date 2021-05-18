@@ -68,31 +68,31 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                     draw::clearField();
                     snake::snake snakeObj(false);
                     switch (cursorState) {
-                        case 0: // SNEK
+                        case 0:  // SNEK
                             snakeObj.run(*term);
                             draw::snakeMenuBase();
                             updateDescription();
                             updateCursor(cursor::notMoved);
                             break;
-                        case 1: // Classic
+                        case 1:  // Classic
                             snakeObj.run(*term);
                             draw::snakeMenuBase();
                             updateDescription();
                             updateCursor(cursor::notMoved);
                             break;
-                        case 2: // Infinite
+                        case 2:  // Infinite
                             snakeObj.run(*term);
                             draw::snakeMenuBase();
                             updateDescription();
                             updateCursor(cursor::notMoved);
                             break;
-                        case 3: // Chaos
+                        case 3:  // Chaos
                             snakeObj.run(*term);
                             draw::snakeMenuBase();
                             updateDescription();
                             updateCursor(cursor::notMoved);
                             break;
-                        case 4: // Creative
+                        case 4:  // Creative
                             snakeObj.run(*term);
                             draw::snakeMenuBase();
                             updateDescription();
