@@ -12,17 +12,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Run clang-format in the frontends folder
-      uses: jidicula/clang-format-action@v3.3.0
+      uses: jidicula/clang-format-action@v3.4.0
       with:
         clang-format-version: '11'
         check-path: 'frontend'
     - name: Run clang-format in the menu folder
-      uses: jidicula/clang-format-action@v3.3.0
+      uses: jidicula/clang-format-action@v3.4.0
       with:
         clang-format-version: '11'
         check-path: 'menu'
     - name: Run clang-format in the snake folder
-      uses: jidicula/clang-format-action@v3.3.0
+      uses: jidicula/clang-format-action@v3.4.0
       with:
         clang-format-version: '11'
         check-path: 'snake'
