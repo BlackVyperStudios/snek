@@ -1,23 +1,11 @@
-#include "snake.hpp"
 #include <cpp-terminal/terminal.h>
 #include <algorithm>
-#include <folf/timeTools.hpp>
 #include <fstream>
+#include <fox/math.hpp>
+#include <fox/time.hpp>
 #include <iostream>
 #include <snake/info.hpp>
-
-// TODO: move to library
-#include <random>
-static unsigned long long randomNum(unsigned long long maxNum) {
-    unsigned long long randomNumber;
-    do {
-        // make the generator ready
-        std::mt19937_64 generator(snake::get_timepoint());
-        randomNumber = generator() % (maxNum + 1);
-    } while (randomNumber == 0);
-
-    return randomNumber - 1;
-}
+#include <snake/snake.hpp>
 
 snake::snake::snake(bool testing) {
     if (testing)
@@ -80,7 +68,7 @@ void snake::snake::drawSnake() {
 
 void snake::snake::getInput(Term::Terminal& term) {
     Input inputCopy = input;
-    timer timer(snakeSpeed);
+    Fox::Timer timer(snakeSpeed);
     while (!timer.done() || input == Input::none) {
         switch (term.read_key0()) {
             case 'w':
@@ -214,8 +202,8 @@ void snake::snake::drawScore() {
 
 void snake::snake::createApple() {
     do {
-        applePos[0] = 1 + randomNum(screenSize::s_column - 2);
-        applePos[1] = 1 + randomNum(screenSize::s_row - 2);
+        applePos[0] = 1 + Fox::get_randomNumber(screenSize::s_column - 2);
+        applePos[1] = 1 + Fox::get_randomNumber(screenSize::s_row - 2);
     } while (isOnSnake(applePos[0], applePos[1]) ||
              (snakePos[0][0] == applePos[0] && snakePos[1][0] == applePos[1]));
 }

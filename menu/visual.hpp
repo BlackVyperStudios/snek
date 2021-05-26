@@ -1,3 +1,4 @@
+#pragma once
 namespace anim {
 // animates the snek header
 void snakeHeader();

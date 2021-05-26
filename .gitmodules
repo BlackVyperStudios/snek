@@ -1,6 +1,6 @@
 [submodule "dependencies/cpp-terminal"]
 	path = dependencies/cpp-terminal
 	url = https://github.com/jupyter-xeus/cpp-terminal.git
-[submodule "dependencies/folf-namespace"]
-	path = dependencies/folf-namespace
-	url = https://github.com/FOLF-projects/folf-namespace.git
+[submodule "dependencies/foxspace"]
+	path = dependencies/foxspace
+	url = https://github.com/MCWertGaming/foxspace.git
