@@ -1,31 +1,32 @@
-#include "visual.hpp"
 #include <cpp-terminal/terminal.h>
 #include <chrono>
+#include <fox/time.hpp>
+#include <menu/visual.hpp>
 #include <snake/info.hpp>
 #include <thread>
 
 void anim::snakeMenuBase() {
     std::cout << Term::color24_bg(32, 144, 255) << Term::color24_fg(0, 0, 0)
               << Term::move_cursor(5, 14) << ' ' << std::flush;
-    std::this_thread::sleep_for(std::chrono::milliseconds(70));
+    Fox::sleep_for(70);
 
     // draws the top line
     for (unsigned int i = 1; i < 14; i++) {
         std::cout << Term::move_cursor(5, 14 - i) << ' '
                   << Term::move_cursor(5, 14 + i) << ' ' << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(70));
+        Fox::sleep_for(70);
     }
     // left and right rows
     for (unsigned int i = 0; i < 14; i++) {
         std::cout << Term::move_cursor(5 + i, 1) << ' '
                   << Term::move_cursor(5 + i, 27) << ' ' << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(70));
+        Fox::sleep_for(70);
     }
     // bottom row
     for (unsigned int i = 0; i < 14; i++) {
         std::cout << Term::move_cursor(19, 1 + i) << ' '
                   << Term::move_cursor(19, 27 - i) << ' ' << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(70));
+        Fox::sleep_for(70);
     }
     std::cout << Term::color24_fg(80, 200, 120) << Term::color(Term::bg::reset)
               << std::flush;
@@ -43,7 +44,7 @@ void anim::snakeMenuBase() {
                       << Term::move_cursor(16, 1 + (i - 16)) << ' ';
         // flush iostream
         std::cout << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(70));
+        Fox::sleep_for(70);
     }
     std::cout << Term::move_cursor(7, 10) << Term::color24_fg(255, 255, 0)
               << "MAIN MENU" << Term::color24_fg(21, 96, 189)
@@ -145,9 +146,9 @@ void anim::license_menu_toggle(bool* toggle) {
                   << Term::move_cursor(12, 6) << "cpp-terminal   "
                   << Term::color24_fg(36, 115, 201) << Term::move_cursor(13, 6)
                   << "by Ondřej Čertík" << Term::color24_fg(255, 64, 0)
-                  << Term::move_cursor(14, 6) << "FOLF-namespace "
+                  << Term::move_cursor(14, 6) << "foxspace       "
                   << Term::color24_fg(36, 115, 201) << Term::move_cursor(15, 6)
-                  << "by FOLF-projects " << Term::move_cursor(17, 7)
+                  << "by Damon Leven   " << Term::move_cursor(17, 7)
                   << Term::color24_fg(255, 64, 0) << "  [Page  2/2]"
                   << std::flush;
         *toggle = true;

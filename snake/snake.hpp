@@ -1,3 +1,4 @@
+#pragma once
 #include <cpp-terminal/terminal.h>
 #include <string>
 
@@ -73,30 +74,5 @@ class snake {
     unsigned short int run(Term::Terminal&);
 
     virtual ~snake() = default;
-};
-
-// timer class
-// TODO: move into library
-static unsigned int get_timepoint() {
-    return std::chrono::time_point_cast<std::chrono::milliseconds>(
-               std::chrono::high_resolution_clock::now())
-        .time_since_epoch()
-        .count();
-}
-class timer {
-   public:
-    timer(unsigned int _duration) : duration{_duration} {
-        old_time = get_timepoint();
-    }
-    unsigned int duration;
-    virtual ~timer() = default;
-    unsigned int old_time;
-    unsigned int paused_state = 0;
-    bool done() { return (get_timepoint() - old_time) > duration; };
-    void pause() { paused_state = get_timepoint() - old_time; }
-    void resume() {
-        duration = paused_state;
-        old_time = get_timepoint();
-    }
 };
 }  // namespace snake
