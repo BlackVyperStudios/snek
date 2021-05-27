@@ -1,8 +1,8 @@
 #include <cpp-terminal/terminal.h>
 #include <algorithm>
-#include <fstream>
 #include <fox/math.hpp>
 #include <fox/time.hpp>
+#include <fstream>
 #include <iostream>
 #include <snake/info.hpp>
 #include <snake/snake.hpp>
