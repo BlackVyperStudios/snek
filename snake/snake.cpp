@@ -1,9 +1,7 @@
 #include <cpp-terminal/terminal.h>
-#include <algorithm>
 #include <fox/math.hpp>
 #include <fox/time.hpp>
 #include <fstream>
-#include <iostream>
 #include <snake/info.hpp>
 #include <snake/snake.hpp>
 
@@ -332,7 +330,7 @@ bool snake::snake::looseScreen(Term::Terminal& term) {
     }
 }
 void snake::snake::highscore() {
-    highscores[10] = score;
+    highscores[0] = score;
     std::sort(highscores, highscores + 11);
     std::ofstream outputFile("scores.txt", std::ios::trunc);
     for (short int i = 10; i > 0; i--) {
