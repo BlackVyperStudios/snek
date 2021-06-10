@@ -1,4 +1,5 @@
 #include <cpp-terminal/terminal.h>
+#include <filesystem>
 #include <fox/math.hpp>
 #include <fox/time.hpp>
 #include <fstream>
@@ -330,9 +331,17 @@ bool snake::snake::looseScreen(Term::Terminal& term) {
     }
 }
 void snake::snake::highscore() {
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(_WIN64)
+        // static const std::string path = "%appdata%/snek/scores.txt";
+    #elif __linux__
+        // static const std::string path = "~/.config/snek/scores.txt";
+        // std::filesystem::create_directory("/.config", "snek");
+    #else
+        static const std::string path = "scores.txt"
+    #endif
     highscores[0] = score;
     std::sort(highscores, highscores + 11);
-    std::ofstream outputFile("scores.txt", std::ios::trunc);
+    std::ofstream outputFile(path, std::ios::trunc);
     for (short int i = 10; i > 0; i--) {
         outputFile << highscores[i] << std::endl;
     }
