@@ -331,14 +331,33 @@ bool snake::snake::looseScreen(Term::Terminal& term) {
     }
 }
 void snake::snake::highscore() {
-    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(_WIN64)
-        // static const std::string path = "%appdata%/snek/scores.txt";
-    #elif __linux__
-        // static const std::string path = "~/.config/snek/scores.txt";
-        // std::filesystem::create_directory("/.config", "snek");
-    #else
-        static const std::string path = "scores.txt"
-    #endif
+#if defined(__WIN32)
+    // get the  current users home directory
+    std::string path = getenv("%appdata%");
+    // add the config foler
+    path.append("/snek/");
+    // create the directory
+    // TODO: only create it when it does not exist
+    // TODO: measure permissions
+    // TODO: move to foxspace
+    // TODO: test what happens if no home directory exists
+    std::filesystem::create_directory(path);
+    // make the path complete
+    path.append("scores.txt");
+#else
+    // get the  current users home directory
+    std::string path = getenv("HOME");
+    // add the config foler
+    path.append("/.config/snek/");
+    // create the directory
+    // TODO: only create it when it does not exist
+    // TODO: measure permissions
+    // TODO: move to foxspace
+    // TODO: test what happens if no home directory exists
+    std::filesystem::create_directory(path);
+    // make the path complete
+    path.append("scores");
+#endif
     highscores[0] = score;
     std::sort(highscores, highscores + 11);
     std::ofstream outputFile(path, std::ios::trunc);
