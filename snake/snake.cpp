@@ -280,15 +280,16 @@ void snake::snake::setSnakeSpeed() {
 }
 
 bool snake::snake::looseScreen(Term::Terminal& term) {
+    highscore();
     std::cout << Term::move_cursor(9, 10) << Term::color(Term::fg::yellow)
               << "You Loose" << Term::move_cursor(10, 9)
               << Term::color(Term::fg::green) << "OoooooooooO"
-              << Term::move_cursor(14, 7) << Term::color(Term::fg::red) << ">"
-              << Term::color(Term::fg::blue) << "  Try again  "
-              << Term::color(Term::fg::red) << "<" << Term::move_cursor(15, 9)
-              << Term::color(Term::fg::blue) << "To the Menu"
-              << Term::color(Term::style::reset) << std::flush;
-    highscore();
+              << Term::move_cursor(11, 9) << Term::color(Term::fg::blue)
+              << "Best run: " << Term::color(Term::fg::red) << highscores[9]
+              << Term::move_cursor(14, 7) << ">" << Term::color(Term::fg::blue)
+              << "  Try again  " << Term::color(Term::fg::red) << "<"
+              << Term::move_cursor(15, 9) << Term::color(Term::fg::blue)
+              << "To the Menu" << Term::color(Term::style::reset) << std::flush;
     bool selection = true;
     while (true) {
         switch (term.read_key()) {
@@ -358,7 +359,7 @@ void snake::snake::highscore() {
     // make the path complete
     path.append("scores");
 #endif
-    if (score >= highscores[0]) {
+    if (score > highscores[0]) {
         highscores[0] = score;
         std::sort(highscores, highscores + 10);
         std::ofstream outputFile(path, std::ios::trunc);
