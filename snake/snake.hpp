@@ -14,7 +14,7 @@ class snake {
     // saves the score
     unsigned short int score = 0;
     // saves the highscore
-    unsigned short int highscores[11]{0};
+    unsigned short int highscores[10]{0};
     // stores the movement speed
     unsigned short int snakeSpeed = 1000;
     // stores the additional space between the console borders to the borders of

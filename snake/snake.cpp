@@ -358,13 +358,15 @@ void snake::snake::highscore() {
     // make the path complete
     path.append("scores");
 #endif
-    highscores[0] = score;
-    std::sort(highscores, highscores + 11);
-    std::ofstream outputFile(path, std::ios::trunc);
-    for (short int i = 10; i > 0; i--) {
-        outputFile << highscores[i] << std::endl;
+    if (score >= highscores[0]) {
+        highscores[0] = score;
+        std::sort(highscores, highscores + 10);
+        std::ofstream outputFile(path, std::ios::trunc);
+        for (short int i = 9; i >= 0; i--) {
+            outputFile << highscores[i] << std::endl;
+        }
+        outputFile.close();
     }
-    outputFile.close();
 }
 void snake::snake::clearField() {
     std::cout << Term::move_cursor(7, 2) << "                         "
