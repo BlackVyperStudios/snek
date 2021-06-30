@@ -359,6 +359,8 @@ void snake::snake::highscore() {
     // make the path complete
     path.append("scores");
 #endif
+    std::ifstream scores;
+    std::string line;
     if (score > highscores[9]) {
         highscores[9] = score;
         std::sort(highscores, highscores + 10, std::greater<int>());
@@ -367,6 +369,13 @@ void snake::snake::highscore() {
             outputFile << highscores[i] << std::endl;
         }
         outputFile.close();
+    }
+    scores.open(path);
+    if (scores.is_open()) {
+        for (short int i = 0; i <= 9; i++) {
+            std::getline(scores, line);
+            highscores[i] = std::stoi(line);
+        }
     }
 }
 void snake::snake::clearField() {
