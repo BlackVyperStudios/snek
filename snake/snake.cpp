@@ -285,7 +285,7 @@ bool snake::snake::looseScreen(Term::Terminal& term) {
               << "You Loose" << Term::move_cursor(10, 9)
               << Term::color(Term::fg::green) << "OoooooooooO"
               << Term::move_cursor(11, 9) << Term::color(Term::fg::blue)
-              << "Best run: " << Term::color(Term::fg::red) << highscores[0]
+              << "Best run: " << Term::color(Term::fg::red) << bestScore
               << Term::move_cursor(14, 7) << ">" << Term::color(Term::fg::blue)
               << "  Try again  " << Term::color(Term::fg::red) << "<"
               << Term::move_cursor(15, 9) << Term::color(Term::fg::blue)
@@ -359,24 +359,26 @@ void snake::snake::highscore() {
     // make the path complete
     path.append("scores");
 #endif
+    unsigned short int highscores[6]{0};
     std::ifstream scores;
     std::string line;
-    if (score > highscores[9]) {
-        highscores[9] = score;
-        std::sort(highscores, highscores + 10, std::greater<int>());
-        std::ofstream outputFile(path, std::ios::trunc);
-        for (short int i = 0; i <= 9; i++) {
-            outputFile << highscores[i] << std::endl;
-        }
-        outputFile.close();
-    }
     scores.open(path);
     if (scores.is_open()) {
-        for (short int i = 0; i <= 9; i++) {
+        for (short int i = 0; i <= 5; i++) {
             std::getline(scores, line);
             highscores[i] = std::stoi(line);
         }
     }
+    if (score > highscores[5]) {
+        highscores[5] = score;
+        std::sort(highscores, highscores + 6, std::greater<int>());
+        std::ofstream outputFile(path, std::ios::trunc);
+        for (short int i = 0; i <= 5; i++) {
+            outputFile << highscores[i] << std::endl;
+        }
+        outputFile.close();
+    }
+    bestScore = highscores[0];
 }
 void snake::snake::clearField() {
     std::cout << Term::move_cursor(7, 2) << "                         "

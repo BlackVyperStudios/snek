@@ -2,6 +2,8 @@
 #include <menu/menu.hpp>
 #include <menu/visual.hpp>
 #include <snake/snake.hpp>
+#include <filesystem>
+#include <fstream>
 
 unsigned short int menu::menu::start(Term::Terminal* term) {
     // draw menu
@@ -131,12 +133,52 @@ void menu::menu::subMenu() {
             updateDescription();
             anim::snakeGamemodes();
             break;
-        case 3:
+        case 3: {
             std::cout << Term::move_cursor(17, 7)
                       << Term::color24_fg(255, 64, 0) << "    Press Q";
             arrow = false;
             anim::snakeHighscores();
-            break;
+            #if defined(__WIN32)
+                // get the  current users home directory
+                std::string path = getenv("%appdata%");
+                // add the config foler
+                path.append("/snek/");
+                // create the directory
+                // TODO: only create it when it does not exist
+                // TODO: measure permissions
+                // TODO: move to foxspace
+                // TODO: test what happens if no home directory exists
+                std::filesystem::create_directory(path);
+                // make the path complete
+                path.append("scores.txt");
+            #else
+                // get the  current users home directory
+                std::string path = getenv("HOME");
+                // add the config foler
+                path.append("/.config/snek/");
+                // create the directory
+                // TODO: only create it when it does not exist
+                // TODO: measure permissions
+                // TODO: move to foxspace
+                // TODO: test what happens if no home directory exists
+                std::filesystem::create_directory(path);
+                // make the path complete
+                path.append("scores");
+            #endif
+            unsigned short int highscores[6]{0};
+            std::ifstream scores;
+            std::string line;
+            scores.open(path);
+            if (scores.is_open()) {
+                for (short int i = 0; i <= 5; i++) {
+                    std::getline(scores, line);
+                    highscores[i] = std::stoi(line);
+                }
+            }
+            for (short int i = 0; i <= 5; i++) {
+                std::cout << Term::move_cursor(10 + i, 6) << highscores[i];
+            }
+            break;}
         case 4:
             std::cout << Term::move_cursor(17, 7)
                       << Term::color24_fg(255, 64, 0) << "    Press Q";
@@ -234,5 +276,41 @@ void menu::menu::updateDescription() const {
             }
         }
         std::cout << Term::color(Term::fg::reset) << std::flush;
+    }
+}
+
+menu::menu::menu() {
+#if defined(__WIN32)
+    // get the  current users home directory
+    std::string path = getenv("%appdata%");
+    // add the config foler
+    path.append("/snek/");
+    // create the directory
+    // TODO: only create it when it does not exist
+    // TODO: measure permissions
+    // TODO: move to foxspace
+    // TODO: test what happens if no home directory exists
+    std::filesystem::create_directory(path);
+    // make the path complete
+    path.append("scores.txt");
+#else
+    // get the  current users home directory
+    std::string path = getenv("HOME");
+    // add the config foler
+    path.append("/.config/snek/");
+    // create the directory
+    // TODO: only create it when it does not exist
+    // TODO: measure permissions
+    // TODO: move to foxspace
+    // TODO: test what happens if no home directory exists
+    std::filesystem::create_directory(path);
+    // make the path complete
+    path.append("scores");
+#endif
+    if (!std::filesystem::exists(path)) {
+        std::ofstream outputFile(path, std::ios::trunc);
+        for (short int i = 0; i <= 5; i++) {
+            outputFile << "0" << std::endl;
+        }
     }
 }
