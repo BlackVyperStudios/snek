@@ -170,12 +170,12 @@ void menu::menu::subMenu() {
             std::string line;
             scores.open(path);
             if (scores.is_open()) {
-                for (short int i = 0; i <= 5; i++) {
+                for (short int i = 0; i < 6; i++) {
                     std::getline(scores, line);
                     highscores[i] = std::stoi(line);
                 }
             }
-            for (short int i = 0; i <= 5; i++) {
+            for (short int i = 0; i < 6; i++) {
                 std::cout << Term::move_cursor(10 + i, 6) << highscores[i];
             }
             break;
@@ -310,7 +310,7 @@ menu::menu::menu() {
 #endif
     if (!std::filesystem::exists(path)) {
         std::ofstream outputFile(path, std::ios::trunc);
-        for (short int i = 0; i <= 5; i++) {
+        for (short int i = 0; i < 6; i++) {
             outputFile << "0" << std::endl;
         }
     }

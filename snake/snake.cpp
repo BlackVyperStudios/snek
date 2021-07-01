@@ -174,7 +174,7 @@ unsigned short int snake::snake::check_game_state() {
 }
 bool snake::snake::isOnSnake(unsigned short int& posX,
                              unsigned short int& PosY) {
-    for (unsigned short int i = 1; i <= snakeLength - 1; i++) {
+    for (unsigned short int i = 1; i < snakeLength; i++) {
         if (snakePos[0][i] == posX && snakePos[1][i] == PosY)
             return true;
     }
@@ -364,7 +364,7 @@ void snake::snake::highscore() {
     std::string line;
     scores.open(path);
     if (scores.is_open()) {
-        for (short int i = 0; i <= 5; i++) {
+        for (short int i = 0; i < 6; i++) {
             std::getline(scores, line);
             highscores[i] = std::stoi(line);
         }
@@ -373,7 +373,7 @@ void snake::snake::highscore() {
         highscores[5] = score;
         std::sort(highscores, highscores + 6, std::greater<int>());
         std::ofstream outputFile(path, std::ios::trunc);
-        for (short int i = 0; i <= 5; i++) {
+        for (short int i = 0; i < 6; i++) {
             outputFile << highscores[i] << std::endl;
         }
         outputFile.close();
