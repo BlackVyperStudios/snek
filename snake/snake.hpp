@@ -13,6 +13,8 @@ class snake {
     unsigned short int snakeLength = 1;
     // saves the score
     unsigned short int score = 0;
+    // stores the best score
+    unsigned short int bestScore;
     // stores the movement speed
     unsigned short int snakeSpeed = 1000;
     // stores the additional space between the console borders to the borders of
@@ -37,6 +39,8 @@ class snake {
     void drawDisplay();
     // draws the snake
     void drawSnake();
+    // generates file and saves the highscores
+    void highscore();
     // parses input
     void getInput(Term::Terminal&);
     // moves the snake

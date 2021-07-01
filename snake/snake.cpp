@@ -1,7 +1,8 @@
 #include <cpp-terminal/terminal.h>
+#include <filesystem>
 #include <fox/math.hpp>
 #include <fox/time.hpp>
-#include <iostream>
+#include <fstream>
 #include <snake/info.hpp>
 #include <snake/snake.hpp>
 
@@ -173,7 +174,7 @@ unsigned short int snake::snake::check_game_state() {
 }
 bool snake::snake::isOnSnake(unsigned short int& posX,
                              unsigned short int& PosY) {
-    for (unsigned short int i = 1; i <= snakeLength - 1; i++) {
+    for (unsigned short int i = 1; i < snakeLength; i++) {
         if (snakePos[0][i] == posX && snakePos[1][i] == PosY)
             return true;
     }
@@ -279,14 +280,16 @@ void snake::snake::setSnakeSpeed() {
 }
 
 bool snake::snake::looseScreen(Term::Terminal& term) {
+    highscore();
     std::cout << Term::move_cursor(9, 10) << Term::color(Term::fg::yellow)
               << "You Loose" << Term::move_cursor(10, 9)
               << Term::color(Term::fg::green) << "OoooooooooO"
-              << Term::move_cursor(14, 7) << Term::color(Term::fg::red) << ">"
-              << Term::color(Term::fg::blue) << "  Try again  "
-              << Term::color(Term::fg::red) << "<" << Term::move_cursor(15, 9)
-              << Term::color(Term::fg::blue) << "To the Menu"
-              << Term::color(Term::style::reset) << std::flush;
+              << Term::move_cursor(11, 9) << Term::color(Term::fg::blue)
+              << "Best run: " << Term::color(Term::fg::red) << bestScore
+              << Term::move_cursor(14, 7) << ">" << Term::color(Term::fg::blue)
+              << "  Try again  " << Term::color(Term::fg::red) << "<"
+              << Term::move_cursor(15, 9) << Term::color(Term::fg::blue)
+              << "To the Menu" << Term::color(Term::style::reset) << std::flush;
     bool selection = true;
     while (true) {
         switch (term.read_key()) {
@@ -327,6 +330,55 @@ bool snake::snake::looseScreen(Term::Terminal& term) {
                 break;
         }
     }
+}
+void snake::snake::highscore() {
+#if defined(__WIN32)
+    // get the  current users home directory
+    std::string path = getenv("%appdata%");
+    // add the config foler
+    path.append("/snek/");
+    // create the directory
+    // TODO: only create it when it does not exist
+    // TODO: measure permissions
+    // TODO: move to foxspace
+    // TODO: test what happens if no home directory exists
+    std::filesystem::create_directory(path);
+    // make the path complete
+    path.append("scores.txt");
+#else
+    // get the  current users home directory
+    std::string path = getenv("HOME");
+    // add the config foler
+    path.append("/.config/snek/");
+    // create the directory
+    // TODO: only create it when it does not exist
+    // TODO: measure permissions
+    // TODO: move to foxspace
+    // TODO: test what happens if no home directory exists
+    std::filesystem::create_directory(path);
+    // make the path complete
+    path.append("scores");
+#endif
+    unsigned short int highscores[6]{0};
+    std::ifstream scores;
+    std::string line;
+    scores.open(path);
+    if (scores.is_open()) {
+        for (short int i = 0; i < 6; i++) {
+            std::getline(scores, line);
+            highscores[i] = std::stoi(line);
+        }
+    }
+    if (score > highscores[5]) {
+        highscores[5] = score;
+        std::sort(highscores, highscores + 6, std::greater<int>());
+        std::ofstream outputFile(path, std::ios::trunc);
+        for (short int i = 0; i < 6; i++) {
+            outputFile << highscores[i] << std::endl;
+        }
+        outputFile.close();
+    }
+    bestScore = highscores[0];
 }
 void snake::snake::clearField() {
     std::cout << Term::move_cursor(7, 2) << "                         "
