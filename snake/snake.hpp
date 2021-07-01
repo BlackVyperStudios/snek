@@ -13,7 +13,7 @@ class snake {
     unsigned short int snakeLength = 1;
     // saves the score
     unsigned short int score = 0;
-    //stores the best score
+    // stores the best score
     unsigned short int bestScore;
     // stores the movement speed
     unsigned short int snakeSpeed = 1000;
