@@ -21,7 +21,7 @@ class menu {
     bool arrow = true;
 
    public:
-    menu() = default;
+    menu();
 
     // start the menu
     unsigned short int start(Term::Terminal* term);
