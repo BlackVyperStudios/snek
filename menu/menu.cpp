@@ -18,7 +18,9 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
         switch (term->read_key()) {
             case 'w':
             case Term::Key::ARROW_UP:
-                if (license_sub_open)
+                if (settings_sub_open)
+                    anim::settings_menu_toggle(&settings_page_toggle);
+                else if (license_sub_open)
                     anim::license_menu_toggle(&license_page_toggle);
                 else if (cursorState > 0) {
                     updateCursor(cursor::up);
@@ -27,7 +29,9 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
                 break;
             case 's':
             case Term::Key::ARROW_DOWN:
-                if (license_sub_open)
+                if (settings_sub_open)
+                    anim::settings_menu_toggle(&settings_page_toggle);
+                else if (license_sub_open)
                     anim::license_menu_toggle(&license_page_toggle);
                 else if (!sub && cursorState <= 5) {
                     updateCursor(cursor::down);
@@ -48,6 +52,7 @@ unsigned short int menu::menu::start(Term::Terminal* term) {
             case 'q':
                 if (sub) {
                     sub = false;
+                    settings_sub_open = false;
                     license_sub_open = false;
                     arrow = true;
                     draw::clearMenu();
@@ -181,10 +186,14 @@ void menu::menu::subMenu() {
             break;
         }
         case 4:
+            settings_sub_open = true;
+            arrow = false;
+            settings_sub_open = true;
+            settings_page_toggle = true;
+            anim::snakeSettings();
+            anim::settings_menu_toggle(&settings_page_toggle);
             std::cout << Term::move_cursor(17, 7)
                       << Term::color24_fg(255, 64, 0) << "    Press Q";
-            arrow = false;
-            anim::snakeSettings();
             break;
         case 5:
             std::cout << Term::move_cursor(17, 7)

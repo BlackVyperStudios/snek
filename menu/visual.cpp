@@ -89,10 +89,6 @@ void anim::snakeGamemodes() {
               << Term::move_cursor(9, 20) << Term::color24_fg(255, 64, 0)
               << "<--" << Term::color(Term::fg::reset) << std::flush;
 }
-void anim::snakeSettings() {
-    std::cout << Term::move_cursor(7, 10) << Term::color24_fg(255, 255, 0)
-              << "SETTINGS!" << Term::color(Term::fg::reset) << std::flush;
-}
 void anim::snakeHighscores() {
     std::cout << Term::move_cursor(7, 9) << Term::color24_fg(255, 255, 0)
               << "HIGHSCORES!" << Term::move_cursor(9, 4)
@@ -101,6 +97,33 @@ void anim::snakeHighscores() {
               << Term::color24_fg(51, 51, 51) << Term::color(Term::bg::reset)
               << "MULTI" << Term::move_cursor(9, 19) << "ONLINE"
               << Term::color(Term::fg::reset) << std::flush;
+}
+void anim::snakeSettings() {
+    std::cout << Term::move_cursor(7, 10) << Term::color24_fg(255, 255, 0)
+              << "SETTINGS!" << Term::color24_fg(36, 115, 201)
+              << Term::move_cursor(9, 6) << "Controls"
+              << Term::move_cursor(10, 6) << "Themes"
+              << Term::color(Term::fg::reset) << std::flush;
+}
+void anim::settings_menu_toggle(bool* toggle) {
+    if (*toggle) {
+        std::cout << Term::move_cursor(9, 15) << Term::color(Term::fg::red)
+                  << ">" << Term::color(Term::fg::reset) << "WASD"
+                  << Term::color(Term::fg::red) << "<"
+                  << Term::move_cursor(10, 13) << Term::color(Term::fg::reset)
+                  << " Standard " << Term::color(Term::style::reset)
+                  << std::flush;
+        *toggle = false;
+    }
+    else {
+        std::cout << Term::move_cursor(9, 15) << Term::color(Term::fg::reset)
+                  << " WASD " << Term::move_cursor(10, 13)
+                  << Term::color(Term::fg::red) << ">"
+                  << Term::color(Term::fg::reset) << "Standard"
+                  << Term::color(Term::fg::red) << "<"
+                  << Term::color(Term::style::reset) << std::flush;
+        *toggle = true;
+    }
 }
 void anim::snakeAbout() {
     std::cout << Term::move_cursor(7, 12) << Term::color24_fg(255, 255, 0)

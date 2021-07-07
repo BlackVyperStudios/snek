@@ -17,6 +17,9 @@ class menu {
     // toggles for the license sub menu
     bool license_sub_open = false;
     bool license_page_toggle = true;
+    // toggle for the settings sub menu
+    bool settings_sub_open = false;
+    bool settings_page_toggle = true;
     // if false, no selection arrow
     bool arrow = true;
 

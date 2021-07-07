@@ -12,12 +12,14 @@ void snakeGamemodes();
 void snakeHighscores();
 // settings sub menu
 void snakeSettings();
+// toggles between the first and second Settings option
+void settings_menu_toggle(bool*);
 // about sub menu
 void snakeAbout();
 // license sub menu
 // prints the menu title
 void snakeLicense();
-// toggles between the first and seconds License menu page
+// toggles between the first and second License menu page
 void license_menu_toggle(bool*);
 // animates the change from the sub to main menu
 void switchMainMenu();
